@@ -1,0 +1,3 @@
+[submodule "Uranus/Uranus/vendor/spdlog"]
+	path = Uranus/Uranus/vendor/spdlog
+	url = https://github.com/gabime/spdlog
