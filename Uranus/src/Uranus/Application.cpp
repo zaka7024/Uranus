@@ -1,3 +1,6 @@
+
+#include "urpch.h"
+
 #include "Application.h"
 
 namespace Uranus {
@@ -14,6 +17,10 @@ namespace Uranus {
 
 	void Uranus::Application::Run()
 	{
+		// Test
+		WindowResizeEvent e(100, 100);
+		UR_TRACE(e);
+
 		while (true);
 	}
 }

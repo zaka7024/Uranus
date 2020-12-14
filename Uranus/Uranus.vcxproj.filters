@@ -4,6 +4,9 @@
     <Filter Include="Uranus">
       <UniqueIdentifier>{E37F6BD6-CF21-96AC-B8DC-A900A41D1DFD}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Uranus\Events">
+      <UniqueIdentifier>{670E7C02-D3CE-F738-9C09-41B608893C15}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Uranus.h" />
@@ -16,11 +19,22 @@
     <ClInclude Include="src\Uranus\EntryPoint.h">
       <Filter>Uranus</Filter>
     </ClInclude>
+    <ClInclude Include="src\Uranus\Events\ApplicationEvent.h">
+      <Filter>Uranus\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Uranus\Events\Event.h">
+      <Filter>Uranus\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Uranus\Events\KeyEvent.h">
+      <Filter>Uranus\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Uranus\Events\MouseEvent.h">
+      <Filter>Uranus\Events</Filter>
+    </ClInclude>
     <ClInclude Include="src\Uranus\Log.h">
       <Filter>Uranus</Filter>
     </ClInclude>
-    <ClInclude Include="src\Uranus\Events\Event.h" />
-    <ClInclude Include="src\Uranus\Events\KeyEvent.h" />
+    <ClInclude Include="src\urpch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Uranus\Application.cpp">
@@ -29,5 +43,6 @@
     <ClCompile Include="src\Uranus\Log.cpp">
       <Filter>Uranus</Filter>
     </ClCompile>
+    <ClCompile Include="src\urpch.cpp" />
   </ItemGroup>
 </Project>

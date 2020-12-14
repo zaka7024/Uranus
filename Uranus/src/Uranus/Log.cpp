@@ -1,3 +1,6 @@
+
+#include "urpch.h"
+
 #include "Log.h"
 
 namespace Uranus {

@@ -6,33 +6,33 @@ namespace Uranus {
 
 	class URANUS_API KeyEvent : public Event {
 	public:
-		inline int GetKeyCode() const { return _keyCode; }
+		inline int GetKeyCode() const { return _KeyCode; }
 
 		EVENT_CLASS_CATEGORY(EventCategoryInput | EventCategoryKeyboard);
 	
 	protected:
-		int _keyCode;
+		int _KeyCode;
 		KeyEvent(const int keyCode) 
-			: _keyCode(keyCode) {}
+			: _KeyCode(keyCode) {}
 	};
 
 	class URANUS_API KeyPressedEvent : public KeyEvent {
 	public:
 		KeyPressedEvent(const int keyCode, int repateCount)
-			: KeyEvent(keyCode), _repeatCount(repateCount) {};
+			: KeyEvent(keyCode), _RepeatCount(repateCount) {};
 
-		inline int GetRepeatCount() const { return _repeatCount; }
+		inline int GetRepeatCount() const { return _RepeatCount; }
 
 		virtual std::string ToString() const override {
 			std::stringstream ss;
-			ss << "KeyPressedEvent" << _keyCode << " (" << _repeatCount << " repeats)";
+			ss << "KeyPressedEvent: " << _KeyCode << " (" << _RepeatCount << " repeats)";
 			return ss.str();
 		}
 
 		EVENT_CLASS_TYPE(KeyPressed)
 	
 	private:
-		int _repeatCount;
+		int _RepeatCount;
 	};
 
 	class URANUS_API KeyReleasedEvent : public KeyEvent {
@@ -42,7 +42,7 @@ namespace Uranus {
 
 		virtual std::string ToString() const override {
 			std::stringstream ss;
-			ss << "KeyReleasedEvent" << _keyCode;
+			ss << "KeyReleasedEvent: " << _KeyCode;
 			return ss.str();
 		}
 

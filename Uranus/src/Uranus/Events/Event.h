@@ -1,13 +1,13 @@
 #pragma once
 
-#include "../Core.h"
+#include "Uranus/Core.h"
 
-#include<string>
 #include <sstream>
+#include <string>
 
 namespace Uranus {
 
-	// Blocking event system
+	// Blocking Event System
 
 	enum class EventType {
 		None = 0,
@@ -31,7 +31,7 @@ namespace Uranus {
 								virtual EventType GetEventType() const override { return GetStaticType(); }\
 								virtual const char* GetName() const override { return #type; }
 
-#define EVENT_CLASS_CATEGORY(category) virtual int GetCategoryFlags() override const { return category; }
+#define EVENT_CLASS_CATEGORY(category) virtual int GetCategoryFlags() const override{ return category; }
 
 	class URANUS_API Event {
 	public:
@@ -50,4 +50,8 @@ namespace Uranus {
 
 		bool isHandled = false;
 	};
+
+	std::ostream& operator<< (std::ostream& os, const Event& e) {
+		return os << e.ToString();
+	}
 }

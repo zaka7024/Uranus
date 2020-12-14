@@ -1,6 +1,9 @@
 #pragma once
 
-#include "Core.h"
+#include "Uranus/Core.h"
+
+#include "Uranus/Events/ApplicationEvent.h"
+#include "Uranus/Log.h"
 
 namespace Uranus {
 
