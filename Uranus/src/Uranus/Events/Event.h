@@ -51,7 +51,28 @@ namespace Uranus {
 		bool isHandled = false;
 	};
 
-	std::ostream& operator<< (std::ostream& os, const Event& e) {
+	inline std::ostream& operator<< (std::ostream& os, const Event& e) {
 		return os << e.ToString();
 	}
+
+	class EventDispatcher {
+		template<typename T>
+		using EventFun = std::function<bool(T&)>;
+
+	public:
+		EventDispatcher(Event& e)
+			:_Event(e) {}
+
+		template<typename T>
+		bool Dispatch(EventFun<T> fun) {
+			if (_Event.GetEventType() == T::GetStaticType()) {
+				_Event.isHandled =  fun(*(T*)&_Event);
+				return true;
+			}
+			return false;
+		}
+
+	private:
+		Event& _Event;
+	};
 }

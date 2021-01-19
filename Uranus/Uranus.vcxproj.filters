@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <Filter Include="Platform">
+      <UniqueIdentifier>{2AC788B4-1694-E3BF-3FAD-D1672BD9184E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Platform\Windows">
+      <UniqueIdentifier>{64FBD71A-50F4-F66C-7926-DCF1657ED678}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Uranus">
       <UniqueIdentifier>{E37F6BD6-CF21-96AC-B8DC-A900A41D1DFD}</UniqueIdentifier>
     </Filter>
@@ -9,6 +15,9 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Platform\Windows\WindowsWindow.h">
+      <Filter>Platform\Windows</Filter>
+    </ClInclude>
     <ClInclude Include="src\Uranus.h" />
     <ClInclude Include="src\Uranus\Application.h">
       <Filter>Uranus</Filter>
@@ -31,13 +40,31 @@
     <ClInclude Include="src\Uranus\Events\MouseEvent.h">
       <Filter>Uranus\Events</Filter>
     </ClInclude>
+    <ClInclude Include="src\Uranus\Layer.h">
+      <Filter>Uranus</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Uranus\LayerStack.h">
+      <Filter>Uranus</Filter>
+    </ClInclude>
     <ClInclude Include="src\Uranus\Log.h">
+      <Filter>Uranus</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Uranus\Window.h">
       <Filter>Uranus</Filter>
     </ClInclude>
     <ClInclude Include="src\urpch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp">
+      <Filter>Platform\Windows</Filter>
+    </ClCompile>
     <ClCompile Include="src\Uranus\Application.cpp">
+      <Filter>Uranus</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Uranus\Layer.cpp">
+      <Filter>Uranus</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Uranus\LayerStack.cpp">
       <Filter>Uranus</Filter>
     </ClCompile>
     <ClCompile Include="src\Uranus\Log.cpp">
