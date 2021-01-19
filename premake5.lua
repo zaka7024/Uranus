@@ -14,9 +14,11 @@ workspace "Uranus"
 IncludeDir = {}
 IncludeDir["GLFW"] = "Uranus/vendor/GLFW/include"
 IncludeDir["Glad"] = "Uranus/vendor/glad/include"
+IncludeDir["ImGui"] = "Uranus/vendor/imgui"
 
 include "Uranus/vendor/GLFW"
 include "Uranus/vendor/Glad"
+include "Uranus/vendor/imgui"
 
 project "Uranus"
 	location "Uranus"
@@ -38,12 +40,14 @@ project "Uranus"
 		"%{prj.name}/src",
 		"%{prj.name}/vendor/spdlog/include",
 		"%{IncludeDir.GLFW}",
-		"%{IncludeDir.Glad}"
+		"%{IncludeDir.Glad}",
+		"%{IncludeDir.ImGui}"
 	}
 
 	links {
 		"GLFW",
-		"Glad"
+		"Glad",
+		"ImGui"
 	}
 
 	filter "system:windows"

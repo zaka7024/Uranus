@@ -24,6 +24,7 @@ class Sandbox : public Uranus::Application {
 public:
 	Sandbox() {
 		PushLayer(new ExampleLayer());
+		PushOverlay(new Uranus::ImGuiLayer());
 	}
 
 	~Sandbox() {

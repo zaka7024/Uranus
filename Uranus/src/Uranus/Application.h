@@ -22,7 +22,12 @@ namespace Uranus {
 		void PushLayer(Layer* layer);
 		void PushOverlay(Layer* layer);
 
+		inline static Application& Get() { return *_Instance; }
+
+		inline Window& GetWindow() { return *Get()._Window; }
+
 	private:
+		static Application* _Instance;
 		std::unique_ptr<Window> _Window;
 		bool _IsRunning = true;
 		LayerStack _layerStack;

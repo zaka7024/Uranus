@@ -4,6 +4,9 @@
     <Filter Include="Platform">
       <UniqueIdentifier>{2AC788B4-1694-E3BF-3FAD-D1672BD9184E}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Platform\OpenGL">
+      <UniqueIdentifier>{1E7D2C1D-8A08-9AE1-9319-1DD6FF23F6E1}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Platform\Windows">
       <UniqueIdentifier>{64FBD71A-50F4-F66C-7926-DCF1657ED678}</UniqueIdentifier>
     </Filter>
@@ -13,8 +16,14 @@
     <Filter Include="Uranus\Events">
       <UniqueIdentifier>{670E7C02-D3CE-F738-9C09-41B608893C15}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Uranus\ImGui">
+      <UniqueIdentifier>{4D13BB93-3976-4A38-E2FB-82EECE3D16BB}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Platform\OpenGL\ImGuiOpenGLRenderer.h">
+      <Filter>Platform\OpenGL</Filter>
+    </ClInclude>
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h">
       <Filter>Platform\Windows</Filter>
     </ClInclude>
@@ -40,6 +49,9 @@
     <ClInclude Include="src\Uranus\Events\MouseEvent.h">
       <Filter>Uranus\Events</Filter>
     </ClInclude>
+    <ClInclude Include="src\Uranus\ImGui\ImGuiLayer.h">
+      <Filter>Uranus\ImGui</Filter>
+    </ClInclude>
     <ClInclude Include="src\Uranus\Layer.h">
       <Filter>Uranus</Filter>
     </ClInclude>
@@ -55,11 +67,17 @@
     <ClInclude Include="src\urpch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Platform\OpenGL\ImGuiOpenGLRenderer.cpp">
+      <Filter>Platform\OpenGL</Filter>
+    </ClCompile>
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp">
       <Filter>Platform\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\Uranus\Application.cpp">
       <Filter>Uranus</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Uranus\ImGui\ImGuiLayer.cpp">
+      <Filter>Uranus\ImGui</Filter>
     </ClCompile>
     <ClCompile Include="src\Uranus\Layer.cpp">
       <Filter>Uranus</Filter>

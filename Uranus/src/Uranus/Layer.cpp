@@ -2,7 +2,7 @@
 #include "Layer.h"
 
 Uranus::Layer::Layer(const std::string& name)
-	:_debugeName(name)
+	:_DebugeName(name)
 {
 
 }

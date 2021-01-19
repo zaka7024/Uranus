@@ -9,8 +9,13 @@ namespace Uranus {
 
 #define BIND_EVENT_FUN(x) std::bind(&Application::x, this, std::placeholders::_1)
 
+	Application* Application::_Instance;
+
 	Application::Application()
 	{
+		UR_CORE_ASSERT(!_Instance, "There exsist already Application instance")
+		_Instance = this;
+
 		_Window = std::unique_ptr<Window>(Window::Create());
 		_Window->SetEventCallback(BIND_EVENT_FUN(OnEvent));
 	}
@@ -31,11 +36,13 @@ namespace Uranus {
 	void Application::PushLayer(Layer* layer)
 	{
 		_layerStack.PushLayer(layer);
+		layer->OnAttach();
 	}
 
 	void Application::PushOverlay(Layer* layer)
 	{
 		_layerStack.PushOverlay(layer);
+		layer->OnAttach();
 	}
 
 	Application::~Application()
@@ -46,6 +53,7 @@ namespace Uranus {
 	void Application::Run()
 	{
 		while (_IsRunning) {
+
 			_Window->OnUpdate();
 
 			for (Layer* layer : _layerStack)

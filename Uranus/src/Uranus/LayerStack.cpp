@@ -26,6 +26,7 @@ void Uranus::LayerStack::PopLayer(Layer* layer)
 {
 	auto item = std::find(_layers.begin(), _layers.end(), layer);
 	if (item != _layers.end()) {
+		layer->OnDetach();
 		_layers.erase(item);
 		_layerInsert--;
 	}
@@ -35,6 +36,7 @@ void Uranus::LayerStack::PopOverlay(Layer* overlay)
 {
 	auto item = std::find(_layers.begin(), _layers.end(), overlay);
 	if (item != _layers.end()) {
+		overlay->OnDetach();
 		_layers.erase(item);
 	}
 }

@@ -16,10 +16,10 @@ namespace Uranus {
 		virtual void OnUpdate() {}
 		virtual void OnEvent(Event& event) {}
 
-		inline const std::string& GetLayerName() const{ return _debugeName; }
+		inline const std::string& GetLayerName() const{ return _DebugeName; }
 
 	private:
-		std::string _debugeName;
+		std::string _DebugeName;
 	};
 
 }
