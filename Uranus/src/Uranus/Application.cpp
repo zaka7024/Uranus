@@ -7,8 +7,6 @@
 
 namespace Uranus {
 
-#define BIND_EVENT_FUN(x) std::bind(&Application::x, this, std::placeholders::_1)
-
 	Application* Application::_Instance;
 
 	Application::Application()
@@ -17,13 +15,13 @@ namespace Uranus {
 		_Instance = this;
 
 		_Window = std::unique_ptr<Window>(Window::Create());
-		_Window->SetEventCallback(BIND_EVENT_FUN(OnEvent));
+		_Window->SetEventCallback(UR_BIND_EVENT_FUN(Application::OnEvent));
 	}
 
 	void Application::OnEvent(Event& e) {
 
 		EventDispatcher eventDispatcher(e);
-		eventDispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FUN(onWindowClose));
+		eventDispatcher.Dispatch<WindowCloseEvent>(UR_BIND_EVENT_FUN(Application::OnWindowClose));
 
 		// UR_CORE_TRACE("{0}", e);
 
@@ -61,7 +59,7 @@ namespace Uranus {
 		}
 	}
 
-	bool Application::onWindowClose(WindowCloseEvent& e) {
+	bool Application::OnWindowClose(WindowCloseEvent& e) {
 		_IsRunning = false;
 		return true;
 	}

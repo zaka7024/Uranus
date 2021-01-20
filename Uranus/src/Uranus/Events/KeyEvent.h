@@ -38,7 +38,7 @@ namespace Uranus {
 	class URANUS_API KeyReleasedEvent : public KeyEvent {
 	public:
 		KeyReleasedEvent(const int keyCode)
-			: KeyEvent(keyCode) {};
+			: KeyEvent(keyCode) {}
 
 		virtual std::string ToString() const override {
 			std::stringstream ss;
@@ -47,5 +47,19 @@ namespace Uranus {
 		}
 
 		EVENT_CLASS_TYPE(KeyReleased)
+	};
+
+	class URANUS_API KeyTypedEvent : public KeyEvent {
+	public:
+		KeyTypedEvent(const int keyCode)
+			:KeyEvent(keyCode) {}
+
+		virtual std::string ToString() const override {
+			std::stringstream ss;
+			ss << "KeyTypedEvent: " << _KeyCode;
+			return ss.str();
+		}
+
+		EVENT_CLASS_TYPE(KeyTyped)
 	};
 }

@@ -8,9 +8,7 @@ public:
 		:Layer("ExampleLayer") {}
 
 	void OnUpdate() {
-		std::stringstream ss;
-		ss << GetLayerName() << "::OnUpdate";
-		UR_INFO(ss.str())
+		
 	}
 
 	void OnEvent(Uranus::Event& event) {

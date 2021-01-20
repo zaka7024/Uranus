@@ -95,6 +95,13 @@ namespace Uranus {
 			}
 		});
 
+		glfwSetCharCallback(_Window, [](GLFWwindow* window, unsigned int keyCode) {
+			WindowData windowData = *(WindowData*)glfwGetWindowUserPointer(window);
+
+			KeyTypedEvent event(keyCode);
+			windowData.EventCallback(event);
+		});
+
 		glfwSetMouseButtonCallback(_Window, [](GLFWwindow* window, int button, int action, int mods) {
 			WindowData windowData = *(WindowData*)glfwGetWindowUserPointer(window);
 			switch (action)

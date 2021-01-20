@@ -21,3 +21,5 @@
 
 
 #define BIT(x) 1 << x
+
+#define UR_BIND_EVENT_FUN(x) std::bind(&x, this, std::placeholders::_1)

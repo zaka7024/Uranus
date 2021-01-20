@@ -32,7 +32,7 @@ namespace Uranus {
 		bool _IsRunning = true;
 		LayerStack _layerStack;
 
-		bool onWindowClose(WindowCloseEvent& e);
+		bool OnWindowClose(WindowCloseEvent& e);
 	};
 
 	Application* CreateApplication();

@@ -6,7 +6,9 @@
 #include "Uranus/Events/KeyEvent.h"
 #include "Uranus/Events/MouseEvent.h"
 
+// Temp
 #include "GLFW/glfw3.h"
+#include <glad/glad.h>
 
 namespace Uranus {
 
@@ -76,33 +78,100 @@ namespace Uranus {
         ImGui_ImplOpenGL3_NewFrame();
         ImGui::NewFrame();
 
-        bool show_demo_window = true;
+        static bool show_demo_window = true;
         ImGui::ShowDemoWindow(&show_demo_window);
 
         ImGui::Render();
+
+        glClear(GL_COLOR_BUFFER_BIT);
+
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
 	}
 
 	void ImGuiLayer::OnEvent(Event& event) {
 
-        if (event.GetEventType() == Uranus::EventType::KeyPressed) {
-            ImGuiIO& io = ImGui::GetIO();
-
-            KeyPressedEvent& e = ((Uranus::KeyPressedEvent&)event);
-            io.KeysDown[e.GetKeyCode()] = true;
-        }
-
-        if (event.GetEventType() == Uranus::EventType::MouseButtonPressed) {
-            ImGuiIO& io = ImGui::GetIO();
-            MouseButtonPressedEvent& e = ((Uranus::MouseButtonPressedEvent&)event);
-            io.MouseDown[e.GetMouseButton()] = true;
-        }
-
-        if (event.GetEventType() == Uranus::EventType::MouseMoved) {
-            ImGuiIO& io = ImGui::GetIO();
-            MouseMovedEvent& e = ((Uranus::MouseMovedEvent&)event);
-            io.MousePos = ImVec2(e.GetX(), e.GetY());
-        }
+        EventDispatcher dispatcher(event);
+        dispatcher.Dispatch<MouseButtonPressedEvent>(UR_BIND_EVENT_FUN(ImGuiLayer::OnMouseButtonPressedEvent));
+        dispatcher.Dispatch<MouseButtonRelesedEvent>(UR_BIND_EVENT_FUN(ImGuiLayer::OnMouseButtonRelesedEvent));
+        dispatcher.Dispatch<MouseMovedEvent>(UR_BIND_EVENT_FUN(ImGuiLayer::OnMouseMovedEvent));
+        dispatcher.Dispatch<MouseScrolledEvent>(UR_BIND_EVENT_FUN(ImGuiLayer::OnMouseScrolledEvent));
+        dispatcher.Dispatch<WindowResizeEvent>(UR_BIND_EVENT_FUN(ImGuiLayer::OnWindowResizeEvent));
+        dispatcher.Dispatch<KeyPressedEvent>(UR_BIND_EVENT_FUN(ImGuiLayer::OnKeyPressedEvent));
+        dispatcher.Dispatch<KeyReleasedEvent>(UR_BIND_EVENT_FUN(ImGuiLayer::OnKeyReleasedEvent));
+        dispatcher.Dispatch<KeyTypedEvent>(UR_BIND_EVENT_FUN(ImGuiLayer::OnKeyTypedEvent));
 	}
+
+    bool ImGuiLayer::OnMouseButtonPressedEvent(MouseButtonPressedEvent& e)
+    {
+        ImGuiIO& io = ImGui::GetIO();
+        io.MouseDown[e.GetMouseButton()] = true;
+
+        return false;
+    }
+
+    bool ImGuiLayer::OnMouseButtonRelesedEvent(MouseButtonRelesedEvent& e)
+    {
+        ImGuiIO& io = ImGui::GetIO();
+        io.MouseDown[e.GetMouseButton()] = false;
+
+        return false;
+    }
+
+    bool ImGuiLayer::OnMouseScrolledEvent(MouseScrolledEvent& e)
+    {
+        ImGuiIO& io = ImGui::GetIO();
+        io.MouseWheelH += e.GetOffsetX();
+        io.MouseWheel += e.GetOffsetY();
+
+        return false;
+    }
+
+    bool ImGuiLayer::OnMouseMovedEvent(MouseMovedEvent& e)
+    {
+        ImGuiIO& io = ImGui::GetIO();
+        io.MousePos = ImVec2(e.GetX(), e.GetY());
+
+        return false;
+    }
+
+    bool ImGuiLayer::OnKeyPressedEvent(KeyPressedEvent& e)
+    {
+        ImGuiIO& io = ImGui::GetIO();
+        io.KeysDown[e.GetKeyCode()] = true;
+
+        io.KeyCtrl = io.KeysDown[GLFW_KEY_RIGHT_CONTROL] || io.KeysDown[GLFW_KEY_LEFT_CONTROL];
+        io.KeyShift = io.KeysDown[GLFW_KEY_RIGHT_SHIFT] || io.KeysDown[GLFW_KEY_LEFT_SHIFT];
+        io.KeyAlt = io.KeysDown[GLFW_KEY_RIGHT_ALT] || io.KeysDown[GLFW_KEY_LEFT_ALT];
+        io.KeySuper = io.KeysDown[GLFW_KEY_RIGHT_SUPER] || io.KeysDown[GLFW_KEY_LEFT_SUPER];
+
+        return false;
+    }
+
+    bool ImGuiLayer::OnKeyReleasedEvent(KeyReleasedEvent& e)
+    {
+        ImGuiIO& io = ImGui::GetIO();
+        io.KeysDown[e.GetKeyCode()] = false;
+
+        return false;
+    }
+
+    bool ImGuiLayer::OnKeyTypedEvent(KeyTypedEvent& e)
+    {
+        ImGuiIO& io = ImGui::GetIO();
+        io.AddInputCharacter(e.GetKeyCode());
+
+        return false;
+    }
+
+    bool ImGuiLayer::OnWindowResizeEvent(WindowResizeEvent& e)
+    {
+        ImGuiIO& io = ImGui::GetIO();
+        io.DisplaySize = ImVec2(e.GetWidth(), e.GetHeight());
+        io.DisplayFramebufferScale = ImVec2(1.0f, 1.0f);
+       
+        glViewport(0, 0, e.GetWidth(), e.GetHeight());
+
+        return false;
+    }
 }
