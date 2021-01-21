@@ -1,9 +1,10 @@
 
 #include "urpch.h"
 
-#include "Application.h"
+#include "Uranus/Application.h"
+#include "Uranus/Input.h"
 
-#include "glad/glad.h"
+#include <glad/glad.h>
 
 namespace Uranus {
 

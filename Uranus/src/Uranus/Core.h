@@ -10,6 +10,12 @@
 	#error Uranus only supports Windows
 #endif
 
+#ifdef UR_DEBUG
+	#define UR_ENABLE_ASSERT
+#endif // UR_DEBUG
+
+
+
 #ifdef UR_ENABLE_ASSERT
 	#define UR_ASSERT(x, y) { if(!(x)) { UR_ERROR("Assertion Failed: {0}", y); __debugbreak(); } }
 	#define UR_CORE_ASSERT(x, y) { if(!(x)) { UR_CORE_ERROR("Assertion Failed: {0}", y); __debugbreak(); } }

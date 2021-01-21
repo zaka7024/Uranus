@@ -8,11 +8,17 @@ public:
 		:Layer("ExampleLayer") {}
 
 	void OnUpdate() {
-		
+
+		if (Uranus::Input::IsKeyPressed(UR_KEY_A)) {
+			UR_TRACE("UR_KEY_A Pressed (poll)")
+		}
 	}
 
 	void OnEvent(Uranus::Event& event) {
-		UR_TRACE("{0}", event.ToString())
+		if (event.GetEventType() == Uranus::EventType::KeyPressed) {
+			Uranus::KeyPressedEvent& e = (Uranus::KeyPressedEvent&)event;
+			UR_TRACE((char)e.GetKeyCode())
+		}
 	}
 
 };

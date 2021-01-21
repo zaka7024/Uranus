@@ -20,6 +20,8 @@ namespace Uranus {
 		void SetVSync(bool enabled) override;
 		bool IsVSync() override;
 
+		virtual void* GetNativeWindow() { return _Window; };
+
 	private:
 
 		void Init(const WindowProps& windowProps);

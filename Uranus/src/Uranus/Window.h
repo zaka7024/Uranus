@@ -7,7 +7,7 @@
 
 namespace Uranus {
 
-	struct WindowProps{
+	struct WindowProps {
 		std::string Name;
 		unsigned int Width, Height;
 
@@ -30,6 +30,8 @@ namespace Uranus {
 		virtual void SetEventCallback(const EventCallbackFun& callback) = 0;
 		virtual void SetVSync(bool enabled) = 0;
 		virtual bool IsVSync() = 0;
+
+		virtual void* GetNativeWindow() = 0;
 
 		static Window* Create(const WindowProps& WindowProps = WindowProps());
 	};

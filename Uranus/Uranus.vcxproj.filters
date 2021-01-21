@@ -65,6 +65,10 @@
       <Filter>Uranus</Filter>
     </ClInclude>
     <ClInclude Include="src\urpch.h" />
+    <ClInclude Include="src\Uranus\Input.h" />
+    <ClInclude Include="src\Platform\Windows\WindowsInput.h" />
+    <ClInclude Include="src\Uranus\KeyCodes.h" />
+    <ClInclude Include="src\Uranus\MouseButtonCodes.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Platform\OpenGL\ImGuiOpenGLRenderer.cpp">
@@ -89,5 +93,6 @@
       <Filter>Uranus</Filter>
     </ClCompile>
     <ClCompile Include="src\urpch.cpp" />
+    <ClCompile Include="src\Platform\Windows\WindowsInput.cpp" />
   </ItemGroup>
 </Project>

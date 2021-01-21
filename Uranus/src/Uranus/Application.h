@@ -24,7 +24,7 @@ namespace Uranus {
 
 		inline static Application& Get() { return *_Instance; }
 
-		inline Window& GetWindow() { return *Get()._Window; }
+		inline Window& GetWindow() { return (*Get()._Window); }
 
 	private:
 		static Application* _Instance;

@@ -1,7 +1,7 @@
 
 workspace "Uranus"
-
-	architecture "x64"	
+	architecture "x64"
+	startproject "Sandbox"
 
 	configurations {
 		"Debug",
@@ -22,6 +22,7 @@ include "Uranus/vendor/imgui"
 
 project "Uranus"
 	location "Uranus"
+	staticruntime "off"
 	kind "SharedLib"
 	language "C++"
 
@@ -52,39 +53,39 @@ project "Uranus"
 
 	filter "system:windows"
 		cppdialect "C++17"
-		staticruntime "On"
 		systemversion "latest"
 
 		defines {
 			"UR_PLATFORM_WINDOWS",
 			"UR_BUILD_DLL",
-			"UR_ENABLE_ASSERT",
+			"UR_DEBUG",
 			"GLFW_INCLUDE_NONE"
 		}
 
 		postbuildcommands {
-			("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Sandbox")
+			("{COPY} %{cfg.buildtarget.relpath} \"../bin/" .. outputdir .. "/Sandbox/\"")
 		}
 
 	filter "configurations:Debug"
 		defines "UR_DEBUG"
-		buildoptions "/MDd"
+		runtime "Debug"
 		symbols "On"
 
 	filter "configurations:Release"
 		defines "UR_RELAESE"
-		buildoptions "/MD"
+		runtime "Release"
 		optimize "On"
 
 	filter "configurations:Dist"
 		defines "UR_DIST"
-		buildoptions "/MD"
+		runtime "Release"
 		optimize "On"
 		
 
 project "Sandbox"
 	location "Sandbox"
 	kind "ConsoleApp"
+	staticruntime "off"
 	language "C++"
 
 	targetdir ("%{wks.location}/bin/" .. outputdir .. "/%{prj.name}")
@@ -106,7 +107,6 @@ project "Sandbox"
 
 	filter "system:windows"
 		cppdialect "C++17"
-		staticruntime "On"
 		systemversion "latest"
 
 		defines {
@@ -115,16 +115,16 @@ project "Sandbox"
 
 	filter "configurations:Debug"
 		defines "UR_DEBUG"
-		buildoptions "/MDd"
+		runtime "Debug"
 		symbols "On"
 
 	filter "configurations:Release"
 		defines "UR_RELAESE"
-		buildoptions "/MD"
+		runtime "Release"
 		optimize "On"
 
 	filter "configurations:Dist"
 		defines "UR_DIST"
-		buildoptions "/MD"
+		runtime "Release"
 		optimize "On"
 		
