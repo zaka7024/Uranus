@@ -1,6 +1,8 @@
 
 #include <Uranus.h>
 
+#include "imgui/imgui.h"
+
 class ExampleLayer : public Uranus::Layer {
 
 public:
@@ -21,6 +23,11 @@ public:
 		}
 	}
 
+	void OnImGuiRender() {
+		ImGui::Begin("Window");
+		ImGui::Text("Hello, World");
+		ImGui::End();
+	}
 };
 
 class Sandbox : public Uranus::Application {

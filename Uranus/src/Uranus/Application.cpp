@@ -64,7 +64,8 @@ namespace Uranus {
 				layer->OnUpdate();
 
 			_ImGuiLayer->Begin();
-			_ImGuiLayer->OnImGuiRender();
+			for (Layer* layer : _LayerStack)
+				layer->OnImGuiRender();
 			_ImGuiLayer->End();
 
 			_Window->OnUpdate();

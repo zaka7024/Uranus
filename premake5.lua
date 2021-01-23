@@ -23,8 +23,9 @@ include "Uranus/vendor/imgui"
 
 project "Uranus"
 	location "Uranus"
-	staticruntime "off"
-	kind "SharedLib"
+	staticruntime "on"
+	kind "StaticLib"
+	cppdialect "C++17"
 	language "C++"
 
 	targetdir ("%{wks.location}/bin/" .. outputdir .. "/%{prj.name}")
@@ -56,40 +57,35 @@ project "Uranus"
 	}
 
 	filter "system:windows"
-		cppdialect "C++17"
 		systemversion "latest"
 
 		defines {
 			"UR_PLATFORM_WINDOWS",
-			"UR_BUILD_DLL",
 			"UR_DEBUG",
 			"GLFW_INCLUDE_NONE"
-		}
-
-		postbuildcommands {
-			("{COPY} %{cfg.buildtarget.relpath} \"../bin/" .. outputdir .. "/Sandbox/\"")
 		}
 
 	filter "configurations:Debug"
 		defines "UR_DEBUG"
 		runtime "Debug"
-		symbols "On"
+		symbols "on"
 
 	filter "configurations:Release"
 		defines "UR_RELAESE"
 		runtime "Release"
-		optimize "On"
+		optimize "on"
 
 	filter "configurations:Dist"
 		defines "UR_DIST"
 		runtime "Release"
-		optimize "On"
+		optimize "on"
 		
 
 project "Sandbox"
 	location "Sandbox"
 	kind "ConsoleApp"
-	staticruntime "off"
+	staticruntime "on"
+	cppdialect "C++17"
 	language "C++"
 
 	targetdir ("%{wks.location}/bin/" .. outputdir .. "/%{prj.name}")
@@ -103,6 +99,7 @@ project "Sandbox"
 	includedirs {
 		"Uranus/src",
 		"Uranus/vendor/spdlog/include",
+		"Uranus/vendor",
 		"%{IncludeDir.glm}"
 	}
 
@@ -111,7 +108,6 @@ project "Sandbox"
 	}
 
 	filter "system:windows"
-		cppdialect "C++17"
 		systemversion "latest"
 
 		defines {
