@@ -34,7 +34,9 @@ namespace Uranus {
 		ImGuiLayer* _ImGuiLayer;
 		bool _IsRunning = true;
 		LayerStack _LayerStack;
+		unsigned int _VertexArray, _VertexBuffer, _IndexBuffer;
 
+	private:
 		bool OnWindowClose(WindowCloseEvent& e);
 	};
 

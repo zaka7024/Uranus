@@ -6,7 +6,8 @@
 #include "Uranus/Events/KeyEvent.h"
 #include "Uranus/Events/MouseEvent.h"
 
-#include "glad/glad.h"
+#include "Platform/OpenGL/OpenGLContext.h"
+
 
 namespace Uranus {
 
@@ -21,8 +22,7 @@ namespace Uranus {
 	}
 
 	void WindowsWindow::OnUpdate() {
-		glfwPollEvents();
-		glfwSwapBuffers(_Window);
+		_Context->SwapBuffers();
 	}
 
 	void WindowsWindow::Init(const WindowProps& windowProps) {
@@ -40,12 +40,9 @@ namespace Uranus {
 
 		_Window = glfwCreateWindow(_WindowData.Width, _WindowData.Height, _WindowData.Title.c_str(), nullptr, nullptr);
 		
-		// Craete OpenGL Context
-		glfwMakeContextCurrent(_Window);
-		
-		// Initilize Glad
-		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
-		UR_CORE_ASSERT(status, "Could not initilize Glad!")
+		// In the future we can switch to diffrenet graphics API
+		_Context = new OpenGLContext(_Window);
+		_Context->Init();
 
 		glfwSetWindowUserPointer(_Window, &_WindowData);
 		SetVSync(true);

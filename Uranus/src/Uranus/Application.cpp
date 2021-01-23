@@ -20,6 +20,31 @@ namespace Uranus {
 
 		_ImGuiLayer = new ImGuiLayer();
 		PushOverlay(_ImGuiLayer);
+
+		// OpenGL Code
+		glGenVertexArrays(1, &_VertexArray);
+		glBindVertexArray(_VertexArray);
+
+		glGenBuffers(1, &_VertexBuffer);
+		glBindBuffer(GL_ARRAY_BUFFER, _VertexBuffer);
+
+		float vertieces[3 * 3] = {
+			-0.5f, -0.5f, 0.0f,
+			 0.5f, -0.5f, 0.0f,
+			 0.0f, 0.5f, 0.0f
+		};
+
+		glBufferData(GL_ARRAY_BUFFER, sizeof(vertieces), vertieces, GL_STATIC_DRAW);
+
+		glEnableVertexAttribArray(0);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
+
+		glGenBuffers(1, &_IndexBuffer);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _IndexBuffer);
+
+		unsigned int indeices[3] = { 0, 1, 2 };
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indeices), indeices, GL_STATIC_DRAW);
+
 	}
 
 	void Application::OnEvent(Event& e) {
@@ -57,8 +82,11 @@ namespace Uranus {
 	{
 		while (_IsRunning) {
 
-			glClearColor(1, 0, 1, 1);
+			glClearColor(0.2f, 0.2f, 0.2f, 1);
 			glClear(GL_COLOR_BUFFER_BIT);
+
+			glBindVertexArray(_VertexArray);
+			glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr);
 
 			for (Layer* layer : _LayerStack)
 				layer->OnUpdate();

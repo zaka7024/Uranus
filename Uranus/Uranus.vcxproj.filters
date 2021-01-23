@@ -1347,6 +1347,8 @@
     <ClInclude Include="vendor\spdlog\tests\catch.hpp">
       <Filter>vendor\spdlog\tests</Filter>
     </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h" />
+    <ClInclude Include="src\Uranus\Renderer\GraphicsContext.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Platform\Windows\WindowsInput.cpp">
@@ -1376,5 +1378,7 @@
     <ClCompile Include="src\urpch.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp" />
+    <ClCompile Include="src\Uranus\Renderer\GraphicsContext.cpp" />
   </ItemGroup>
 </Project>

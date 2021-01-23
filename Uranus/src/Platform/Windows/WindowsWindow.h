@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Uranus/Window.h"
+#include "Uranus/Renderer/GraphicsContext.h"
 #include "GLFW/glfw3.h"
 
 namespace Uranus {
@@ -34,9 +35,9 @@ namespace Uranus {
 			EventCallbackFun EventCallback;
 		};
 
-		WindowData _WindowData;
+		GraphicsContext* _Context;
 
+		WindowData _WindowData;
 		GLFWwindow* _Window;
 	};
-
 }
