@@ -9,7 +9,9 @@
 #include "Window.h"
 
 #include "LayerStack.h"
+
 #include "Uranus/ImGui/ImGuiLayer.h"
+#include "Uranus/Renderer/Shader.h"
 
 namespace Uranus {
 
@@ -34,7 +36,9 @@ namespace Uranus {
 		ImGuiLayer* _ImGuiLayer;
 		bool _IsRunning = true;
 		LayerStack _LayerStack;
-		unsigned int _VertexArray, _VertexBuffer, _IndexBuffer;
+
+		uint32_t _VertexArray, _VertexBuffer, _IndexBuffer;
+		std::unique_ptr<Shader> shader;
 
 	private:
 		bool OnWindowClose(WindowCloseEvent& e);

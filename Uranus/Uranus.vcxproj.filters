@@ -1349,6 +1349,7 @@
     </ClInclude>
     <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h" />
     <ClInclude Include="src\Uranus\Renderer\GraphicsContext.h" />
+    <ClInclude Include="src\Uranus\Renderer\Shader.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Platform\Windows\WindowsInput.cpp">
@@ -1380,5 +1381,6 @@
     </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp" />
     <ClCompile Include="src\Uranus\Renderer\GraphicsContext.cpp" />
+    <ClCompile Include="src\Uranus\Renderer\Shader.cpp" />
   </ItemGroup>
 </Project>

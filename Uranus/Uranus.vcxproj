@@ -150,6 +150,7 @@
     <ClInclude Include="src\Uranus\LayerStack.h" />
     <ClInclude Include="src\Uranus\Log.h" />
     <ClInclude Include="src\Uranus\MouseButtonCodes.h" />
+    <ClInclude Include="src\Uranus\Renderer\Shader.h" />
     <ClInclude Include="src\Uranus\Window.h" />
     <ClInclude Include="src\urpch.h" />
     <ClInclude Include="vendor\glm\glm\common.hpp" />
@@ -578,6 +579,7 @@
     <ClCompile Include="src\Uranus\Layer.cpp" />
     <ClCompile Include="src\Uranus\LayerStack.cpp" />
     <ClCompile Include="src\Uranus\Log.cpp" />
+    <ClCompile Include="src\Uranus\Renderer\Shader.cpp" />
     <ClCompile Include="src\urpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
