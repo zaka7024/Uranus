@@ -62,7 +62,8 @@ namespace Uranus {
 
 	class BufferLayout {
 	public:
-		BufferLayout() {}
+		BufferLayout()
+		:_Stride(0) {}
 
 		BufferLayout(const std::initializer_list<BufferElement>& elements)
 		:_BufferElements(elements) {

@@ -10,26 +10,6 @@ namespace Uranus {
 
 	Application* Application::_Instance;
 
-	static GLenum ShaderDateTypeToOpenGLBaseType(ShaderDataType type) {
-		switch (type)
-		{
-			case Uranus::ShaderDataType::Float:		return GL_FLOAT;
-			case Uranus::ShaderDataType::Float2:	return GL_FLOAT;
-			case Uranus::ShaderDataType::Float3:	return GL_FLOAT;
-			case Uranus::ShaderDataType::Float4:	return GL_FLOAT;
-			case Uranus::ShaderDataType::Mat3:		return GL_FLOAT;
-			case Uranus::ShaderDataType::Mat4:		return GL_FLOAT;
-			case Uranus::ShaderDataType::Int:		return GL_INT;
-			case Uranus::ShaderDataType::Int2:		return GL_INT;
-			case Uranus::ShaderDataType::Int3:		return GL_INT;
-			case Uranus::ShaderDataType::Int4:		return GL_INT;
-			case Uranus::ShaderDataType::Bool:		return GL_BOOL;
-		}
-
-		UR_CORE_ASSERT(false, "Unknown Shader Data Type!")
-			return 0;
-	}
-
 	Application::Application()
 	{
 		UR_CORE_ASSERT(!_Instance, "There exsist already Application instance")
@@ -42,16 +22,17 @@ namespace Uranus {
 		PushOverlay(_ImGuiLayer);
 
 		// OpenGL Code
-		glGenVertexArrays(1, &_VertexArray);
-		glBindVertexArray(_VertexArray);
+		_VertexArray.reset(VertexArray::Create());
+		_VertexArray->Bind();
 
-
-		float vertices[3 * 7] = {
-			-0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
-			 0.5f, -0.5f, 0.0f, 0.8f, 0.0f, 0.0f, 1.0f,
-			 0.0f,  0.5f, 0.0f, 0.3f, 0.0f, 0.3f, 1.0f
+		float vertices[4 * 7] = {
+			-0.8f, -0.8f, 0.0f, 0.6f, 0.2f, 0.3f, 1.0f,
+			 0.8f, -0.8f, 0.0f, 0.5f, 0.2f, 0.3f, 1.0f,
+			-0.8f, 0.8f, 0.0f, 0.2f, 0.2f, 0.5f, 1.0f,
+			 0.8f, 0.8f, 0.0f, 0.3f, 0.2f, 0.6f, 1.0f
 		};
 
+		std::shared_ptr<VertexBuffer> vertexBuffer;
 		vertexBuffer.reset(VertexBuffer::Create(vertices, sizeof(vertices)));
 
 		BufferLayout bufferLayout = {
@@ -60,19 +41,14 @@ namespace Uranus {
 		};
 
 		vertexBuffer->SetLayout(bufferLayout);
-
-		uint8_t index = 0;
-		for (auto& element : bufferLayout.GetElements()) {
-			glEnableVertexAttribArray(index);
-			glVertexAttribPointer(index, GetShderTypeComponentCount(element.Type),
-				ShaderDateTypeToOpenGLBaseType(element.Type) , element.Normlized,
-				bufferLayout.GetStride(), (const void*)element.Offset);
-			index++;
-		}
+		_VertexArray->AddVertexBuffer(vertexBuffer);
 
 
-		uint32_t indeices[3] = { 0, 1, 2 };
+		uint32_t indeices[6] = { 0, 1, 2, 1, 3, 2};
+		std::shared_ptr<IndexBuffer> indexBuffer;
 		indexBuffer.reset(IndexBuffer::Create(indeices, sizeof(indeices) / sizeof(uint32_t)));
+
+		_VertexArray->SetIndexBuffer(indexBuffer);
 
 		std::string vertexShader = R"(
 			#version 330 core
@@ -106,7 +82,7 @@ namespace Uranus {
 
 		)";
 
-		shader = std::make_unique<Shader>(vertexShader, fragmentShader);
+		_Shader = std::make_shared<Shader>(vertexShader, fragmentShader);
 
 	}
 
@@ -148,10 +124,11 @@ namespace Uranus {
 			glClearColor(0.2f, 0.2f, 0.2f, 1);
 			glClear(GL_COLOR_BUFFER_BIT);
 
-			shader->Bind();
+			_Shader->Bind();
 
-			glBindVertexArray(_VertexArray);
-			glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr);
+			_VertexArray->Bind();
+
+			glDrawElements(GL_TRIANGLES, _VertexArray->GetIndexBuffer().GetCount(), GL_UNSIGNED_INT, nullptr);
 
 			for (Layer* layer : _LayerStack)
 				layer->OnUpdate();

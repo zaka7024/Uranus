@@ -13,6 +13,7 @@
 #include "Uranus/ImGui/ImGuiLayer.h"
 #include "Uranus/Renderer/Shader.h"
 #include "Uranus/Renderer/Buffer.h"
+#include "Uranus/Renderer/VertexArray.h"
 
 namespace Uranus {
 
@@ -38,10 +39,8 @@ namespace Uranus {
 		bool _IsRunning = true;
 		LayerStack _LayerStack;
 
-		uint32_t _VertexArray;
-		std::unique_ptr<VertexBuffer> vertexBuffer;
-		std::unique_ptr<IndexBuffer> indexBuffer;
-		std::unique_ptr<Shader> shader;
+		std::shared_ptr<VertexArray> _VertexArray;
+		std::shared_ptr<Shader> _Shader;
 
 	private:
 		bool OnWindowClose(WindowCloseEvent& e);
