@@ -1350,6 +1350,9 @@
     <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h" />
     <ClInclude Include="src\Uranus\Renderer\GraphicsContext.h" />
     <ClInclude Include="src\Uranus\Renderer\Shader.h" />
+    <ClInclude Include="src\Uranus\Renderer\Buffer.h" />
+    <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h" />
+    <ClInclude Include="src\Uranus\Renderer\Renderer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Platform\Windows\WindowsInput.cpp">
@@ -1382,5 +1385,8 @@
     <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp" />
     <ClCompile Include="src\Uranus\Renderer\GraphicsContext.cpp" />
     <ClCompile Include="src\Uranus\Renderer\Shader.cpp" />
+    <ClCompile Include="src\Uranus\Renderer\Buffer.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp" />
+    <ClCompile Include="src\Uranus\Renderer\Renderer.cpp" />
   </ItemGroup>
 </Project>

@@ -12,6 +12,7 @@
 
 #include "Uranus/ImGui/ImGuiLayer.h"
 #include "Uranus/Renderer/Shader.h"
+#include "Uranus/Renderer/Buffer.h"
 
 namespace Uranus {
 
@@ -37,7 +38,9 @@ namespace Uranus {
 		bool _IsRunning = true;
 		LayerStack _LayerStack;
 
-		uint32_t _VertexArray, _VertexBuffer, _IndexBuffer;
+		uint32_t _VertexArray;
+		std::unique_ptr<VertexBuffer> vertexBuffer;
+		std::unique_ptr<IndexBuffer> indexBuffer;
 		std::unique_ptr<Shader> shader;
 
 	private:

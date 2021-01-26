@@ -25,25 +25,20 @@ namespace Uranus {
 		glGenVertexArrays(1, &_VertexArray);
 		glBindVertexArray(_VertexArray);
 
-		glGenBuffers(1, &_VertexBuffer);
-		glBindBuffer(GL_ARRAY_BUFFER, _VertexBuffer);
 
-		float vertieces[3 * 3] = {
+		float vertices[3 * 3] = {
 			-0.5f, -0.5f, 0.0f,
 			 0.5f, -0.5f, 0.0f,
 			 0.0f, 0.5f, 0.0f
 		};
 
-		glBufferData(GL_ARRAY_BUFFER, sizeof(vertieces), vertieces, GL_STATIC_DRAW);
+		vertexBuffer.reset(VertexBuffer::Create(vertices, sizeof(vertices)));
 
 		glEnableVertexAttribArray(0);
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
 
-		glGenBuffers(1, &_IndexBuffer);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _IndexBuffer);
-
-		unsigned int indeices[3] = { 0, 1, 2 };
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indeices), indeices, GL_STATIC_DRAW);
+		uint32_t indeices[3] = { 0, 1, 2 };
+		indexBuffer.reset(IndexBuffer::Create(indeices, sizeof(indeices) / sizeof(uint32_t)));
 
 		std::string vertexShader = R"(
 			#version 330 core
