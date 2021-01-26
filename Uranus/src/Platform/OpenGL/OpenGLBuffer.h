@@ -11,9 +11,12 @@ namespace Uranus {
 
 		virtual void Bind() const override;
 		virtual void Unbind() const override;
+		virtual void SetLayout(BufferLayout& layout) override;
+		virtual BufferLayout& GetLayout() { return _BufferLayout; };
 
 	private:
 		uint32_t _RendererId;
+		BufferLayout _BufferLayout;
 	};
 
 	class OpenGLIndexBuffer : public IndexBuffer {

@@ -5,8 +5,8 @@
 
 namespace Uranus {
 
-	////////////////////////////////////////
-	// VertexBuffer //////////////////////////
+	//////////////////////////////////////////
+	// VertexBuffer /////////////////////////
 	////////////////////////////////////////
 
 	OpenGLVertexBuffer::OpenGLVertexBuffer(float* vertices, uint32_t size) {
@@ -28,6 +28,11 @@ namespace Uranus {
 	void OpenGLVertexBuffer::Unbind() const
 	{
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
+	}
+
+	void OpenGLVertexBuffer::SetLayout(BufferLayout& layout)
+	{
+		_BufferLayout = layout;
 	}
 
 	//////////////////////////////////////////
