@@ -4,7 +4,7 @@
 #include "Uranus/Application.h"
 #include "Uranus/Input.h"
 
-#include <glad/glad.h>
+#include "Renderer/Renderer.h"
 
 namespace Uranus {
 
@@ -26,10 +26,10 @@ namespace Uranus {
 		_VertexArray->Bind();
 
 		float vertices[4 * 7] = {
-			-0.8f, -0.8f, 0.0f, 0.6f, 0.2f, 0.3f, 1.0f,
-			 0.8f, -0.8f, 0.0f, 0.5f, 0.2f, 0.3f, 1.0f,
-			-0.8f, 0.8f, 0.0f, 0.2f, 0.2f, 0.5f, 1.0f,
-			 0.8f, 0.8f, 0.0f, 0.3f, 0.2f, 0.6f, 1.0f
+			-0.8f, -0.8f,  0.0f,  0.9f, 0.2f, 0.3f, 1.0f,
+			 0.8f, -0.8f,  0.0f,  0.9f, 0.2f, 0.3f, 1.0f,
+			-0.8f,  0.8f,  0.0f,  0.2f, 0.3f, 0.9f, 1.0f,
+			 0.8f,  0.8f,  0.0f,  0.2f, 0.3f, 0.9f, 1.0f
 		};
 
 		std::shared_ptr<VertexBuffer> vertexBuffer;
@@ -121,14 +121,15 @@ namespace Uranus {
 	{
 		while (_IsRunning) {
 
-			glClearColor(0.2f, 0.2f, 0.2f, 1);
-			glClear(GL_COLOR_BUFFER_BIT);
+			Renderer::BeginScene();
+
+			RenderCommand::SetClearColor({ 0.2f, 0.2f, 0.2f, 1});
+			RenderCommand::Clear();
 
 			_Shader->Bind();
+			Renderer::Submit(_VertexArray);
 
-			_VertexArray->Bind();
-
-			glDrawElements(GL_TRIANGLES, _VertexArray->GetIndexBuffer().GetCount(), GL_UNSIGNED_INT, nullptr);
+			Renderer::EndScene();
 
 			for (Layer* layer : _LayerStack)
 				layer->OnUpdate();

@@ -9,9 +9,9 @@ namespace Uranus {
 	VertexBuffer* VertexBuffer::Create(float* vertices, uint32_t size) {
 		switch (Renderer::GetApi())
 		{
-		case RendererAPI::None:
+		case RendererAPI::API::None:
 				UR_CORE_ASSERT(false, "RendererAPI::None in currently not supported!"); return nullptr;
-		case RendererAPI::OpenGL: return new OpenGLVertexBuffer(vertices, size);
+		case RendererAPI::API::OpenGL: return new OpenGLVertexBuffer(vertices, size);
 		}
 
 		UR_CORE_ASSERT(false, "Unkown Renderer API!");
@@ -21,9 +21,9 @@ namespace Uranus {
 	IndexBuffer* IndexBuffer::Create(uint32_t* indecies, uint32_t size) {
 		switch (Renderer::GetApi())
 		{
-		case RendererAPI::None:
+		case RendererAPI::API::None:
 			UR_CORE_ASSERT(false, "RendererAPI::None in currently not supported!"); return nullptr;
-		case RendererAPI::OpenGL:
+		case RendererAPI::API::OpenGL:
 			return new OpenGLIndexBuffer(indecies, size);
 		}
 

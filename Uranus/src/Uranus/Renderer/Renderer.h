@@ -1,20 +1,18 @@
 #pragma once
 
-namespace Uranus {
+#include "RendererAPI.h"
+#include "RenderCommand.h"
 
-	enum class RendererAPI {
-		None = 0,
-		OpenGL = 1
-	};
+namespace Uranus {
 
 	class Renderer {
 
 	public:
-		Renderer();
+		static void BeginScene();
+		static void EndScene();
+		static void Submit(const std::shared_ptr<VertexArray>& vertexArray);
 
 	public:
-		inline static RendererAPI GetApi() { return _RendererAPI; }
-	private:
-		static RendererAPI _RendererAPI;
+		inline static RendererAPI::API GetApi() { return RendererAPI::GetApi(); }
 	};
 }

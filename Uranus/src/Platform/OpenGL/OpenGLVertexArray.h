@@ -13,7 +13,7 @@ namespace Uranus {
 		virtual void Bind() const override;
 		virtual void Unbind() const override;
 		virtual void AddVertexBuffer(const std::shared_ptr<VertexBuffer>& vertexBuffer) override;
-		virtual void SetIndexBuffer(const std::shared_ptr<IndexBuffer>& indexBuffer) override;
+		virtual void SetIndexBuffer(const std::shared_ptr<IndexBuffer> &indexBuffer) override;
 
 		inline virtual IndexBuffer& GetIndexBuffer() const override { return *_IndexBuffer; };
 
