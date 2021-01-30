@@ -1,7 +1,8 @@
 #pragma once
 
 #include "Uranus/Core.h"
-#include "Events/Event.h"
+#include "Uranus/Events/Event.h"
+#include "Uranus/Core/Timestep.h"
 
 namespace Uranus {
 
@@ -13,7 +14,7 @@ namespace Uranus {
 
 		virtual void OnAttach() {}
 		virtual void OnDetach() {}
-		virtual void OnUpdate() {}
+		virtual void OnUpdate(Timestep ts) {}
 		virtual void OnEvent(Event& event) {}
 		virtual void OnImGuiRender() {};
 

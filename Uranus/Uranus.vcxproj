@@ -135,6 +135,7 @@
     <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLRendererAPI.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLVertexArray.h" />
+    <ClInclude Include="src\Uranus\Core\Timestep.h" />
     <ClInclude Include="src\Uranus\Renderer\OrthographicCamera.h" />
     <ClInclude Include="src\Uranus\Renderer\PerspectiveCamera.h" />
     <ClInclude Include="src\Uranus\Renderer\RenderCommand.h" />

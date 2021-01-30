@@ -11,11 +11,6 @@
 #include "LayerStack.h"
 
 #include "Uranus/ImGui/ImGuiLayer.h"
-#include "Uranus/Renderer/Shader.h"
-#include "Uranus/Renderer/Buffer.h"
-#include "Uranus/Renderer/VertexArray.h"
-
-#include "Uranus/Renderer/OrthographicCamera.h"
 
 namespace Uranus {
 
@@ -40,16 +35,10 @@ namespace Uranus {
 		ImGuiLayer* _ImGuiLayer;
 		bool _IsRunning = true;
 		LayerStack _LayerStack;
-
-		std::shared_ptr<VertexArray> _VertexArray;
-		std::shared_ptr<Shader> _Shader;
-
-		std::shared_ptr<VertexArray> _VertexArrayBlue;
-		std::shared_ptr<Shader> _ShaderBlue;
+		float _LastFrameTime = 0.0f;
 
 	private:
 		bool OnWindowClose(WindowCloseEvent& e);
-		OrthographicCamera _Camera;
 	};
 
 	Application* CreateApplication();
