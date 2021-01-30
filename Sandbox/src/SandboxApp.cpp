@@ -3,11 +3,14 @@
 
 #include "imgui/imgui.h"
 
+#include <glm/gtc/matrix_transform.hpp>
+
 class ExampleLayer : public Uranus::Layer {
 
 public:
 	ExampleLayer()
-		:Layer("ExampleLayer"), _CameraPosition(0.0f), _Camera(-1.6f, 1.6f, -0.9f, 0.9f) {
+		:Layer("ExampleLayer"), _CameraPosition(0.0f), _Camera(-1.6f, 1.6f, -0.9f, 0.9f),
+		_Transfrom(0.0f) {
 		// OpenGL Code
 		_VertexArray.reset(Uranus::VertexArray::Create());
 		_VertexArray->Bind();
@@ -44,6 +47,7 @@ public:
 			layout(location = 1) in vec4 a_Color;
 
 			uniform mat4 u_ViewProjection;
+			uniform mat4 u_Transfrom;
 
 			out vec3 v_Position;
 			out vec4 v_Color;
@@ -51,7 +55,7 @@ public:
 			void main() {
 				v_Color = a_Color;
 				v_Position = a_Position;
-				gl_Position = u_ViewProjection * vec4(a_Position, 1.0) + vec4(-0.6, 0, 0,0);
+				gl_Position = u_ViewProjection * u_Transfrom * vec4(a_Position, 1.0);
 			}
 
 		)";
@@ -114,7 +118,7 @@ public:
 			out vec4 v_Color;
 
 			void main() {
-				v_Color = a_Color;
+				v_Color = a_Color * vec4(a_Position, 1.0);
 				v_Position = a_Position;
 				gl_Position = u_ViewProjection * vec4(a_Position, 1.0);
 			}
@@ -141,8 +145,6 @@ public:
 
 	void OnUpdate(Uranus::Timestep ts) {
 
-		UR_TRACE("Deleta Time: {0}s, {1}ms", ts.GetSeconds(), ts.GetMilliSeconds());
-
 		Uranus::Renderer::BeginScene(_Camera);
 
 		Uranus::RenderCommand::SetClearColor({ 0.2f, 0.2f, 0.2f, 1 });
@@ -158,11 +160,25 @@ public:
 		if (Uranus::Input::IsKeyPressed(UR_KEY_A))
 			_CameraPosition.x -= _CameraMoveSpeed * ts;
 
+		if (Uranus::Input::IsKeyPressed(UR_KEY_UP))
+			_Transfrom.y += _CameraMoveSpeed * ts;
+		if (Uranus::Input::IsKeyPressed(UR_KEY_DOWN))
+			_Transfrom.y -= _CameraMoveSpeed * ts;
+
+		if (Uranus::Input::IsKeyPressed(UR_KEY_RIGHT))
+			_Transfrom.x += _CameraMoveSpeed * ts;
+		if (Uranus::Input::IsKeyPressed(UR_KEY_LEFT))
+			_Transfrom.x -= _CameraMoveSpeed * ts;
+
 		_Camera.SetPoisition(_CameraPosition);
 		_Camera.SetRotation(0.0f);
 
-		Uranus::Renderer::Submit(_ShaderBlue, _VertexArrayBlue);
-		Uranus::Renderer::Submit(_Shader, _VertexArray);
+
+		glm::mat4 transformer(1.0f);
+		transformer = glm::translate(transformer, _Transfrom);
+
+		Uranus::Renderer::Submit(_Shader, _VertexArrayBlue, transformer);
+		Uranus::Renderer::Submit(_ShaderBlue, _VertexArray);
 
 		Uranus::Renderer::EndScene();
 	}
@@ -188,6 +204,8 @@ private:
 
 	glm::vec3 _CameraPosition;
 	float _CameraMoveSpeed = 3.0f;
+
+	glm::vec3 _Transfrom;
 };
 
 class Sandbox : public Uranus::Application {

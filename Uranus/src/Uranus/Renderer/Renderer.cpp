@@ -14,9 +14,10 @@ namespace Uranus {
 
 	}
 
-	void Renderer::Submit(const std::shared_ptr<Shader>& shader, const std::shared_ptr<VertexArray>& vertexArray) {
+	void Renderer::Submit(const std::shared_ptr<Shader>& shader, const std::shared_ptr<VertexArray>& vertexArray, const glm::mat4& transform) {
 		shader->Bind();
 		shader->UploadUniformMat4(_SceneData->ViewProjectionMatrix, "u_ViewProjection");
+		shader->UploadUniformMat4(transform, "u_Transfrom");
 
 		vertexArray->Bind();
 		RenderCommand::DrawIndexed(vertexArray);
