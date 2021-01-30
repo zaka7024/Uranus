@@ -15,6 +15,8 @@
 #include "Uranus/Renderer/Buffer.h"
 #include "Uranus/Renderer/VertexArray.h"
 
+#include "Uranus/Renderer/OrthographicCamera.h"
+
 namespace Uranus {
 
 	class URANUS_API Application
@@ -42,8 +44,12 @@ namespace Uranus {
 		std::shared_ptr<VertexArray> _VertexArray;
 		std::shared_ptr<Shader> _Shader;
 
+		std::shared_ptr<VertexArray> _VertexArrayBlue;
+		std::shared_ptr<Shader> _ShaderBlue;
+
 	private:
 		bool OnWindowClose(WindowCloseEvent& e);
+		OrthographicCamera _Camera;
 	};
 
 	Application* CreateApplication();

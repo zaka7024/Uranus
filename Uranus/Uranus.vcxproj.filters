@@ -1358,6 +1358,8 @@
     <ClInclude Include="src\Uranus\Renderer\RendererAPI.h" />
     <ClInclude Include="src\Uranus\Renderer\RenderCommand.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLRendererAPI.h" />
+    <ClInclude Include="src\Uranus\Renderer\OrthographicCamera.h" />
+    <ClInclude Include="src\Uranus\Renderer\PerspectiveCamera.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Platform\Windows\WindowsInput.cpp">
@@ -1398,5 +1400,7 @@
     <ClCompile Include="src\Uranus\Renderer\RendererAPI.cpp" />
     <ClCompile Include="src\Uranus\Renderer\RenderCommand.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLRendererAPI.cpp" />
+    <ClCompile Include="src\Uranus\Renderer\OrthographicCamera.cpp" />
+    <ClCompile Include="src\Uranus\Renderer\PerspectiveCamera.cpp" />
   </ItemGroup>
 </Project>

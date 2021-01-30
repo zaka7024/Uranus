@@ -135,6 +135,8 @@
     <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLRendererAPI.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLVertexArray.h" />
+    <ClInclude Include="src\Uranus\Renderer\OrthographicCamera.h" />
+    <ClInclude Include="src\Uranus\Renderer\PerspectiveCamera.h" />
     <ClInclude Include="src\Uranus\Renderer\RenderCommand.h" />
     <ClInclude Include="src\Uranus\Renderer\RendererAPI.h" />
     <ClInclude Include="src\Uranus\Renderer\VertexArray.h" />
@@ -591,6 +593,8 @@
     <ClCompile Include="src\Uranus\Layer.cpp" />
     <ClCompile Include="src\Uranus\LayerStack.cpp" />
     <ClCompile Include="src\Uranus\Log.cpp" />
+    <ClCompile Include="src\Uranus\Renderer\OrthographicCamera.cpp" />
+    <ClCompile Include="src\Uranus\Renderer\PerspectiveCamera.cpp" />
     <ClCompile Include="src\Uranus\Renderer\RenderCommand.cpp" />
     <ClCompile Include="src\Uranus\Renderer\Renderer.cpp" />
     <ClCompile Include="src\Uranus\Renderer\RendererAPI.cpp" />

@@ -2,6 +2,7 @@
 #include "Shader.h"
 
 #include <glad/glad.h>
+#include <glm/gtc/type_ptr.hpp>
 
 namespace Uranus {
 	Shader::Shader(std::string& vertexSrc, std::string& fragmentSrc)
@@ -122,5 +123,11 @@ namespace Uranus {
 	void Shader::Unbind()
 	{
 		glUseProgram(0);
+	}
+
+	void Shader::UploadUniformMat4(const glm::mat4& mat4, const std::string& name)
+	{
+		GLuint location = glGetUniformLocation(_RendererId, name.c_str());
+		glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(mat4));
 	}
 }
