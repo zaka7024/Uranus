@@ -1,6 +1,7 @@
 #include "urpch.h"
 
 #include "Renderer.h"
+#include "Platform/OpenGL/OpenGLShader.h"
 
 namespace Uranus {
 
@@ -16,8 +17,8 @@ namespace Uranus {
 
 	void Renderer::Submit(const std::shared_ptr<Shader>& shader, const std::shared_ptr<VertexArray>& vertexArray, const glm::mat4& transform) {
 		shader->Bind();
-		shader->UploadUniformMat4(_SceneData->ViewProjectionMatrix, "u_ViewProjection");
-		shader->UploadUniformMat4(transform, "u_Transfrom");
+		std::dynamic_pointer_cast<Uranus::OpenGLShader>(shader)->UploadUniformMat4(_SceneData->ViewProjectionMatrix, "u_ViewProjection");
+		std::dynamic_pointer_cast<Uranus::OpenGLShader>(shader)->UploadUniformMat4(transform, "u_Transfrom");
 
 		vertexArray->Bind();
 		RenderCommand::DrawIndexed(vertexArray);

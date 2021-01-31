@@ -1,9 +1,11 @@
 
 #include <Uranus.h>
+#include <Platform/OpenGL/OpenGLShader.h>
 
 #include "imgui/imgui.h"
 
 #include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 class ExampleLayer : public Uranus::Layer {
 
@@ -48,12 +50,13 @@ public:
 
 			uniform mat4 u_ViewProjection;
 			uniform mat4 u_Transfrom;
+			uniform vec4 u_Color;
 
 			out vec3 v_Position;
 			out vec4 v_Color;
 
 			void main() {
-				v_Color = a_Color;
+				v_Color = u_Color;
 				v_Position = a_Position;
 				gl_Position = u_ViewProjection * u_Transfrom * vec4(a_Position, 1.0);
 			}
@@ -69,13 +72,12 @@ public:
 			in vec4 v_Color;
 
 			void main() {
-				color = vec4(v_Position + 0.5, 1);
 				color = v_Color;
 			}
 
 		)";
 
-		_Shader = std::make_shared<Uranus::Shader>(vertexShader, fragmentShader);
+		_Shader.reset(Uranus::Shader::Create(vertexShader, fragmentShader));
 
 		// Blue
 		_VertexArrayBlue.reset(Uranus::VertexArray::Create());
@@ -140,7 +142,7 @@ public:
 
 		)";
 
-		_ShaderBlue = std::make_shared<Uranus::Shader>(vertexShaderBlue, fragmentShaderBlue);
+		_ShaderBlue.reset(Uranus::Shader::Create(vertexShaderBlue, fragmentShaderBlue));
 	}
 
 	void OnUpdate(Uranus::Timestep ts) {
@@ -161,21 +163,35 @@ public:
 			_CameraPosition.x -= _CameraMoveSpeed * ts;
 
 		if (Uranus::Input::IsKeyPressed(UR_KEY_UP))
-			_Transfrom.y += _CameraMoveSpeed * ts;
+			_Transfrom.y += _SquareMoveSpeed * ts;
 		if (Uranus::Input::IsKeyPressed(UR_KEY_DOWN))
-			_Transfrom.y -= _CameraMoveSpeed * ts;
+			_Transfrom.y -= _SquareMoveSpeed * ts;
 
 		if (Uranus::Input::IsKeyPressed(UR_KEY_RIGHT))
-			_Transfrom.x += _CameraMoveSpeed * ts;
+			_Transfrom.x += _SquareMoveSpeed * ts;
 		if (Uranus::Input::IsKeyPressed(UR_KEY_LEFT))
-			_Transfrom.x -= _CameraMoveSpeed * ts;
+			_Transfrom.x -= _SquareMoveSpeed * ts;
+
+		if (Uranus::Input::IsKeyPressed(UR_KEY_J)) {
+			_Rotation += _SquareRotationSpeed * ts;
+		}
+
+		if (Uranus::Input::IsKeyPressed(UR_KEY_L)) {
+			_Rotation -= _SquareRotationSpeed * ts;
+		}
+
 
 		_Camera.SetPoisition(_CameraPosition);
 		_Camera.SetRotation(0.0f);
 
+		_Rotation += _SquareRotationSpeed * ts;
 
 		glm::mat4 transformer(1.0f);
 		transformer = glm::translate(transformer, _Transfrom);
+		transformer = glm::rotate(transformer, _Rotation, { 0, 0, 1 });
+
+		_Shader->Bind();
+		std::dynamic_pointer_cast<Uranus::OpenGLShader>(_Shader)->UploadUniformFloat4(_Color, "u_Color");
 
 		Uranus::Renderer::Submit(_Shader, _VertexArrayBlue, transformer);
 		Uranus::Renderer::Submit(_ShaderBlue, _VertexArray);
@@ -191,6 +207,11 @@ public:
 		ImGui::Begin("Window");
 		ImGui::Text("Hello, World");
 		ImGui::End();
+
+		ImGui::Begin("Color Picker");
+		ImGui::ColorEdit4("Color", glm::value_ptr(_Color));
+		ImGui::End();
+
 	}
 
 private:
@@ -204,8 +225,12 @@ private:
 
 	glm::vec3 _CameraPosition;
 	float _CameraMoveSpeed = 3.0f;
+	float _SquareMoveSpeed = 2.5f;
+	float _SquareRotationSpeed = 5.0f;
 
 	glm::vec3 _Transfrom;
+	glm::vec4 _Color = {1.0f, 1.0f, 1.0f, 1.0f};
+	float _Rotation = 0.0f;
 };
 
 class Sandbox : public Uranus::Application {

@@ -1,22 +1,19 @@
 #pragma once
 
 #include <string>
-#include <glm/glm.hpp>
 
 namespace Uranus {
 
 	class Shader {
 	public:
-		Shader(std::string& vertexSrc, std::string& fragmentSrc);
-		~Shader();
+		virtual ~Shader() = default;
 		 
-		void Bind();
-		void Unbind();
+		virtual void Bind() = 0;
+		virtual void Unbind() = 0;
 
 		inline uint32_t GetProgramId() { return _RendererId; }
 
-		void UploadUniformMat4(const glm::mat4& mat4, const std::string& name);
-
+		static Shader* Create(std::string& vertexSrc, std::string& fragmentSrc);
 	private:
 		uint32_t _RendererId;
 	};
