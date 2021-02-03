@@ -31,7 +31,7 @@ namespace Uranus {
 
 	private:
 		static Application* _Instance;
-		std::unique_ptr<Window> _Window;
+		Scope<Window> _Window;
 		ImGuiLayer* _ImGuiLayer;
 		bool _IsRunning = true;
 		LayerStack _LayerStack;

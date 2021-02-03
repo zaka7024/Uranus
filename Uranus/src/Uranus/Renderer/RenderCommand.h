@@ -8,7 +8,7 @@ namespace Uranus {
 	public:
 		static void SetClearColor(const glm::vec4& color) { _RendererAPI->SetClearColor(color); }
 		static void Clear() { _RendererAPI->Clear(); }
-		static void DrawIndexed(const std::shared_ptr<VertexArray>& vertexArray) {
+		static void DrawIndexed(const Uranus::Ref<VertexArray>& vertexArray) {
 			_RendererAPI->DrawIndexed(vertexArray);
 		}
 

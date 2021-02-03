@@ -17,19 +17,19 @@ public:
 		_VertexArray.reset(Uranus::VertexArray::Create());
 		_VertexArray->Bind();
 
-		float vertices[4 * 7] = {
-			-0.2f, -0.2f,  0.6f,  0.9f, 0.2f, 0.3f, 1.0f,
-			 0.2f, -0.2f,  0.6f,  0.9f, 0.2f, 0.3f, 1.0f,
-			-0.2f,  0.2f,  0.6f,  0.2f, 0.3f, 0.9f, 1.0f,
-			 0.2f,  0.2f,  0.6f,  0.2f, 0.3f, 0.9f, 1.0f
+		float vertices[4 * 5] = {
+			-0.6f, -0.6f,  0.6f, 0.0f, 0.0f,
+			 0.6f, -0.6f,  0.6f, 1.0f, 0.0f,
+			-0.6f,  0.6f,  0.6f, 0.0f, 1.0f,
+			 0.6f,  0.6f,  0.6f, 1.0f, 1.0f
 		};
 
-		std::shared_ptr<Uranus::VertexBuffer> vertexBuffer;
+		Uranus::Ref<Uranus::VertexBuffer> vertexBuffer;
 		vertexBuffer.reset(Uranus::VertexBuffer::Create(vertices, sizeof(vertices)));
 
 		Uranus::BufferLayout bufferLayout = {
 			{ Uranus::ShaderDataType::Float3, "a_Position"},
-			{ Uranus::ShaderDataType::Float4, "a_Color"}
+			{ Uranus::ShaderDataType::Float2, "a_TexCoord"}
 		};
 
 		vertexBuffer->SetLayout(bufferLayout);
@@ -37,7 +37,7 @@ public:
 
 
 		uint32_t indeices[6] = { 0, 1, 2, 1, 3, 2 };
-		std::shared_ptr<Uranus::IndexBuffer> indexBuffer;
+		Uranus::Ref<Uranus::IndexBuffer> indexBuffer;
 		indexBuffer.reset(Uranus::IndexBuffer::Create(indeices, sizeof(indeices) / sizeof(uint32_t)));
 
 		_VertexArray->SetIndexBuffer(indexBuffer);
@@ -46,18 +46,17 @@ public:
 			#version 330 core
 
 			layout(location = 0) in vec3 a_Position;
-			layout(location = 1) in vec4 a_Color;
+			layout(location = 1) in vec2 a_TexCoord;
 
 			uniform mat4 u_ViewProjection;
 			uniform mat4 u_Transfrom;
-			uniform vec4 u_Color;
 
 			out vec3 v_Position;
-			out vec4 v_Color;
+			out vec2 v_TexCoord;
 
 			void main() {
-				v_Color = u_Color;
 				v_Position = a_Position;
+				v_TexCoord = a_TexCoord;
 				gl_Position = u_ViewProjection * u_Transfrom * vec4(a_Position, 1.0);
 			}
 
@@ -68,11 +67,14 @@ public:
 
 			layout(location = 0) out vec4 color;
 
+			uniform vec4 u_Color;
+			uniform sampler2D u_Texture;
+		
+			in vec2 v_TexCoord;
 			in vec3 v_Position;
-			in vec4 v_Color;
 
 			void main() {
-				color = v_Color;
+				color = texture(u_Texture, v_TexCoord) * u_Color;
 			}
 
 		)";
@@ -90,7 +92,7 @@ public:
 			 0.2f,  0.2f,  0.6f,  0.2f, 0.3f, 0.9f, 1.0f
 		};
 
-		std::shared_ptr<Uranus::VertexBuffer> vertexBufferBlue;
+		Uranus::Ref<Uranus::VertexBuffer> vertexBufferBlue;
 		vertexBufferBlue.reset(Uranus::VertexBuffer::Create(verticesBlue, sizeof(verticesBlue)));
 
 		Uranus::BufferLayout bufferLayoutBlue = {
@@ -103,7 +105,7 @@ public:
 
 
 		uint32_t indeicesBlue[6] = { 0, 1, 2, 1, 3, 2 };
-		std::shared_ptr<Uranus::IndexBuffer> indexBufferBlue;
+		Uranus::Ref<Uranus::IndexBuffer> indexBufferBlue;
 		indexBufferBlue.reset(Uranus::IndexBuffer::Create(indeicesBlue, sizeof(indeicesBlue) / sizeof(uint32_t)));
 
 		_VertexArrayBlue->SetIndexBuffer(indexBufferBlue);
@@ -143,6 +145,8 @@ public:
 		)";
 
 		_ShaderBlue.reset(Uranus::Shader::Create(vertexShaderBlue, fragmentShaderBlue));
+
+		_Texture = Uranus::Texture2D::Create("assets/textures/clash.jpg");
 	}
 
 	void OnUpdate(Uranus::Timestep ts) {
@@ -191,10 +195,13 @@ public:
 		transformer = glm::rotate(transformer, _Rotation, { 0, 0, 1 });
 
 		_Shader->Bind();
+		_Texture->Bind();
+		
 		std::dynamic_pointer_cast<Uranus::OpenGLShader>(_Shader)->UploadUniformFloat4(_Color, "u_Color");
+		std::dynamic_pointer_cast<Uranus::OpenGLShader>(_Shader)->UploadUniformInt(0, "u_Texture");
 
-		Uranus::Renderer::Submit(_Shader, _VertexArrayBlue, transformer);
-		Uranus::Renderer::Submit(_ShaderBlue, _VertexArray);
+		Uranus::Renderer::Submit(_Shader, _VertexArray, transformer);
+		//Uranus::Renderer::Submit(_ShaderBlue, _VertexArrayBlue);
 
 		Uranus::Renderer::EndScene();
 	}
@@ -215,11 +222,12 @@ public:
 	}
 
 private:
-	std::shared_ptr<Uranus::VertexArray> _VertexArray;
-	std::shared_ptr<Uranus::Shader> _Shader;
+	Uranus::Ref<Uranus::VertexArray> _VertexArray;
+	Uranus::Ref<Uranus::Shader> _Shader;
 
-	std::shared_ptr<Uranus::VertexArray> _VertexArrayBlue;
-	std::shared_ptr<Uranus::Shader> _ShaderBlue;
+	Uranus::Ref<Uranus::VertexArray> _VertexArrayBlue;
+	Uranus::Ref<Uranus::Shader> _ShaderBlue;
+	Uranus::Ref<Uranus::Texture2D> _Texture;
 
 	Uranus::OrthographicCamera _Camera;
 

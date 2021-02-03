@@ -15,7 +15,7 @@ namespace Uranus {
 
 	}
 
-	void Renderer::Submit(const std::shared_ptr<Shader>& shader, const std::shared_ptr<VertexArray>& vertexArray, const glm::mat4& transform) {
+	void Renderer::Submit(const Uranus::Ref<Shader>& shader, const Uranus::Ref<VertexArray>& vertexArray, const glm::mat4& transform) {
 		shader->Bind();
 		std::dynamic_pointer_cast<Uranus::OpenGLShader>(shader)->UploadUniformMat4(_SceneData->ViewProjectionMatrix, "u_ViewProjection");
 		std::dynamic_pointer_cast<Uranus::OpenGLShader>(shader)->UploadUniformMat4(transform, "u_Transfrom");

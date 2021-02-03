@@ -16,6 +16,7 @@ IncludeDir["GLFW"] = "Uranus/vendor/GLFW/include"
 IncludeDir["Glad"] = "Uranus/vendor/glad/include"
 IncludeDir["ImGui"] = "Uranus/vendor/imgui"
 IncludeDir["glm"] = "Uranus/vendor/glm"
+IncludeDir["stb_image"] = "Uranus/vendor/stb_image"
 
 include "Uranus/vendor/GLFW"
 include "Uranus/vendor/Glad"
@@ -38,7 +39,9 @@ project "Uranus"
 		"%{prj.name}/src/**.h",
 		"%{prj.name}/src/**.cpp",
 		"%{prj.name}/vendor/**.hpp",
-		"%{prj.name}/vendor/**.inl"
+		"%{prj.name}/vendor/**.inl",
+		"%{prj.name}/vendor/stb_image/**.h",
+		"%{prj.name}/vendor/stb_image/**.cpp"
 	}
 
 	includedirs {
@@ -47,7 +50,8 @@ project "Uranus"
 		"%{IncludeDir.GLFW}",
 		"%{IncludeDir.Glad}",
 		"%{IncludeDir.ImGui}",
-		"%{IncludeDir.glm}"
+		"%{IncludeDir.glm}",
+		"%{IncludeDir.stb_image}"
 	}
 
 	links {

@@ -11,8 +11,8 @@ namespace Uranus {
 
 		virtual void Bind() const = 0;
 		virtual void Unbind() const = 0;
-		virtual void AddVertexBuffer(const std::shared_ptr<VertexBuffer>& vertexBuffer) = 0;
-		virtual void SetIndexBuffer(const std::shared_ptr<IndexBuffer> &indexBuffer) = 0;
+		virtual void AddVertexBuffer(const Uranus::Ref<VertexBuffer>& vertexBuffer) = 0;
+		virtual void SetIndexBuffer(const Uranus::Ref<IndexBuffer> &indexBuffer) = 0;
 
 		inline virtual IndexBuffer& GetIndexBuffer() const = 0;
 

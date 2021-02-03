@@ -7,17 +7,26 @@
     <Filter Include="src\Platform">
       <UniqueIdentifier>{21CA02E5-0D2D-9289-B6B2-CA3FA2F45D0C}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Platform\OpenGL">
+      <UniqueIdentifier>{35A49437-A105-7245-2A73-B8F796D3A804}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Platform\Windows">
       <UniqueIdentifier>{5B054582-4794-CE4B-F0B2-E246DC20DFF1}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\Uranus">
       <UniqueIdentifier>{1A59CA33-0611-0C81-6F18-E5DC5BEFA671}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Uranus\Core">
+      <UniqueIdentifier>{B23D49FD-1EC9-B6C1-27DA-39B693E412C2}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Uranus\Events">
       <UniqueIdentifier>{BE83B179-2A9A-AF0F-7311-3B31DF668097}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\Uranus\ImGui">
       <UniqueIdentifier>{C4B9DBA6-B0B2-FAF8-D9E4-DF7DC53CDA04}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Uranus\Renderer">
+      <UniqueIdentifier>{007A1CA3-6CDB-F9B0-F548-406361A93070}</UniqueIdentifier>
     </Filter>
     <Filter Include="vendor">
       <UniqueIdentifier>{B3738122-9F15-ACF8-88D0-BF4C74113349}</UniqueIdentifier>
@@ -46,8 +55,29 @@
     <Filter Include="vendor\spdlog\tests">
       <UniqueIdentifier>{ADA32A34-1905-0842-A272-4EF40ED33E01}</UniqueIdentifier>
     </Filter>
+    <Filter Include="vendor\stb_image">
+      <UniqueIdentifier>{0DA0BA59-F998-D9AB-22CB-BE300E23B9B7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLRendererAPI.h">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLShader.h">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLTexture2D.h">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLVertexArray.h">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClInclude>
     <ClInclude Include="src\Platform\Windows\WindowsInput.h">
       <Filter>src\Platform\Windows</Filter>
     </ClInclude>
@@ -62,6 +92,9 @@
     </ClInclude>
     <ClInclude Include="src\Uranus\Core.h">
       <Filter>src\Uranus</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Uranus\Core\Timestep.h">
+      <Filter>src\Uranus\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Uranus\EntryPoint.h">
       <Filter>src\Uranus</Filter>
@@ -98,6 +131,36 @@
     </ClInclude>
     <ClInclude Include="src\Uranus\MouseButtonCodes.h">
       <Filter>src\Uranus</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Uranus\Renderer\Buffer.h">
+      <Filter>src\Uranus\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Uranus\Renderer\GraphicsContext.h">
+      <Filter>src\Uranus\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Uranus\Renderer\OrthographicCamera.h">
+      <Filter>src\Uranus\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Uranus\Renderer\PerspectiveCamera.h">
+      <Filter>src\Uranus\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Uranus\Renderer\RenderCommand.h">
+      <Filter>src\Uranus\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Uranus\Renderer\Renderer.h">
+      <Filter>src\Uranus\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Uranus\Renderer\RendererAPI.h">
+      <Filter>src\Uranus\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Uranus\Renderer\Shader.h">
+      <Filter>src\Uranus\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Uranus\Renderer\Texture.h">
+      <Filter>src\Uranus\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Uranus\Renderer\VertexArray.h">
+      <Filter>src\Uranus\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Uranus\Window.h">
       <Filter>src\Uranus</Filter>
@@ -1347,23 +1410,29 @@
     <ClInclude Include="vendor\spdlog\tests\catch.hpp">
       <Filter>vendor\spdlog\tests</Filter>
     </ClInclude>
-    <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h" />
-    <ClInclude Include="src\Uranus\Renderer\GraphicsContext.h" />
-    <ClInclude Include="src\Uranus\Renderer\Shader.h" />
-    <ClInclude Include="src\Uranus\Renderer\Buffer.h" />
-    <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h" />
-    <ClInclude Include="src\Uranus\Renderer\Renderer.h" />
-    <ClInclude Include="src\Uranus\Renderer\VertexArray.h" />
-    <ClInclude Include="src\Platform\OpenGL\OpenGLVertexArray.h" />
-    <ClInclude Include="src\Uranus\Renderer\RendererAPI.h" />
-    <ClInclude Include="src\Uranus\Renderer\RenderCommand.h" />
-    <ClInclude Include="src\Platform\OpenGL\OpenGLRendererAPI.h" />
-    <ClInclude Include="src\Uranus\Renderer\OrthographicCamera.h" />
-    <ClInclude Include="src\Uranus\Renderer\PerspectiveCamera.h" />
-    <ClInclude Include="src\Uranus\Core\Timestep.h" />
-    <ClInclude Include="src\Platform\OpenGL\OpenGLShader.h" />
+    <ClInclude Include="vendor\stb_image\stb_image.h">
+      <Filter>vendor\stb_image</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLRendererAPI.cpp">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLShader.cpp">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLTexture2D.cpp">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLVertexArray.cpp">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClCompile>
     <ClCompile Include="src\Platform\Windows\WindowsInput.cpp">
       <Filter>src\Platform\Windows</Filter>
     </ClCompile>
@@ -1388,22 +1457,41 @@
     <ClCompile Include="src\Uranus\Log.cpp">
       <Filter>src\Uranus</Filter>
     </ClCompile>
+    <ClCompile Include="src\Uranus\Renderer\Buffer.cpp">
+      <Filter>src\Uranus\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Uranus\Renderer\GraphicsContext.cpp">
+      <Filter>src\Uranus\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Uranus\Renderer\OrthographicCamera.cpp">
+      <Filter>src\Uranus\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Uranus\Renderer\PerspectiveCamera.cpp">
+      <Filter>src\Uranus\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Uranus\Renderer\RenderCommand.cpp">
+      <Filter>src\Uranus\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Uranus\Renderer\Renderer.cpp">
+      <Filter>src\Uranus\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Uranus\Renderer\RendererAPI.cpp">
+      <Filter>src\Uranus\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Uranus\Renderer\Shader.cpp">
+      <Filter>src\Uranus\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Uranus\Renderer\Texture.cpp">
+      <Filter>src\Uranus\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Uranus\Renderer\VertexBuffer.cpp">
+      <Filter>src\Uranus\Renderer</Filter>
+    </ClCompile>
     <ClCompile Include="src\urpch.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp" />
-    <ClCompile Include="src\Uranus\Renderer\GraphicsContext.cpp" />
-    <ClCompile Include="src\Uranus\Renderer\Shader.cpp" />
-    <ClCompile Include="src\Uranus\Renderer\Buffer.cpp" />
-    <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp" />
-    <ClCompile Include="src\Uranus\Renderer\Renderer.cpp" />
-    <ClCompile Include="src\Uranus\Renderer\VertexBuffer.cpp" />
-    <ClCompile Include="src\Platform\OpenGL\OpenGLVertexArray.cpp" />
-    <ClCompile Include="src\Uranus\Renderer\RendererAPI.cpp" />
-    <ClCompile Include="src\Uranus\Renderer\RenderCommand.cpp" />
-    <ClCompile Include="src\Platform\OpenGL\OpenGLRendererAPI.cpp" />
-    <ClCompile Include="src\Uranus\Renderer\OrthographicCamera.cpp" />
-    <ClCompile Include="src\Uranus\Renderer\PerspectiveCamera.cpp" />
-    <ClCompile Include="src\Platform\OpenGL\OpenGLShader.cpp" />
+    <ClCompile Include="vendor\stb_image\stb_image.cpp">
+      <Filter>vendor\stb_image</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

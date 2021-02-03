@@ -1,4 +1,5 @@
 #pragma once
+#include <memory>
 
 #ifdef UR_PLATFORM_WINDOWS
 	#ifdef UR_DYNAMIC_LINK
@@ -33,3 +34,12 @@
 #define BIT(x) 1 << x
 
 #define UR_BIND_EVENT_FUN(x) std::bind(&x, this, std::placeholders::_1)
+
+namespace Uranus {
+
+	template<typename T>
+	using Scope = std::unique_ptr<T>;
+
+	template<typename T>
+	using Ref = std::shared_ptr<T>;
+}
