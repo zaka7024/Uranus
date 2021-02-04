@@ -22,6 +22,7 @@ namespace Uranus {
 		_Window = std::unique_ptr<Window>(Window::Create());
 		_Window->SetEventCallback(UR_BIND_EVENT_FUN(Application::OnEvent));
 
+		Renderer::Init();
 
 		_ImGuiLayer = new ImGuiLayer();
 		PushOverlay(_ImGuiLayer);

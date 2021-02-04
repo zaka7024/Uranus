@@ -6,6 +6,7 @@ namespace Uranus {
 
 	class RenderCommand {
 	public:
+		static void Init() { _RendererAPI->Init(); }
 		static void SetClearColor(const glm::vec4& color) { _RendererAPI->SetClearColor(color); }
 		static void Clear() { _RendererAPI->Clear(); }
 		static void DrawIndexed(const Uranus::Ref<VertexArray>& vertexArray) {

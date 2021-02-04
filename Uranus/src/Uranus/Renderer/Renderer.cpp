@@ -7,6 +7,11 @@ namespace Uranus {
 
 	std::unique_ptr<Renderer::SceneData> Renderer::_SceneData = std::make_unique<SceneData>();
 
+	void Renderer::Init()
+	{
+		RenderCommand::Init();
+	}
+
 	void Renderer::BeginScene(OrthographicCamera& camera) {
 		_SceneData->ViewProjectionMatrix = camera.GetViewProjectionMatrix();
 	}

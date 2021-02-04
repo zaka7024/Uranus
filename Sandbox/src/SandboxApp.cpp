@@ -188,7 +188,7 @@ public:
 		_Camera.SetPoisition(_CameraPosition);
 		_Camera.SetRotation(0.0f);
 
-		_Rotation += _SquareRotationSpeed * ts;
+		//_Rotation += _SquareRotationSpeed * ts;
 
 		glm::mat4 transformer(1.0f);
 		transformer = glm::translate(transformer, _Transfrom);
