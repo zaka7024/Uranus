@@ -32,6 +32,7 @@ namespace Uranus {
 
 		EventDispatcher eventDispatcher(e);
 		eventDispatcher.Dispatch<WindowCloseEvent>(UR_BIND_EVENT_FUN(Application::OnWindowClose));
+		eventDispatcher.Dispatch<WindowResizeEvent>(UR_BIND_EVENT_FUN(Application::OnWindowResize));
 
 		// UR_CORE_TRACE("{0}", e);
 
@@ -68,8 +69,10 @@ namespace Uranus {
 			Timestep ts = time - _LastFrameTime;
 			_LastFrameTime = time;
 
-			for (Layer* layer : _LayerStack)
-				layer->OnUpdate(ts);
+			if (!_Minimzed) {
+				for (Layer* layer : _LayerStack)
+					layer->OnUpdate(ts);
+			}
 
 			_ImGuiLayer->Begin();
 			for (Layer* layer : _LayerStack)
@@ -83,5 +86,17 @@ namespace Uranus {
 	bool Application::OnWindowClose(WindowCloseEvent& e) {
 		_IsRunning = false;
 		return true;
+	}
+
+	bool Application::OnWindowResize(WindowResizeEvent& e) {
+		if (e.GetWidth() == 0 || e.GetHeight() == 0) {
+			_Minimzed = true;
+			return false;
+		}
+
+		_Minimzed = false;
+		Renderer::OnWindowResize(e.GetWidth(), e.GetHeight());
+
+		return false;
 	}
 }

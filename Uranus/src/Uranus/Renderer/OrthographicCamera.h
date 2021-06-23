@@ -18,6 +18,8 @@ namespace Uranus {
 			_Rotation = rotation; RecalculateViewMatrix();
 		}
 
+		void SetProjection(float left, float right, float bottom, float top);
+
 		inline float GetRotation() { return _Rotation; }
 
 		const glm::mat4& GetViewMatrix() { return _ViewMatrix; }

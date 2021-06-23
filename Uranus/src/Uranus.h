@@ -23,6 +23,7 @@
 
 #include "Uranus/Renderer/RenderCommand.h"
 #include "Uranus/Renderer/OrthographicCamera.h"
+#include "Uranus/OrthographicCameraController.h"
 #include "Uranus/Renderer/PerspectiveCamera.h"
 
 #include "Uranus/EntryPoint.h"

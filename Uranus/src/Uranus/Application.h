@@ -34,11 +34,13 @@ namespace Uranus {
 		Scope<Window> _Window;
 		ImGuiLayer* _ImGuiLayer;
 		bool _IsRunning = true;
+		bool _Minimzed = false;
 		LayerStack _LayerStack;
 		float _LastFrameTime = 0.0f;
 
 	private:
 		bool OnWindowClose(WindowCloseEvent& e);
+		bool OnWindowResize(WindowResizeEvent& e);
 	};
 
 	Application* CreateApplication();

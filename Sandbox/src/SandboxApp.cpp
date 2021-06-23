@@ -11,17 +11,17 @@ class ExampleLayer : public Uranus::Layer {
 
 public:
 	ExampleLayer()
-		:Layer("ExampleLayer"), _CameraPosition(0.0f), _Camera(-1.6f, 1.6f, -0.9f, 0.9f),
+		:Layer("ExampleLayer"), _CameraPosition(0.0f), _CameraController(1280.0f/ 720.0f, true),
 		_Transfrom(0.0f) {
 		// OpenGL Code
 		_VertexArray.reset(Uranus::VertexArray::Create());
 		_VertexArray->Bind();
 
 		float vertices[4 * 5] = {
-			-0.6f, -0.6f,  0.6f, 0.0f, 0.0f,
-			 0.6f, -0.6f,  0.6f, 1.0f, 0.0f,
-			-0.6f,  0.6f,  0.6f, 0.0f, 1.0f,
-			 0.6f,  0.6f,  0.6f, 1.0f, 1.0f
+			-0.1f, -0.1f,  0.1f, 0.0f, 0.0f,
+			 0.1f, -0.1f,  0.1f, 1.0f, 0.0f,
+			-0.1f,  0.1f,  0.1f, 0.0f, 1.0f,
+			 0.1f,  0.1f,  0.1f, 1.0f, 1.0f
 		};
 
 		Uranus::Ref<Uranus::VertexBuffer> vertexBuffer;
@@ -79,19 +79,20 @@ public:
 
 		)";
 
-		_Shader.reset(Uranus::Shader::Create(vertexShader, fragmentShader));
+		_Shader = Uranus::Shader::Create("", vertexShader, fragmentShader);
+
 
 		// Blue
 		_VertexArrayBlue.reset(Uranus::VertexArray::Create());
 		_VertexArrayBlue->Bind();
 
 		float verticesBlue[4 * 7] = {
-			-0.2f, -0.2f,  0.6f,  0.9f, 0.2f, 0.3f, 1.0f,
-			 0.2f, -0.2f,  0.6f,  0.9f, 0.2f, 0.3f, 1.0f,
-			-0.2f,  0.2f,  0.6f,  0.2f, 0.3f, 0.9f, 1.0f,
-			 0.2f,  0.2f,  0.6f,  0.2f, 0.3f, 0.9f, 1.0f
+			-0.2f, -0.2f,  0.6f,  0.007f, 0.27f, 0.9f, 1.0f,
+			 0.2f, -0.2f,  0.6f,  0.007f, 0.27f, 0.9f, 1.0f,
+			-0.2f,  0.2f,  0.6f,  0.007f, 0.27f, 0.9f, 1.0f,
+			 0.2f,  0.2f,  0.6f,  0.007f, 0.27f, 0.9f, 1.0f
 		};
-
+		 
 		Uranus::Ref<Uranus::VertexBuffer> vertexBufferBlue;
 		vertexBufferBlue.reset(Uranus::VertexBuffer::Create(verticesBlue, sizeof(verticesBlue)));
 
@@ -110,61 +111,20 @@ public:
 
 		_VertexArrayBlue->SetIndexBuffer(indexBufferBlue);
 
-		std::string vertexShaderBlue = R"(
-			#version 330 core
+		auto shaderBlue = _ShaderLibrary.Load("assets/shaders/shader.glsl");
 
-			layout(location = 0) in vec3 a_Position;
-			layout(location = 1) in vec4 a_Color;
-
-			uniform mat4 u_ViewProjection;
-
-			out vec3 v_Position;
-			out vec4 v_Color;
-
-			void main() {
-				v_Color = a_Color * vec4(a_Position, 1.0);
-				v_Position = a_Position;
-				gl_Position = u_ViewProjection * vec4(a_Position, 1.0);
-			}
-
-		)";
-
-		std::string fragmentShaderBlue = R"(
-			#version 330 core
-
-			layout(location = 0) out vec4 color;
-
-			in vec3 v_Position;
-			in vec4 v_Color;
-
-			void main() {
-				color = vec4(v_Position + 0.5, 1);
-				color = v_Color;
-			}
-
-		)";
-
-		_ShaderBlue.reset(Uranus::Shader::Create(vertexShaderBlue, fragmentShaderBlue));
-
-		_Texture = Uranus::Texture2D::Create("assets/textures/clash.jpg");
+		_Texture = Uranus::Texture2D::Create("assets/textures/moon.png");
 	}
 
 	void OnUpdate(Uranus::Timestep ts) {
 
-		Uranus::Renderer::BeginScene(_Camera);
+		_CameraController.OnUpdate(ts);
 
 		Uranus::RenderCommand::SetClearColor({ 0.2f, 0.2f, 0.2f, 1 });
 		Uranus::RenderCommand::Clear();
 
-		if (Uranus::Input::IsKeyPressed(UR_KEY_W))
-			_CameraPosition.y += _CameraMoveSpeed * ts;
-		if (Uranus::Input::IsKeyPressed(UR_KEY_S))
-			_CameraPosition.y -= _CameraMoveSpeed * ts;
+		Uranus::Renderer::BeginScene(_CameraController.GetCamera());
 
-		if (Uranus::Input::IsKeyPressed(UR_KEY_D))
-			_CameraPosition.x += _CameraMoveSpeed * ts;
-		if (Uranus::Input::IsKeyPressed(UR_KEY_A))
-			_CameraPosition.x -= _CameraMoveSpeed * ts;
 
 		if (Uranus::Input::IsKeyPressed(UR_KEY_UP))
 			_Transfrom.y += _SquareMoveSpeed * ts;
@@ -184,12 +144,6 @@ public:
 			_Rotation -= _SquareRotationSpeed * ts;
 		}
 
-
-		_Camera.SetPoisition(_CameraPosition);
-		_Camera.SetRotation(0.0f);
-
-		//_Rotation += _SquareRotationSpeed * ts;
-
 		glm::mat4 transformer(1.0f);
 		transformer = glm::translate(transformer, _Transfrom);
 		transformer = glm::rotate(transformer, _Rotation, { 0, 0, 1 });
@@ -200,14 +154,16 @@ public:
 		std::dynamic_pointer_cast<Uranus::OpenGLShader>(_Shader)->UploadUniformFloat4(_Color, "u_Color");
 		std::dynamic_pointer_cast<Uranus::OpenGLShader>(_Shader)->UploadUniformInt(0, "u_Texture");
 
+		auto shaderBlue = _ShaderLibrary.Get("shader");
+
+		Uranus::Renderer::Submit(shaderBlue, _VertexArrayBlue);
 		Uranus::Renderer::Submit(_Shader, _VertexArray, transformer);
-		//Uranus::Renderer::Submit(_ShaderBlue, _VertexArrayBlue);
 
 		Uranus::Renderer::EndScene();
 	}
 
 	void OnEvent(Uranus::Event& event) {
-		
+		_CameraController.OnEvent(event);
 	}
 
 	void OnImGuiRender() {
@@ -218,18 +174,17 @@ public:
 		ImGui::Begin("Color Picker");
 		ImGui::ColorEdit4("Color", glm::value_ptr(_Color));
 		ImGui::End();
-
 	}
 
 private:
 	Uranus::Ref<Uranus::VertexArray> _VertexArray;
-	Uranus::Ref<Uranus::Shader> _Shader;
 
 	Uranus::Ref<Uranus::VertexArray> _VertexArrayBlue;
-	Uranus::Ref<Uranus::Shader> _ShaderBlue;
+	Uranus::Ref<Uranus::Shader> _Shader;
 	Uranus::Ref<Uranus::Texture2D> _Texture;
+	Uranus::ShaderLibrary _ShaderLibrary;
 
-	Uranus::OrthographicCamera _Camera;
+	Uranus::OrthographicCameraController _CameraController;
 
 	glm::vec3 _CameraPosition;
 	float _CameraMoveSpeed = 3.0f;

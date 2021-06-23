@@ -5,11 +5,16 @@
 
 namespace Uranus {
 
-	std::unique_ptr<Renderer::SceneData> Renderer::_SceneData = std::make_unique<SceneData>();
+	Scope<Renderer::SceneData> Renderer::_SceneData = std::make_unique<SceneData>();
 
 	void Renderer::Init()
 	{
 		RenderCommand::Init();
+	}
+
+	void Renderer::OnWindowResize(std::uint32_t width, std::uint32_t height)
+	{
+		RenderCommand::SetViewPort(0, 0, width, height);
 	}
 
 	void Renderer::BeginScene(OrthographicCamera& camera) {

@@ -1,0 +1,12 @@
+[submodule "Uranus/vendor/spdlog"]
+	path = Uranus/vendor/spdlog
+	url = https://github.com/gabime/spdlog
+[submodule "Uranus/vendor/GLFW"]
+	path = Uranus/vendor/GLFW
+	url = https://github.com/TheCherno/glfw
+[submodule "Uranus/vendor/imgui"]
+	path = Uranus/vendor/imgui
+	url = https://github.com/TheCherno/imgui
+[submodule "Uranus/vendor/glm"]
+	path = Uranus/vendor/glm
+	url = https://github.com/g-truc/glm

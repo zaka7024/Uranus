@@ -22,7 +22,7 @@ namespace Uranus {
 
 		int width, height;
 		glfwGetWindowSize(_Window, &width, &height);
-		//glViewport(0, 0, 1280, 720);
+		glViewport(0, 0, 1280, 720);
 	}
 
 	void OpenGLContext::SwapBuffers()

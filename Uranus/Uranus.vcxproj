@@ -155,6 +155,7 @@
     <ClInclude Include="src\Uranus\LayerStack.h" />
     <ClInclude Include="src\Uranus\Log.h" />
     <ClInclude Include="src\Uranus\MouseButtonCodes.h" />
+    <ClInclude Include="src\Uranus\OrthographicCameraController.h" />
     <ClInclude Include="src\Uranus\Renderer\Buffer.h" />
     <ClInclude Include="src\Uranus\Renderer\GraphicsContext.h" />
     <ClInclude Include="src\Uranus\Renderer\OrthographicCamera.h" />
@@ -598,6 +599,7 @@
     <ClCompile Include="src\Uranus\Layer.cpp" />
     <ClCompile Include="src\Uranus\LayerStack.cpp" />
     <ClCompile Include="src\Uranus\Log.cpp" />
+    <ClCompile Include="src\Uranus\OrthographicCameraController.cpp" />
     <ClCompile Include="src\Uranus\Renderer\Buffer.cpp" />
     <ClCompile Include="src\Uranus\Renderer\GraphicsContext.cpp" />
     <ClCompile Include="src\Uranus\Renderer\OrthographicCamera.cpp" />

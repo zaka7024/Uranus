@@ -138,6 +138,12 @@
       <Project>{E37F6BD6-CF21-96AC-B8DC-A900A41D1DFD}</Project>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="I:\Assets\Kenney Game Assets 2 version 21\2D assets\Abstract Platformer (370 assets)\PNG\Players\Player Red\playerRed_stand.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="assets\shaders\shader.glsl" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
