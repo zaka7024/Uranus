@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Uranus/Core.h"
-#include "Uranus/Layer.h"
+#include "Uranus/Core/Core.h"
+#include "Uranus/Core/Layer.h"
 #include "Uranus/Events/MouseEvent.h"
 #include "Uranus/Events/KeyEvent.h"
 #include "Uranus/Events/ApplicationEvent.h"

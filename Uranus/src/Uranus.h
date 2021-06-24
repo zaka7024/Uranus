@@ -2,14 +2,14 @@
 
 // This headers for the client
 
-#include "Uranus/Application.h"
-#include "Uranus/Log.h"
-#include "Uranus/Layer.h"
+#include "Uranus/Core/Application.h"
+#include "Uranus/Core/Log.h"
+#include "Uranus/Core/Layer.h"
 #include "Uranus/Core/Timestep.h"
 
-#include "Uranus/Input.h"
-#include "Uranus/KeyCodes.h"
-#include "Uranus/MouseButtonCodes.h"
+#include "Uranus/Core/Input.h"
+#include "Uranus/Core/KeyCodes.h"
+#include "Uranus/Core/MouseButtonCodes.h"
 
 #include "Uranus/ImGui/ImGuiLayer.h"
 
@@ -26,4 +26,4 @@
 #include "Uranus/OrthographicCameraController.h"
 #include "Uranus/Renderer/PerspectiveCamera.h"
 
-#include "Uranus/EntryPoint.h"
+#include "Uranus/Core/EntryPoint.h"

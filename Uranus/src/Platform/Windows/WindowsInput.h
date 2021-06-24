@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Uranus/Input.h"
+#include "Uranus/Core/Input.h"
 
 namespace Uranus {
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Uranus/Core.h"
+#include "Uranus/Core/Core.h"
 
 #include <sstream>
 #include <string>

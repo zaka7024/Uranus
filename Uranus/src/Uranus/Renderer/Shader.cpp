@@ -2,7 +2,7 @@
 #include "Shader.h"
 #include "Renderer.h"
 #include "Platform/OpenGL/OpenGLShader.h"
-#include "Uranus/Core.h"
+#include "Uranus/Core/Core.h"
 
 #include <glad/glad.h>
 #include <glm/gtc/type_ptr.hpp>

@@ -1,7 +1,7 @@
 #include "urpch.h"
 #include "WindowsInput.h"
 
-#include "Uranus/Application.h"
+#include "Uranus/Core/Application.h"
 
 #include <GLFW/glfw3.h>
 

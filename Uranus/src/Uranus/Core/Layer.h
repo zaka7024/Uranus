@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Uranus/Core.h"
+#include "Uranus/Core/Core.h"
 #include "Uranus/Events/Event.h"
 #include "Uranus/Core/Timestep.h"
 

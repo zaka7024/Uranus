@@ -1,10 +1,10 @@
 
 #include "urpch.h"
 
-#include "Uranus/Application.h"
-#include "Uranus/Input.h"
-#include "Renderer/Renderer.h"
-#include "Uranus/KeyCodes.h"
+#include "Uranus/Core/Application.h"
+#include "Uranus/Core/Input.h"
+#include "Uranus/Renderer/Renderer.h"
+#include "Uranus/Core/KeyCodes.h"
 
 #include "Uranus/Core/Timestep.h"
 

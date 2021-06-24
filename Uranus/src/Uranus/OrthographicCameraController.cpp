@@ -1,7 +1,7 @@
 #include "urpch.h"
 #include "OrthographicCameraController.h"
-#include "Uranus/Input.h"
-#include "Uranus/KeyCodes.h"
+#include "Uranus/Core/Input.h"
+#include "Uranus/Core/KeyCodes.h"
 
 namespace Uranus{
 	OrthographicCameraController::OrthographicCameraController(float aspectRatio, bool rotation)
@@ -45,7 +45,7 @@ namespace Uranus{
 	bool OrthographicCameraController::OnMouseScrolled(MouseScrolledEvent& e)
 	{
 		_ZoomLevel -= e.GetOffsetY() * 0.15f;
-		_ZoomLevel = std::max(_ZoomLevel,0.25f);
+		_ZoomLevel = std::max(_ZoomLevel, 0.25f);
 		_Camera.SetProjection(-_AspectRatio * _ZoomLevel, _AspectRatio * _ZoomLevel, -_ZoomLevel, _ZoomLevel);
 		return false;
 	}

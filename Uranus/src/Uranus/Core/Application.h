@@ -2,8 +2,8 @@
 
 #include "urpch.h"
 
-#include "Uranus/Core.h"
-#include "Uranus/Log.h"
+#include "Uranus/Core/Core.h"
+#include "Uranus/Core/Log.h"
 #include "Uranus/Events/Event.h"
 #include "Uranus/Events/ApplicationEvent.h"
 #include "Window.h"

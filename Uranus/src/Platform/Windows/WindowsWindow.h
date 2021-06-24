@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Uranus/Window.h"
+#include "Uranus/Core/Window.h"
 #include "Uranus/Renderer/GraphicsContext.h"
 #include "GLFW/glfw3.h"
 

@@ -3,7 +3,7 @@
 #include "urpch.h"
 
 #include "Uranus/Events/Event.h"
-#include "Uranus/Core.h"
+#include "Uranus/Core/Core.h"
 
 namespace Uranus {
 

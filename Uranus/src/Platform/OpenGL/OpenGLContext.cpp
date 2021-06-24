@@ -1,7 +1,7 @@
 #include "urpch.h"
 
 #include "OpenGLContext.h"
-#include "Uranus/Core.h"
+#include "Uranus/Core/Core.h"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
