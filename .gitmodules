@@ -1,12 +1,16 @@
-[submodule "Uranus/vendor/spdlog"]
-	path = Uranus/vendor/spdlog
+[submodule "Hazel/vendor/spdlog"]
+	path = Hazel/vendor/spdlog
 	url = https://github.com/gabime/spdlog
-[submodule "Uranus/vendor/GLFW"]
-	path = Uranus/vendor/GLFW
+	branch = v1.x
+[submodule "Hazel/vendor/GLFW"]
+	path = Hazel/vendor/GLFW
 	url = https://github.com/TheCherno/glfw
-[submodule "Uranus/vendor/imgui"]
-	path = Uranus/vendor/imgui
+	branch = master
+[submodule "Hazel/vendor/imgui"]
+	path = Hazel/vendor/imgui
 	url = https://github.com/TheCherno/imgui
-[submodule "Uranus/vendor/glm"]
-	path = Uranus/vendor/glm
+	branch = docking
+[submodule "Hazel/vendor/glm"]
+	path = Hazel/vendor/glm
 	url = https://github.com/g-truc/glm
+	branch = master

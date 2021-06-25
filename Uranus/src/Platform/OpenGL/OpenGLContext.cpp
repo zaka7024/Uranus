@@ -20,6 +20,12 @@ namespace Uranus {
 		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
 		UR_CORE_ASSERT(status, "Could not initilize Glad!")
 
+
+		UR_CORE_INFO("OpenGL Info:");
+		UR_CORE_INFO("Vendor: {0}", glGetString(GL_VENDOR));
+		UR_CORE_INFO("Renderer: {0}", glGetString(GL_RENDERER));
+		UR_CORE_INFO("Version: {0}", glGetString(GL_VERSION));
+
 		int width, height;
 		glfwGetWindowSize(_Window, &width, &height);
 		glViewport(0, 0, 1280, 720);

@@ -6,12 +6,12 @@
 
 namespace Uranus {
 
-	VertexArray* VertexArray::Create() {
+	Ref<VertexArray> VertexArray::Create() {
 		switch (Renderer::GetApi())
 		{
 		case RendererAPI::API::None:
 			UR_CORE_ASSERT(false, "RendererAPI::None in currently not supported!"); return nullptr;
-		case RendererAPI::API::OpenGL: return new OpenGLVertexArray();
+		case RendererAPI::API::OpenGL: return std::make_shared<OpenGLVertexArray>();
 		}
 
 		UR_CORE_ASSERT(false, "Unkown Renderer API!");

@@ -1,6 +1,9 @@
 
 #include <Uranus.h>
+#include "Uranus/Core/EntryPoint.h"
 #include <Platform/OpenGL/OpenGLShader.h>
+
+#include "Sandbox2D.h"
 
 #include "imgui/imgui.h"
 
@@ -14,7 +17,7 @@ public:
 		:Layer("ExampleLayer"), _CameraPosition(0.0f), _CameraController(1280.0f/ 720.0f, true),
 		_Transfrom(0.0f) {
 		// OpenGL Code
-		_VertexArray.reset(Uranus::VertexArray::Create());
+		_VertexArray = Uranus::VertexArray::Create();
 		_VertexArray->Bind();
 
 		float vertices[4 * 5] = {
@@ -25,7 +28,7 @@ public:
 		};
 
 		Uranus::Ref<Uranus::VertexBuffer> vertexBuffer;
-		vertexBuffer.reset(Uranus::VertexBuffer::Create(vertices, sizeof(vertices)));
+		vertexBuffer = Uranus::VertexBuffer::Create(vertices, sizeof(vertices));
 
 		Uranus::BufferLayout bufferLayout = {
 			{ Uranus::ShaderDataType::Float3, "a_Position"},
@@ -38,7 +41,7 @@ public:
 
 		uint32_t indeices[6] = { 0, 1, 2, 1, 3, 2 };
 		Uranus::Ref<Uranus::IndexBuffer> indexBuffer;
-		indexBuffer.reset(Uranus::IndexBuffer::Create(indeices, sizeof(indeices) / sizeof(uint32_t)));
+		indexBuffer= Uranus::IndexBuffer::Create(indeices, sizeof(indeices) / sizeof(uint32_t));
 
 		_VertexArray->SetIndexBuffer(indexBuffer);
 
@@ -83,7 +86,7 @@ public:
 
 
 		// Blue
-		_VertexArrayBlue.reset(Uranus::VertexArray::Create());
+		_VertexArrayBlue = Uranus::VertexArray::Create();
 		_VertexArrayBlue->Bind();
 
 		float verticesBlue[4 * 7] = {
@@ -94,7 +97,7 @@ public:
 		};
 		 
 		Uranus::Ref<Uranus::VertexBuffer> vertexBufferBlue;
-		vertexBufferBlue.reset(Uranus::VertexBuffer::Create(verticesBlue, sizeof(verticesBlue)));
+		vertexBufferBlue = Uranus::VertexBuffer::Create(verticesBlue, sizeof(verticesBlue));
 
 		Uranus::BufferLayout bufferLayoutBlue = {
 			{ Uranus::ShaderDataType::Float3, "a_Position"},
@@ -107,7 +110,7 @@ public:
 
 		uint32_t indeicesBlue[6] = { 0, 1, 2, 1, 3, 2 };
 		Uranus::Ref<Uranus::IndexBuffer> indexBufferBlue;
-		indexBufferBlue.reset(Uranus::IndexBuffer::Create(indeicesBlue, sizeof(indeicesBlue) / sizeof(uint32_t)));
+		indexBufferBlue = (Uranus::IndexBuffer::Create(indeicesBlue, sizeof(indeicesBlue) / sizeof(uint32_t)));
 
 		_VertexArrayBlue->SetIndexBuffer(indexBufferBlue);
 
@@ -200,7 +203,8 @@ class Sandbox : public Uranus::Application {
 
 public:
 	Sandbox() {
-		PushLayer(new ExampleLayer());
+		PushLayer(new Sandbox2D());
+		//PushLayer(new ExampleLayer());
 		//PushOverlay(new Uranus::ImGuiLayer());
 	}
 

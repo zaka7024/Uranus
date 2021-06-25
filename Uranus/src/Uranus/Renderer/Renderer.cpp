@@ -1,6 +1,7 @@
 #include "urpch.h"
 
 #include "Renderer.h"
+#include "Renderer2D.h"
 #include "Platform/OpenGL/OpenGLShader.h"
 
 namespace Uranus {
@@ -10,6 +11,7 @@ namespace Uranus {
 	void Renderer::Init()
 	{
 		RenderCommand::Init();
+		Renderer2D::Init();
 	}
 
 	void Renderer::OnWindowResize(std::uint32_t width, std::uint32_t height)

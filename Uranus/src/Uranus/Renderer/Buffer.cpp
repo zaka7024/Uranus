@@ -6,25 +6,25 @@
 
 namespace Uranus {
 
-	VertexBuffer* VertexBuffer::Create(float* vertices, uint32_t size) {
+	Ref<VertexBuffer> VertexBuffer::Create(float* vertices, uint32_t size) {
 		switch (Renderer::GetApi())
 		{
 		case RendererAPI::API::None:
 				UR_CORE_ASSERT(false, "RendererAPI::None in currently not supported!"); return nullptr;
-		case RendererAPI::API::OpenGL: return new OpenGLVertexBuffer(vertices, size);
+		case RendererAPI::API::OpenGL: return std::make_shared<OpenGLVertexBuffer>(vertices, size);
 		}
 
 		UR_CORE_ASSERT(false, "Unkown Renderer API!");
 		return nullptr;
 	}
 
-	IndexBuffer* IndexBuffer::Create(uint32_t* indecies, uint32_t size) {
+	Ref<IndexBuffer> IndexBuffer::Create(uint32_t* indecies, uint32_t size) {
 		switch (Renderer::GetApi())
 		{
 		case RendererAPI::API::None:
 			UR_CORE_ASSERT(false, "RendererAPI::None in currently not supported!"); return nullptr;
 		case RendererAPI::API::OpenGL:
-			return new OpenGLIndexBuffer(indecies, size);
+			return std::make_shared<OpenGLIndexBuffer>(indecies, size);
 		}
 
 		UR_CORE_ASSERT(false, "Unkown Renderer API!");

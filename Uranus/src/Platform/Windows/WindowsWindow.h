@@ -10,6 +10,7 @@ namespace Uranus {
 	public:
 
 		WindowsWindow(const WindowProps& windowProps);
+		~WindowsWindow();
 
 		void OnUpdate() override;
 
@@ -35,7 +36,7 @@ namespace Uranus {
 			EventCallbackFun EventCallback;
 		};
 
-		GraphicsContext* _Context;
+		Scope<GraphicsContext> _Context;
 
 		WindowData _WindowData;
 		GLFWwindow* _Window;

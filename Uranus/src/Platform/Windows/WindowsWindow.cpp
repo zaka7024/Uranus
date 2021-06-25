@@ -21,6 +21,11 @@ namespace Uranus {
 		Init(windowProps);
 	}
 
+	WindowsWindow::~WindowsWindow()
+	{
+		delete _Window;
+	}
+
 	void WindowsWindow::OnUpdate() {
 		_Context->SwapBuffers();
 	}
@@ -41,7 +46,7 @@ namespace Uranus {
 		_Window = glfwCreateWindow(_WindowData.Width, _WindowData.Height, _WindowData.Title.c_str(), nullptr, nullptr);
 		
 		// In the future we can switch to diffrenet graphics API
-		_Context = new OpenGLContext(_Window);
+		_Context = std::make_unique<OpenGLContext>(_Window);
 		_Context->Init();
 
 		glfwSetWindowUserPointer(_Window, &_WindowData);

@@ -5,5 +5,5 @@
 
 namespace Uranus {
 
-	RendererAPI* RenderCommand::_RendererAPI = new OpenGLRendererAPI();
+	Scope<RendererAPI> RenderCommand::_RendererAPI = std::make_unique<OpenGLRendererAPI>();
 }

@@ -18,13 +18,13 @@
     <ClCompile Include="src\SandboxApp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Sandbox2D.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="I:\Assets\Kenney Game Assets 2 version 21\2D assets\Abstract Platformer (370 assets)\PNG\Players\Player Red\playerRed_stand.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="assets\shaders\shader.glsl" />
+    <ClInclude Include="src\Sandbox2D.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

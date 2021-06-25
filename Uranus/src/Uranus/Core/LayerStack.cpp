@@ -8,8 +8,10 @@ Uranus::LayerStack::LayerStack()
 
 Uranus::LayerStack::~LayerStack()
 {
-	for (Layer* layer : _Layers)
+	for (Layer* layer : _Layers) {
+		layer->OnDetach();
 		delete layer;
+	}
 }
 
 void Uranus::LayerStack::PushLayer(Layer* layer)

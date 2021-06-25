@@ -103,7 +103,7 @@ namespace Uranus {
 		virtual void SetLayout(BufferLayout& layout) = 0;
 		virtual BufferLayout& GetLayout() = 0;
 
-		static VertexBuffer* Create(float* vertices, uint32_t size);
+		static Ref<VertexBuffer> Create(float* vertices, uint32_t size);
 	};
 
 	class IndexBuffer {
@@ -116,6 +116,6 @@ namespace Uranus {
 
 		virtual uint32_t GetCount() const = 0;
 
-		static IndexBuffer* Create(uint32_t* indieces, uint32_t count);
+		static Ref<IndexBuffer> Create(uint32_t* indieces, uint32_t count);
 	};
 }

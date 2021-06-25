@@ -17,6 +17,6 @@ namespace Uranus {
 		}
 
 	private:
-		static RendererAPI* _RendererAPI;
+		static Scope<RendererAPI> _RendererAPI;
 	};
 }

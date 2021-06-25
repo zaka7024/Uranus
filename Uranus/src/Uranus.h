@@ -15,6 +15,7 @@
 
 // Renderer
 #include "Uranus/Renderer/Renderer.h"
+#include "Uranus/Renderer/Renderer2D.h"
 
 #include "Uranus/Renderer/VertexArray.h"
 #include "Uranus/Renderer/Buffer.h"
@@ -25,5 +26,3 @@
 #include "Uranus/Renderer/OrthographicCamera.h"
 #include "Uranus/OrthographicCameraController.h"
 #include "Uranus/Renderer/PerspectiveCamera.h"
-
-#include "Uranus/Core/EntryPoint.h"
