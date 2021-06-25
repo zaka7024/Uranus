@@ -56,6 +56,18 @@ namespace Uranus {
 		glUseProgram(0);
 	}
 
+	void OpenGLShader::SetMat4(const glm::mat4& value, const std::string& name) {
+		UploadUniformMat4(value, name);
+	}
+
+	void OpenGLShader::SetFloat4(const glm::vec4& value, const std::string& name) {
+		UploadUniformFloat4(value, name);
+	}
+
+	void OpenGLShader::SetFloat3(const glm::vec3& value, const std::string& name) {
+		UploadUniformFloat3(value, name);
+	}
+
 	const std::string& OpenGLShader::GetName() const
 	{
 		return _Name;

@@ -5,7 +5,7 @@
 #include "Shader.h"
 #include "RenderCommand.h"
 
-#include "Platform/OpenGL/OpenGLShader.h"
+#include <glm/gtc/matrix_transform.hpp>
 
 namespace Uranus {
 
@@ -57,9 +57,8 @@ namespace Uranus {
 
 	void Renderer2D::BeginScene(OrthographicCamera& camera)
 	{
-		std::dynamic_pointer_cast<OpenGLShader>(_RendererData->FlatColorShader)->Bind();
-		std::dynamic_pointer_cast<OpenGLShader>(_RendererData->FlatColorShader)->UploadUniformMat4(camera.GetViewProjectionMatrix(), "u_ViewProjection");
-		std::dynamic_pointer_cast<OpenGLShader>(_RendererData->FlatColorShader)->UploadUniformMat4(glm::mat4(1.0f), "u_Transform");
+		_RendererData->FlatColorShader->Bind();
+		_RendererData->FlatColorShader->SetMat4(camera.GetViewProjectionMatrix(), "u_ViewProjection");
 	}
 
 	void Renderer2D::EndScene()
@@ -67,17 +66,22 @@ namespace Uranus {
 
 	}
 
-	void Renderer2D::DrawQuad(const glm::vec2& position, const glm::vec2& size, const glm::vec4& color)
+	void Renderer2D::DrawQuad(const glm::vec2& position, const glm::vec2& size, float roation, const glm::vec4& color)
 	{
-		std::dynamic_pointer_cast<OpenGLShader>(_RendererData->FlatColorShader)->Bind();
-		std::dynamic_pointer_cast<OpenGLShader>(_RendererData->FlatColorShader)->UploadUniformFloat4(color, "u_Color");
+		DrawQuad({ position.x, position.y, 0.0f }, size, roation, color);
+	}
+
+	void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, float roation, const glm::vec4& color)
+	{
+		_RendererData->FlatColorShader->Bind();
+		_RendererData->FlatColorShader->SetFloat4(color, "u_Color");
+
+		auto transform = glm::translate(glm::mat4(1.0f), position)
+			* glm::rotate(glm::mat4(1.0f), glm::radians(roation), glm::vec3(0.0f, 0.0f, 1.0f))
+			* glm::scale(glm::mat4(1.0f), glm::vec3(size.x, size.y, 1.0f));
+		_RendererData->FlatColorShader->SetMat4(transform, "u_Transform");
 
 		_RendererData->QuadVertexArray->Bind();
 		RenderCommand::DrawIndexed(_RendererData->QuadVertexArray);
-	}
-
-	void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color)
-	{
-
 	}
 }
