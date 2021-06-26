@@ -22,7 +22,7 @@ namespace Uranus {
 		float _ZoomLevel = 1.0f;
 		glm::vec3 _CameraPosition = {0.0f, 0.0f, 0.0f};
 		float _CameraRotaion = 0.0f;
-		float _CameraMoveSpeed = 1.0f;
+		float _CameraMoveSpeed = 5.0f;
 		float _CameraRotaionSpeed = 180.0f;
 		bool _Rotation;
 		OrthographicCamera _Camera;

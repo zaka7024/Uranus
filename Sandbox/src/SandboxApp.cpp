@@ -16,7 +16,7 @@ public:
 	ExampleLayer()
 		:Layer("ExampleLayer"), _CameraPosition(0.0f), _CameraController(1280.0f/ 720.0f, true),
 		_Transfrom(0.0f) {
-		// OpenGL Code
+
 		_VertexArray = Uranus::VertexArray::Create();
 		_VertexArray->Bind();
 
