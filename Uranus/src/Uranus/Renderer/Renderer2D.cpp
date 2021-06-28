@@ -9,17 +9,17 @@
 
 namespace Uranus {
 
-	static struct Renderer2DState {
+	static struct Renderer2DStorage {
 		Ref<VertexArray> QuadVertexArray;
-		Ref<Shader> FlatColorShader;
 		Ref<Shader> TextureShader;
+		Ref<Texture2D> WhiteTexture;
 	};
 
-	Renderer2DState* _RendererData;
+	Renderer2DStorage* _RendererData;
 
 	void Renderer2D::Init()
 	{
-		_RendererData = new Renderer2DState();
+		_RendererData = new Renderer2DStorage();
 
 		_RendererData->QuadVertexArray = VertexArray::Create();
 		_RendererData->QuadVertexArray->Bind();
@@ -49,8 +49,13 @@ namespace Uranus {
 
 		_RendererData->QuadVertexArray->SetIndexBuffer(indexBufferBlue);
 
-		_RendererData->FlatColorShader = Shader::Create("assets/shaders/FlatColor.glsl");
 		_RendererData->TextureShader = Shader::Create("assets/shaders/Texture.glsl");
+		_RendererData->TextureShader->Bind();
+		_RendererData->TextureShader->SetInt(0, "u_Texture");
+
+		_RendererData->WhiteTexture = Texture2D::Create(1, 1);
+		uint32_t data = 0xffffffff;
+		_RendererData->WhiteTexture->SetData(&data, sizeof(data));
 	}
 
 	void Renderer2D::Shutdown()
@@ -60,9 +65,6 @@ namespace Uranus {
 
 	void Renderer2D::BeginScene(OrthographicCamera& camera)
 	{
-		_RendererData->FlatColorShader->Bind();
-		_RendererData->FlatColorShader->SetMat4(camera.GetViewProjectionMatrix(), "u_ViewProjection");
-
 		_RendererData->TextureShader->Bind();
 		_RendererData->TextureShader->SetMat4(camera.GetViewProjectionMatrix(), "u_ViewProjection");
 	}
@@ -79,13 +81,13 @@ namespace Uranus {
 
 	void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, float rotation, const glm::vec4& color)
 	{
-		_RendererData->FlatColorShader->Bind();
-		_RendererData->FlatColorShader->SetFloat4(color, "u_Color");
+		_RendererData->TextureShader->SetFloat4(color, "u_Color");
+		_RendererData->WhiteTexture->Bind();
 
 		auto transform = glm::translate(glm::mat4(1.0f), position)
 			* glm::rotate(glm::mat4(1.0f), glm::radians(rotation), glm::vec3(0.0f, 0.0f, 1.0f))
 			* glm::scale(glm::mat4(1.0f), glm::vec3(size.x, size.y, 1.0f));
-		_RendererData->FlatColorShader->SetMat4(transform, "u_Transform");
+		_RendererData->TextureShader->SetMat4(transform, "u_Transform");
 
 		_RendererData->QuadVertexArray->Bind();
 		RenderCommand::DrawIndexed(_RendererData->QuadVertexArray);
@@ -98,7 +100,7 @@ namespace Uranus {
 
 	void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, float rotation, const Ref<Texture2D>& texture)
 	{
-		_RendererData->TextureShader->Bind();
+		_RendererData->TextureShader->SetFloat4(glm::vec4(1.0f), "u_Color");
 		texture->Bind();
 		
 		auto transform = glm::translate(glm::mat4(1.0f), position)

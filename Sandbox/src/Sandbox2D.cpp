@@ -29,7 +29,7 @@ void Sandbox2D::OnUpdate(Uranus::Timestep ts)
 	Uranus::RenderCommand::Clear();
 	
 	Uranus::Renderer2D::BeginScene(_CameraController.GetCamera());
-	Uranus::Renderer2D::DrawQuad(glm::vec3(0.0f, 0.0f, 0.0f), { 10.0f, 10.0f }, 0, _CheckerboardTexture);
+	Uranus::Renderer2D::DrawQuad(glm::vec3(0.0f, 0.0f, -0.1f), { 10.0f, 10.0f }, 0, _CheckerboardTexture);
 	Uranus::Renderer2D::DrawQuad(_Position, _Scale, _Roation, _Color);
 	Uranus::Renderer::EndScene();
 }

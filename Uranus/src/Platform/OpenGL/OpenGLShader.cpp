@@ -68,6 +68,11 @@ namespace Uranus {
 		UploadUniformFloat3(value, name);
 	}
 
+	void OpenGLShader::SetInt(uint32_t value, const std::string& name)
+	{
+		UploadUniformInt(value, name);
+	}
+
 	const std::string& OpenGLShader::GetName() const
 	{
 		return _Name;
