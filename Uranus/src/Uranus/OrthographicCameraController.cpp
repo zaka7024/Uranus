@@ -8,11 +8,14 @@ namespace Uranus{
 		:_AspectRatio(aspectRatio), _Camera(-_AspectRatio * _ZoomLevel, _AspectRatio * _ZoomLevel,
 			-_ZoomLevel, _ZoomLevel), _Rotation(rotation)
 	{
+		UR_PROFILE_SCOPE("LayerStack OnImGuiRender");
 
 	}
 
 	void OrthographicCameraController::OnUpdate(Timestep ts)
 	{
+		UR_PROFILE_SCOPE("LayerStack OnImGuiRender");
+
 		if (Uranus::Input::IsKeyPressed(UR_KEY_W))
 			_CameraPosition.y += _CameraMoveSpeed * ts;
 		if (Uranus::Input::IsKeyPressed(UR_KEY_S))
@@ -44,6 +47,8 @@ namespace Uranus{
 
 	bool OrthographicCameraController::OnMouseScrolled(MouseScrolledEvent& e)
 	{
+		UR_PROFILE_SCOPE("LayerStack OnImGuiRender");
+
 		_ZoomLevel -= e.GetOffsetY() * 0.15f;
 		_ZoomLevel = std::max(_ZoomLevel, 0.25f);
 		_Camera.SetProjection(-_AspectRatio * _ZoomLevel, _AspectRatio * _ZoomLevel, -_ZoomLevel, _ZoomLevel);
@@ -52,6 +57,8 @@ namespace Uranus{
 
 	bool OrthographicCameraController::OnWindowResized(WindowResizeEvent& e)
 	{
+		UR_PROFILE_SCOPE("LayerStack OnImGuiRender");
+
 		_AspectRatio = static_cast<float>(e.GetWidth()) / e.GetHeight();
 		_Camera.SetProjection(-_AspectRatio * _ZoomLevel, _AspectRatio * _ZoomLevel, -_ZoomLevel, _ZoomLevel);
 		return false;

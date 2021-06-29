@@ -15,6 +15,8 @@ namespace Uranus {
 
 	void OpenGLContext::Init()
 	{
+		UR_PROFILE_FUNCTION();
+
 		glfwMakeContextCurrent(_Window);
 		// Initilize Glad
 		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
@@ -33,6 +35,8 @@ namespace Uranus {
 
 	void OpenGLContext::SwapBuffers()
 	{
+		UR_PROFILE_FUNCTION();
+
 		glfwPollEvents();
 		glfwSwapBuffers(_Window);
 	}

@@ -11,6 +11,7 @@ namespace Uranus {
 
 	public:
 		static void Init();
+		static void Shutdown();
 		static void OnWindowResize(std::uint32_t width, std::uint32_t height);
 
 		static void BeginScene(OrthographicCamera& camera);

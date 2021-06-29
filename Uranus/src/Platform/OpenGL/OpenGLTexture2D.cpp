@@ -9,6 +9,8 @@ namespace Uranus {
 	OpenGLTexture2D::OpenGLTexture2D(uint32_t width, uint32_t height)
 		:_Width(width), _Height(height)
 	{
+		UR_PROFILE_FUNCTION();
+
 		_InternalFormat = GL_RGBA8;
 		_DataFormat = GL_RGBA;
 
@@ -27,6 +29,8 @@ namespace Uranus {
 	OpenGLTexture2D::OpenGLTexture2D(const std::string& path)
 		:_TexturPath(path), _Width(0), _Height(0), _RendererId(0)
 	{
+		UR_PROFILE_FUNCTION();
+
 		stbi_set_flip_vertically_on_load(1);
 
 		int width, height, channels;
@@ -67,11 +71,15 @@ namespace Uranus {
 
 	void OpenGLTexture2D::Bind(uint32_t slot)
 	{
+		UR_PROFILE_FUNCTION();
+
 		glBindTextureUnit(0 + slot, _RendererId);
 	}
 
 	void OpenGLTexture2D::SetData(void* data, uint32_t size)
 	{
+		UR_PROFILE_FUNCTION();
+
 		uint32_t bbp = _InternalFormat == GL_RGB ? 3 : 4;
 		UR_CORE_ASSERT(size == _Width * _Height * bbp, "Data must match the entire texture");
 		glTextureSubImage2D(_RendererId, 0, 0, 0, _Width, _Height, _DataFormat, GL_UNSIGNED_BYTE, data);
@@ -79,6 +87,8 @@ namespace Uranus {
 
 	OpenGLTexture2D::~OpenGLTexture2D()
 	{
+		UR_PROFILE_FUNCTION();
+
 		glDeleteTextures(1, &_RendererId);
 	}
 }

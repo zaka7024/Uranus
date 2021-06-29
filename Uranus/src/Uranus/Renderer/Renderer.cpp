@@ -14,6 +14,11 @@ namespace Uranus {
 		Renderer2D::Init();
 	}
 
+	void Renderer::Shutdown()
+	{
+		Renderer2D::Shutdown();
+	}
+
 	void Renderer::OnWindowResize(std::uint32_t width, std::uint32_t height)
 	{
 		RenderCommand::SetViewPort(0, 0, width, height);

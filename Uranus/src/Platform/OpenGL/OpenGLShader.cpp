@@ -29,7 +29,10 @@ namespace Uranus {
 		Compile(shaderSources);
 	}
 
-	OpenGLShader::OpenGLShader(const std::string& filepath) {
+	OpenGLShader::OpenGLShader(const std::string& filepath) 
+	{
+		UR_PROFILE_FUNCTION();
+
 		std::string& fileSource = ReadFile(filepath);
 		std::unordered_map<GLenum, std::string>& shadersSources = PreProcess(fileSource);
 		Compile(shadersSources);
@@ -43,33 +46,57 @@ namespace Uranus {
 
 	OpenGLShader::~OpenGLShader()
 	{
+		UR_PROFILE_FUNCTION();
+
 		glDeleteProgram(_RendererId);
 	}
 
 	void OpenGLShader::Bind()
 	{
+		UR_PROFILE_FUNCTION();
+
 		glUseProgram(_RendererId);
 	}
 
 	void OpenGLShader::Unbind()
 	{
+		UR_PROFILE_FUNCTION();
+
 		glUseProgram(0);
 	}
 
-	void OpenGLShader::SetMat4(const glm::mat4& value, const std::string& name) {
+	void OpenGLShader::SetMat4(const glm::mat4& value, const std::string& name) 
+	{
+		UR_PROFILE_FUNCTION();
+
 		UploadUniformMat4(value, name);
 	}
 
-	void OpenGLShader::SetFloat4(const glm::vec4& value, const std::string& name) {
+	void OpenGLShader::SetFloat(float value, const std::string& name)
+	{
+		UR_PROFILE_FUNCTION();
+
+		UploadUniformFloat(value, name);
+	}
+
+	void OpenGLShader::SetFloat4(const glm::vec4& value, const std::string& name) 
+	{
+		UR_PROFILE_FUNCTION();
+
 		UploadUniformFloat4(value, name);
 	}
 
-	void OpenGLShader::SetFloat3(const glm::vec3& value, const std::string& name) {
+	void OpenGLShader::SetFloat3(const glm::vec3& value, const std::string& name) 
+	{
+		UR_PROFILE_FUNCTION();
+
 		UploadUniformFloat3(value, name);
 	}
 
 	void OpenGLShader::SetInt(uint32_t value, const std::string& name)
 	{
+		UR_PROFILE_FUNCTION();
+
 		UploadUniformInt(value, name);
 	}
 

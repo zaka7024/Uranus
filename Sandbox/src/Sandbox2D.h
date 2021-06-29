@@ -22,5 +22,13 @@ private:
 	glm::vec4 _Color = {0.4f, 0.2f, 0.7f, 1.0f };
 	glm::vec3 _Position = { 0.0f, 0.0f, 0.1f };
 	glm::vec2 _Scale = { 1.0f, 1.0f };
-	float _Roation = { 0.0f };
+	float _Rotation = { 0.0f };
+
+	struct ProfileResult
+	{
+		const char* Name;
+		float Time;
+	};
+
+	std::vector<ProfileResult> m_ProfileResults;
 };

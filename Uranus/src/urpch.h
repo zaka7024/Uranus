@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Uranus/Core/Log.h"
+#include "Uranus/Debug/Instrumentor.h"
 
 #include <iostream>
 #include <memory>

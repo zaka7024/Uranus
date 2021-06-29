@@ -27,26 +27,36 @@ namespace Uranus {
 
 	OpenGLVertexArray::OpenGLVertexArray()
 	{
+		UR_PROFILE_FUNCTION();
+
 		glCreateVertexArrays(1, &_RendererId);
 	}
 
 	OpenGLVertexArray::~OpenGLVertexArray()
 	{
+		UR_PROFILE_FUNCTION();
+
 		glDeleteVertexArrays(1, &_RendererId);
 	}
 
 	void OpenGLVertexArray::Bind() const
 	{
+		UR_PROFILE_FUNCTION();
+
 		glBindVertexArray(_RendererId);
 	}
 
 	void OpenGLVertexArray::Unbind() const
 	{
+		UR_PROFILE_FUNCTION();
+
 		glBindVertexArray(0);
 	}
 
 	void OpenGLVertexArray::AddVertexBuffer(const std::shared_ptr<VertexBuffer>& vertexBuffer)
 	{
+		UR_PROFILE_FUNCTION();
+
 		UR_CORE_ASSERT(vertexBuffer->GetLayout().GetElements().size(), "Vertex Buffer has no layout!")
 
 		glBindVertexArray(_RendererId);
@@ -68,6 +78,8 @@ namespace Uranus {
 
 	void OpenGLVertexArray::SetIndexBuffer(const std::shared_ptr<IndexBuffer>& indexBuffer)
 	{
+		UR_PROFILE_FUNCTION();
+
 		_IndexBuffer = indexBuffer;
 		indexBuffer->Bind();
 	}

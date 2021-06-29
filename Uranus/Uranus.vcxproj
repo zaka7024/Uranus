@@ -151,6 +151,7 @@
     <ClInclude Include="src\Uranus\Core\MouseButtonCodes.h" />
     <ClInclude Include="src\Uranus\Core\Timestep.h" />
     <ClInclude Include="src\Uranus\Core\Window.h" />
+    <ClInclude Include="src\Uranus\Debug\Instrumentor.h" />
     <ClInclude Include="src\Uranus\Events\ApplicationEvent.h" />
     <ClInclude Include="src\Uranus\Events\Event.h" />
     <ClInclude Include="src\Uranus\Events\KeyEvent.h" />

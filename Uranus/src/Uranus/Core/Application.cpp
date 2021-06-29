@@ -16,6 +16,8 @@ namespace Uranus {
 
 	Application::Application()
 	{
+		UR_PROFILE_FUNCTION();
+
 		UR_CORE_ASSERT(!_Instance, "There exsist already Application instance")
 		_Instance = this;
 
@@ -56,28 +58,41 @@ namespace Uranus {
 
 	Application::~Application()
 	{
+		UR_PROFILE_FUNCTION();
 
+		Renderer::Shutdown();
 	}
 
 	void Application::Run()
 	{
+		UR_PROFILE_FUNCTION();
+
 		static float z, y, x, r;
 
 		while (_IsRunning) {
+
+			UR_PROFILE_SCOPE("RunLoop");
 
 			float time = (float)glfwGetTime();
 			Timestep ts = time - _LastFrameTime;
 			_LastFrameTime = time;
 
 			if (!_Minimzed) {
-				for (Layer* layer : _LayerStack)
-					layer->OnUpdate(ts);
-			}
+				{
+					UR_PROFILE_SCOPE("LayerStack OnUpadte");
 
-			_ImGuiLayer->Begin();
-			for (Layer* layer : _LayerStack)
-				layer->OnImGuiRender();
-			_ImGuiLayer->End();
+					for (Layer* layer : _LayerStack)
+						layer->OnUpdate(ts);
+				}
+
+				_ImGuiLayer->Begin();
+				{
+					UR_PROFILE_SCOPE("LayerStack OnImGuiRender");
+					for (Layer* layer : _LayerStack)
+						layer->OnImGuiRender();
+				}
+				_ImGuiLayer->End();
+			}
 
 			_Window->OnUpdate();
 		}
@@ -89,6 +104,9 @@ namespace Uranus {
 	}
 
 	bool Application::OnWindowResize(WindowResizeEvent& e) {
+		
+		UR_PROFILE_SCOPE("LayerStack OnImGuiRender");
+
 		if (e.GetWidth() == 0 || e.GetHeight() == 0) {
 			_Minimzed = true;
 			return false;

@@ -14,6 +14,7 @@ namespace Uranus {
 		virtual void Bind() = 0;
 		virtual void Unbind() = 0;
 		virtual void SetMat4(const glm::mat4& value, const std::string& name) = 0;
+		virtual void SetFloat(float value, const std::string& name) = 0;
 		virtual void SetFloat4(const glm::vec4& value, const std::string& name) = 0;
 		virtual void SetFloat3(const glm::vec3& value, const std::string& name) = 0;
 		virtual void SetInt(uint32_t value, const std::string& name) = 0;

@@ -31,6 +31,8 @@ namespace Uranus {
 	}
 
 	void WindowsWindow::Init(const WindowProps& windowProps) {
+		UR_PROFILE_FUNCTION();
+
 		_WindowData.Title = windowProps.Name;
 		_WindowData.Height = windowProps.Height;
 		_WindowData.Width = windowProps.Width;
@@ -141,10 +143,14 @@ namespace Uranus {
 	}
 
 	void WindowsWindow::Shutdown() {
+		UR_PROFILE_FUNCTION();
+
 		glfwDestroyWindow(_Window);
 	}
 
 	void WindowsWindow::SetVSync(bool enabled) {
+		UR_PROFILE_FUNCTION();
+
 		if (enabled) {
 			glfwSwapInterval(1);
 		}
