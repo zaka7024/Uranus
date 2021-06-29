@@ -7,7 +7,7 @@
 
 namespace Uranus {
 	
-	Scope<Input> Input::_Instance = std::make_unique<WindowsInput>(WindowsInput());
+	Scope<Input> Input::_Instance = CreateScope<WindowsInput>(WindowsInput());
 
 	bool WindowsInput::IsKeyPressedImpl(int keyCode)
 	{

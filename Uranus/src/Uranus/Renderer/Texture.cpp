@@ -11,7 +11,7 @@ namespace Uranus {
 		{
 		case RendererAPI::API::None:
 			UR_CORE_ASSERT(false, "RendererAPI::None in currently not supported!"); return nullptr;
-		case RendererAPI::API::OpenGL: return std::make_shared<OpenGLTexture2D>(path);
+		case RendererAPI::API::OpenGL: return CreateRef<OpenGLTexture2D>(path);
 		}
 
 		UR_CORE_ASSERT(false, "Unkown Renderer API!");
@@ -23,7 +23,7 @@ namespace Uranus {
 		{
 		case RendererAPI::API::None:
 			UR_CORE_ASSERT(false, "RendererAPI::None in currently not supported!"); return nullptr;
-		case RendererAPI::API::OpenGL: return std::make_shared<OpenGLTexture2D>(width, height);
+		case RendererAPI::API::OpenGL: return CreateRef<OpenGLTexture2D>(width, height);
 		}
 
 		UR_CORE_ASSERT(false, "Unkown Renderer API!");

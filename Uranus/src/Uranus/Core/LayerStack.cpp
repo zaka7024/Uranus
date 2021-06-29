@@ -31,6 +31,7 @@ void Uranus::LayerStack::PopLayer(Layer* layer)
 	if (item != _Layers.end()) {
 		layer->OnDetach();
 		_Layers.erase(item);
+		delete layer;
 		_LayerInsertIndex--;
 	}
 }

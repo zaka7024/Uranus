@@ -20,7 +20,6 @@ namespace Uranus {
 
 		UR_CORE_ASSERT(!_Instance, "There exsist already Application instance")
 		_Instance = this;
-
 		_Window = std::unique_ptr<Window>(Window::Create());
 		_Window->SetEventCallback(UR_BIND_EVENT_FUN(Application::OnEvent));
 

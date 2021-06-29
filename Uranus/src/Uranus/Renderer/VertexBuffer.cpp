@@ -11,7 +11,7 @@ namespace Uranus {
 		{
 		case RendererAPI::API::None:
 			UR_CORE_ASSERT(false, "RendererAPI::None in currently not supported!"); return nullptr;
-		case RendererAPI::API::OpenGL: return std::make_shared<OpenGLVertexArray>();
+		case RendererAPI::API::OpenGL: return CreateRef<OpenGLVertexArray>();
 		}
 
 		UR_CORE_ASSERT(false, "Unkown Renderer API!");

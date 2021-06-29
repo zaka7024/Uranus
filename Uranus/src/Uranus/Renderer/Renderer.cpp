@@ -6,7 +6,7 @@
 
 namespace Uranus {
 
-	Scope<Renderer::SceneData> Renderer::_SceneData = std::make_unique<SceneData>();
+	Scope<Renderer::SceneData> Renderer::_SceneData = CreateScope<SceneData>();
 
 	void Renderer::Init()
 	{

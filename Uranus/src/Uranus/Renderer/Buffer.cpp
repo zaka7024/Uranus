@@ -11,7 +11,7 @@ namespace Uranus {
 		{
 		case RendererAPI::API::None:
 				UR_CORE_ASSERT(false, "RendererAPI::None in currently not supported!"); return nullptr;
-		case RendererAPI::API::OpenGL: return std::make_shared<OpenGLVertexBuffer>(vertices, size);
+		case RendererAPI::API::OpenGL: return CreateRef<OpenGLVertexBuffer>(vertices, size);
 		}
 
 		UR_CORE_ASSERT(false, "Unkown Renderer API!");
@@ -24,7 +24,7 @@ namespace Uranus {
 		case RendererAPI::API::None:
 			UR_CORE_ASSERT(false, "RendererAPI::None in currently not supported!"); return nullptr;
 		case RendererAPI::API::OpenGL:
-			return std::make_shared<OpenGLIndexBuffer>(indecies, size);
+			return CreateRef<OpenGLIndexBuffer>(indecies, size);
 		}
 
 		UR_CORE_ASSERT(false, "Unkown Renderer API!");
