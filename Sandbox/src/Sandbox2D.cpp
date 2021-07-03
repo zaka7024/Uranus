@@ -17,7 +17,7 @@ void Sandbox2D::OnAttach()
 {
 	_CheckerboardTexture = Uranus::Texture2D::Create("assets/textures/Checkerboard.png");
 	_PlayerTexture = Uranus::Texture2D::Create("assets/textures/moon.png");
-	_TileTexture = Uranus::Texture2D::Create("assets/textures/uranus.jpg");
+	_TileTexture = Uranus::Texture2D::Create("assets/textures/tile.jpg");
 }
 
 void Sandbox2D::OnDetach()
@@ -39,6 +39,8 @@ void Sandbox2D::OnUpdate(Uranus::Timestep ts)
 		Uranus::RenderCommand::Clear();
 	}
 	
+	Uranus::Renderer2D::ResetStats();
+
 	{
 		UR_PROFILE_SCOPE("Renderer Draw");
 		Uranus::Renderer2D::BeginScene(_CameraController.GetCamera());
@@ -51,8 +53,7 @@ void Sandbox2D::OnUpdate(Uranus::Timestep ts)
 		
 		Uranus::Renderer2D::DrawQuad(_Position, { 1.0f, 1.0f }, _PlayerTexture, 1);
 		
-		for(uint32_t i = 0; i < 5; i++)
-			Uranus::Renderer2D::DrawQuad({ 1.0f * i, 0.0f }, _Scale, _TileTexture);
+		Uranus::Renderer2D::DrawQuad({ 1.0f, 0.0f }, _Scale, _TileTexture);
 		
 		Uranus::Renderer2D::DrawRotatedQuad({ 1.0f, -1.0f }, _Scale, angel, {0.7, 0.2, 0.5, 1.0f});
 		//Uranus::Renderer2D::DrawQuad(_Position - glm::vec3(_Scale.x / 2.0f, _Scale.y / 2.0f, 0), _Scale, _Color);
@@ -75,14 +76,11 @@ void Sandbox2D::OnImGuiRender()
 	ImGui::DragFloat("Rotation", &_Rotation, 0.1, 0, 360);
 	ImGui::DragFloat2("Scale", glm::value_ptr(_Scale), 0.1, 0, 360);
 
-	for (auto& result : m_ProfileResults)
-	{
-		char label[50];
-		strcpy(label, "%.3fms ");
-		strcat(label, result.Name);
-		ImGui::Text(label, result.Time);
-	}
-	m_ProfileResults.clear();
-
+	ImGui::Text("Stats");
+	auto stats = Uranus::Renderer2D::GetStats();
+	ImGui::Text("Draw	Calls %d", stats.DrawCalls);
+	ImGui::Text("Quad	Count %d", stats.QuadCount);
+	ImGui::Text("Vertex Count %d", stats.GetTotalVertexCount());
+	ImGui::Text("Index	Count %d", stats.GetTotalIndexCount());
 	ImGui::End();
 }

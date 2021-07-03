@@ -19,7 +19,7 @@ namespace Uranus {
 
 	static struct Renderer2DStorage {
 		
-		const uint32_t MaxQuads = 10000;
+		const uint32_t MaxQuads = 20000;
 		const uint32_t MaxVertices = MaxQuads * 4;
 		const uint32_t MaxIndices = MaxQuads * 6;
 
@@ -40,6 +40,8 @@ namespace Uranus {
 
 		glm::vec4 QuadVertexPosition[4];
 		glm::vec2 QuadTextureCoords[4];
+
+		Renderer2D::Statistics Stats;
 	};
 
 	Renderer2DStorage* _RendererData;
@@ -128,8 +130,8 @@ namespace Uranus {
 		_RendererData->TextureShader->SetMat4(camera.GetViewProjectionMatrix(), "u_ViewProjection");
 
 		_RendererData->TextureSlotIndex = 1;
-
 		_RendererData->QuadIndexCount = 0;
+
 		_RendererData->QuadVertexBufferPtr = _RendererData->QuadVertexBufferBase;
 	}
 
@@ -149,6 +151,17 @@ namespace Uranus {
 			_RendererData->TextureSlots[i]->Bind(i);
 
 		RenderCommand::DrawIndexed(_RendererData->QuadVertexArray, _RendererData->QuadIndexCount);
+
+		_RendererData->Stats.DrawCalls++;
+	}
+
+	void Renderer2D::StartNewBatch() {
+		// Flush the current data
+		EndScene();
+
+		_RendererData->TextureSlotIndex = 1;
+		_RendererData->QuadIndexCount = 0;
+		_RendererData->QuadVertexBufferPtr = _RendererData->QuadVertexBufferBase;
 	}
 
 	void Renderer2D::DrawQuad(const glm::vec2& position, const glm::vec2& size, const glm::vec4& color)
@@ -161,6 +174,10 @@ namespace Uranus {
 	void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color)
 	{
 		UR_PROFILE_SCOPE("LayerStack OnImGuiRender");
+
+		if (_RendererData->QuadIndexCount >= _RendererData->MaxIndices) {
+			StartNewBatch();
+		}
 
 		float texIndex = 0;
 		float tilingFactor = 0;
@@ -178,6 +195,8 @@ namespace Uranus {
 		}
 
 		_RendererData->QuadIndexCount += 6;
+
+		_RendererData->Stats.QuadCount++;
 	}
 
 	void Renderer2D::DrawQuad(const glm::vec2& position, const glm::vec2& size, const Ref<Texture2D>& texture, float tilingFactor, const glm::vec4& tintColor)
@@ -190,6 +209,10 @@ namespace Uranus {
 	void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const Ref<Texture2D>& texture, float tilingFactor, const glm::vec4& tintColor)
 	{
 		UR_PROFILE_SCOPE("LayerStack OnImGuiRender");
+
+		if (_RendererData->QuadIndexCount >= _RendererData->MaxIndices) {
+			StartNewBatch();
+		}
 
 		float textureIndex = 0.0f;
 
@@ -220,6 +243,8 @@ namespace Uranus {
 		}
 
 		_RendererData->QuadIndexCount += 6;
+
+		_RendererData->Stats.QuadCount++;
 	}
 	void Renderer2D::DrawRotatedQuad(const glm::vec2& position, const glm::vec2& size, float rotation, const glm::vec4& color)
 	{
@@ -229,6 +254,10 @@ namespace Uranus {
 	void Renderer2D::DrawRotatedQuad(const glm::vec3& position, const glm::vec2& size, float rotation, const glm::vec4& color)
 	{
 		UR_PROFILE_SCOPE("LayerStack OnImGuiRender");
+
+		if (_RendererData->QuadIndexCount >= _RendererData->MaxIndices) {
+			StartNewBatch();
+		}
 
 		float texIndex = 0;
 		float tilingFactor = 0;
@@ -247,6 +276,8 @@ namespace Uranus {
 		}
 
 		_RendererData->QuadIndexCount += 6;
+
+		_RendererData->Stats.QuadCount++;
 	}
 
 	void Renderer2D::DrawRotatedQuad(const glm::vec2& position, const glm::vec2& size, float rotation, const Ref<Texture2D>& texture, float tilingFactor, const glm::vec4& tintColor)
@@ -259,6 +290,10 @@ namespace Uranus {
 	void Renderer2D::DrawRotatedQuad(const glm::vec3& position, const glm::vec2& size, float rotation, const Ref<Texture2D>& texture, float tilingFactor, const glm::vec4& tintColor)
 	{
 		UR_PROFILE_SCOPE("LayerStack OnImGuiRender");
+
+		if (_RendererData->QuadIndexCount >= _RendererData->MaxIndices) {
+			StartNewBatch();
+		}
 
 		float textureIndex = 0.0f;
 
@@ -290,5 +325,17 @@ namespace Uranus {
 		}
 
 		_RendererData->QuadIndexCount += 6;
+
+		_RendererData->Stats.QuadCount++;
+	}
+
+	void Renderer2D::ResetStats()
+	{
+		memset(&_RendererData->Stats, 0, sizeof(Renderer2D::Statistics));
+	}
+
+	Renderer2D::Statistics Renderer2D::GetStats()
+	{
+		return _RendererData->Stats;
 	}
 }
