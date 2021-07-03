@@ -19,10 +19,10 @@ namespace Uranus {
 		OrthographicCamera& GetCamera() { return _Camera; }
 	private:
 		float _AspectRatio;
-		float _ZoomLevel = 1.0f;
+		float _ZoomLevel = 2.0f;
 		glm::vec3 _CameraPosition = {0.0f, 0.0f, 0.0f};
 		float _CameraRotaion = 0.0f;
-		float _CameraMoveSpeed = 5.0f;
+		float _CameraMoveSpeed = 10.0f;
 		float _CameraRotaionSpeed = 180.0f;
 		bool _Rotation;
 		OrthographicCamera _Camera;

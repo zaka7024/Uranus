@@ -9,6 +9,15 @@ namespace Uranus {
 	// VertexBuffer /////////////////////////
 	////////////////////////////////////////
 
+	OpenGLVertexBuffer::OpenGLVertexBuffer(uint32_t size)
+	{
+		UR_PROFILE_FUNCTION();
+
+		glGenBuffers(1, &_RendererId);
+		glBindBuffer(GL_ARRAY_BUFFER, _RendererId);
+		glBufferData(GL_ARRAY_BUFFER, size, nullptr, GL_DYNAMIC_DRAW);
+	}
+
 	OpenGLVertexBuffer::OpenGLVertexBuffer(float* vertices, uint32_t size) {
 		UR_PROFILE_FUNCTION();
 
@@ -36,6 +45,14 @@ namespace Uranus {
 		UR_PROFILE_FUNCTION();
 
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
+	}
+
+	void OpenGLVertexBuffer::SetData(const void* data, uint32_t size)
+	{
+		UR_PROFILE_FUNCTION();
+
+		glBindBuffer(GL_ARRAY_BUFFER, _RendererId);
+		glBufferSubData(GL_ARRAY_BUFFER, 0, size, data);
 	}
 
 	void OpenGLVertexBuffer::SetLayout(BufferLayout& layout)

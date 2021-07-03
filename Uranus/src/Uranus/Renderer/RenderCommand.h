@@ -12,8 +12,8 @@ namespace Uranus {
 		}
 		static void SetClearColor(const glm::vec4& color) { _RendererAPI->SetClearColor(color); }
 		static void Clear() { _RendererAPI->Clear(); }
-		static void DrawIndexed(const Uranus::Ref<VertexArray>& vertexArray) {
-			_RendererAPI->DrawIndexed(vertexArray);
+		static void DrawIndexed(const Uranus::Ref<VertexArray>& vertexArray, uint32_t count = 0) {
+			_RendererAPI->DrawIndexed(vertexArray, count);
 		}
 
 	private:

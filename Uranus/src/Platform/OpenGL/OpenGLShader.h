@@ -22,7 +22,7 @@ namespace Uranus {
 		virtual void SetFloat4(const glm::vec4& value, const std::string& name) override;
 		virtual void SetFloat3(const glm::vec3& value, const std::string& name) override;
 		virtual void SetInt(uint32_t value, const std::string& name) override;
-
+		virtual void SetIntArray(int32_t* values, uint32_t count, const std::string& name) override;
 		virtual const std::string& GetName() const override;
 
 		inline uint32_t GetProgramId() { return _RendererId; }

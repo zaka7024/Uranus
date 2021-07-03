@@ -41,12 +41,15 @@ void Sandbox2D::OnUpdate(Uranus::Timestep ts)
 	{
 		UR_PROFILE_SCOPE("Renderer Draw");
 		Uranus::Renderer2D::BeginScene(_CameraController.GetCamera());
-		Uranus::Renderer2D::DrawRotatedQuad(glm::vec3(0.0f, 0.0f, -0.1f), { 10.0f, 10.0f }, glm::radians(45.0f), _CheckerboardTexture, 10);
-		Uranus::Renderer2D::DrawQuad(_Position, _Scale, _Color);
-		Uranus::Renderer2D::DrawRotatedQuad(_Position, _Scale, glm::radians(_Rotation), _Color);
+		//Uranus::Renderer2D::DrawRotatedQuad(glm::vec3(0.0f, 0.0f, 0.0f), { 10.0f, 10.0f }, glm::radians(45.0f), _CheckerboardTexture, 10);
+		Uranus::Renderer2D::DrawQuad(glm::vec3(-5.0f, -5.0f, 0.0f), { 10.0f, 10.0f }, _CheckerboardTexture, 10);
+		Uranus::Renderer2D::DrawQuad(_Position, { 1.0f, 1.0f }, _PlayerTexture, 1);
+		Uranus::Renderer2D::DrawQuad({ 4.0f, 0.0f }, { 2.0f, 2.0f }, {0.9, 0.3, 0.6, 1.0f});
+		//Uranus::Renderer2D::DrawQuad(_Position - glm::vec3(_Scale.x / 2.0f, _Scale.y / 2.0f, 0), _Scale, _Color);
+		//Uranus::Renderer2D::DrawRotatedQuad(_Position, _Scale, glm::radians(_Rotation), _Color);
 	}
 	
-	Uranus::Renderer::EndScene();
+	Uranus::Renderer2D::EndScene();
 }
 
 void Sandbox2D::OnEvent(Uranus::Event& event)

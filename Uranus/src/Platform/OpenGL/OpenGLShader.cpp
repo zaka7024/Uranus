@@ -100,6 +100,12 @@ namespace Uranus {
 		UploadUniformInt(value, name);
 	}
 
+	void OpenGLShader::SetIntArray(int32_t* values, uint32_t count, const std::string& name)
+	{
+		GLint location = glGetUniformLocation(_RendererId, name.c_str());
+		glUniform1iv(location, count, values);
+	}
+
 	const std::string& OpenGLShader::GetName() const
 	{
 		return _Name;

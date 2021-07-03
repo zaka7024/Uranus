@@ -6,6 +6,18 @@
 
 namespace Uranus {
 
+	Ref<VertexBuffer> VertexBuffer::Create(uint32_t size) {
+		switch (Renderer::GetApi())
+		{
+		case RendererAPI::API::None:
+			UR_CORE_ASSERT(false, "RendererAPI::None in currently not supported!"); return nullptr;
+		case RendererAPI::API::OpenGL: return CreateRef<OpenGLVertexBuffer>(size);
+		}
+
+		UR_CORE_ASSERT(false, "Unkown Renderer API!");
+		return nullptr;
+	}
+
 	Ref<VertexBuffer> VertexBuffer::Create(float* vertices, uint32_t size) {
 		switch (Renderer::GetApi())
 		{

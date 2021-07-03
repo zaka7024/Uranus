@@ -16,6 +16,11 @@ namespace Uranus {
 
 		virtual ~OpenGLTexture2D();
 
+		virtual bool operator==(const Texture& other) const override 
+		{
+			return _RendererId == ((OpenGLTexture2D&)other)._RendererId;
+		}
+
 		virtual uint32_t GetWidth() const { return _Width; }
 		virtual uint32_t GetHeight() const { return _Height; }
 

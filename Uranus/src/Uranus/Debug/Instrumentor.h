@@ -123,7 +123,7 @@ namespace Uranus {
 }
 
 
-#define UR_PROFILE 1
+#define UR_PROFILE 0
 
 #if UR_PROFILE
 	#define UR_PROFILE_BEGIN_SESSION(name, filepath) Uranus::Instrumentor::Get().BeginSession(name, filepath)
