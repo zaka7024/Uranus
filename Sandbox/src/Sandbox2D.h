@@ -18,6 +18,7 @@ private:
 	
 	Uranus::Ref<Uranus::Texture2D> _CheckerboardTexture;
 	Uranus::Ref<Uranus::Texture2D> _PlayerTexture;
+	Uranus::Ref<Uranus::Texture2D> _TileTexture;
 
 	glm::vec4 _Color = {0.4f, 0.2f, 0.7f, 1.0f };
 	glm::vec3 _Position = { 0.0f, 0.0f, 0.1f };

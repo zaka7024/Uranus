@@ -17,6 +17,7 @@ void Sandbox2D::OnAttach()
 {
 	_CheckerboardTexture = Uranus::Texture2D::Create("assets/textures/Checkerboard.png");
 	_PlayerTexture = Uranus::Texture2D::Create("assets/textures/moon.png");
+	_TileTexture = Uranus::Texture2D::Create("assets/textures/uranus.jpg");
 }
 
 void Sandbox2D::OnDetach()
@@ -41,10 +42,19 @@ void Sandbox2D::OnUpdate(Uranus::Timestep ts)
 	{
 		UR_PROFILE_SCOPE("Renderer Draw");
 		Uranus::Renderer2D::BeginScene(_CameraController.GetCamera());
-		//Uranus::Renderer2D::DrawRotatedQuad(glm::vec3(0.0f, 0.0f, 0.0f), { 10.0f, 10.0f }, glm::radians(45.0f), _CheckerboardTexture, 10);
-		Uranus::Renderer2D::DrawQuad(glm::vec3(-5.0f, -5.0f, 0.0f), { 10.0f, 10.0f }, _CheckerboardTexture, 10);
+		Uranus::Renderer2D::DrawQuad(glm::vec3(0.0f), { 10.0f, 10.0f }, _CheckerboardTexture, 10);
+		
+		static float angel;
+		angel += ts * 80.0f;
+
+		Uranus::Renderer2D::DrawRotatedQuad({-2.0f, 0.0f}, { 1.0f, 1.0f }, angel, _CheckerboardTexture, 10, { 1.0f, 0.8f, 0.8f, 1.0f });
+		
 		Uranus::Renderer2D::DrawQuad(_Position, { 1.0f, 1.0f }, _PlayerTexture, 1);
-		Uranus::Renderer2D::DrawQuad({ 4.0f, 0.0f }, { 2.0f, 2.0f }, {0.9, 0.3, 0.6, 1.0f});
+		
+		for(uint32_t i = 0; i < 5; i++)
+			Uranus::Renderer2D::DrawQuad({ 1.0f * i, 0.0f }, _Scale, _TileTexture);
+		
+		Uranus::Renderer2D::DrawRotatedQuad({ 1.0f, -1.0f }, _Scale, angel, {0.7, 0.2, 0.5, 1.0f});
 		//Uranus::Renderer2D::DrawQuad(_Position - glm::vec3(_Scale.x / 2.0f, _Scale.y / 2.0f, 0), _Scale, _Color);
 		//Uranus::Renderer2D::DrawRotatedQuad(_Position, _Scale, glm::radians(_Rotation), _Color);
 	}
