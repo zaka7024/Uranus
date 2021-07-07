@@ -5,7 +5,8 @@
 
 namespace Uranus{
 	OrthographicCameraController::OrthographicCameraController(float aspectRatio, bool rotation)
-		:_AspectRatio(aspectRatio), _Camera(-_AspectRatio * _ZoomLevel, _AspectRatio * _ZoomLevel,
+		:_AspectRatio(aspectRatio), _Bounds ({ -_AspectRatio * _ZoomLevel, _AspectRatio * _ZoomLevel,
+			-_ZoomLevel, _ZoomLevel }), _Camera(-_AspectRatio * _ZoomLevel, _AspectRatio* _ZoomLevel,
 			-_ZoomLevel, _ZoomLevel), _Rotation(rotation)
 	{
 		UR_PROFILE_SCOPE("LayerStack OnImGuiRender");
@@ -51,7 +52,8 @@ namespace Uranus{
 
 		_ZoomLevel -= e.GetOffsetY() * 0.15f;
 		_ZoomLevel = std::max(_ZoomLevel, 0.25f);
-		_Camera.SetProjection(-_AspectRatio * _ZoomLevel, _AspectRatio * _ZoomLevel, -_ZoomLevel, _ZoomLevel);
+		_Bounds = { -_AspectRatio * _ZoomLevel, _AspectRatio * _ZoomLevel, -_ZoomLevel, _ZoomLevel };
+		_Camera.SetProjection(_Bounds.Left, _Bounds.Right, _Bounds.Bottom, _Bounds.Top);
 		return false;
 	}
 
@@ -60,7 +62,8 @@ namespace Uranus{
 		UR_PROFILE_SCOPE("LayerStack OnImGuiRender");
 
 		_AspectRatio = static_cast<float>(e.GetWidth()) / e.GetHeight();
-		_Camera.SetProjection(-_AspectRatio * _ZoomLevel, _AspectRatio * _ZoomLevel, -_ZoomLevel, _ZoomLevel);
+		_Bounds = { -_AspectRatio * _ZoomLevel, _AspectRatio * _ZoomLevel, -_ZoomLevel, _ZoomLevel };
+		_Camera.SetProjection(_Bounds.Left, _Bounds.Right, _Bounds.Bottom, _Bounds.Top);
 		return false;
 	}
 }

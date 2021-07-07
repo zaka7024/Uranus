@@ -6,12 +6,21 @@
 
 namespace Uranus {
 
+	struct OrthographicCameraBounds {
+		float Left, Right, Bottom, Top;
+
+		uint32_t GetWidth() { return Left - Right; }
+		uint32_t GetHeight() { return Top - Bottom; }
+	};
+
 	class OrthographicCameraController {
 	public:
 		OrthographicCameraController(float aspectRatio, bool rotation = false);
 
 		void OnUpdate(Timestep ts);
 		void OnEvent(Event& e);
+
+		const OrthographicCameraBounds& GetBounds() const { return _Bounds; }
 
 		bool OnMouseScrolled(MouseScrolledEvent& e);
 		bool OnWindowResized(WindowResizeEvent& e);
@@ -25,8 +34,8 @@ namespace Uranus {
 		float _CameraMoveSpeed = 10.0f;
 		float _CameraRotaionSpeed = 180.0f;
 		bool _Rotation;
+		OrthographicCameraBounds _Bounds;
 		OrthographicCamera _Camera;
-
 	};
 
 }
