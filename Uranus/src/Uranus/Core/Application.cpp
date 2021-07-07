@@ -97,6 +97,10 @@ namespace Uranus {
 		}
 	}
 
+	void Application::Close() {
+		_IsRunning = false;
+	}
+
 	bool Application::OnWindowClose(WindowCloseEvent& e) {
 		_IsRunning = false;
 		return true;

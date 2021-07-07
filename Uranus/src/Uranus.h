@@ -21,6 +21,7 @@
 #include "Uranus/Renderer/Buffer.h"
 #include "Uranus/Renderer/Shader.h"
 #include "Uranus/Renderer/Texture.h"
+#include "Uranus/Renderer/FrameBuffer.h"
 
 #include "Uranus/Renderer/RenderCommand.h"
 #include "Uranus/Renderer/OrthographicCamera.h"

@@ -133,6 +133,7 @@
   <ItemGroup>
     <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h" />
+    <ClInclude Include="src\Platform\OpenGL\OpenGLFrameBuffer.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLRendererAPI.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLShader.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLTexture2D.h" />
@@ -159,6 +160,7 @@
     <ClInclude Include="src\Uranus\ImGui\ImGuiLayer.h" />
     <ClInclude Include="src\Uranus\OrthographicCameraController.h" />
     <ClInclude Include="src\Uranus\Renderer\Buffer.h" />
+    <ClInclude Include="src\Uranus\Renderer\FrameBuffer.h" />
     <ClInclude Include="src\Uranus\Renderer\GraphicsContext.h" />
     <ClInclude Include="src\Uranus\Renderer\OrthographicCamera.h" />
     <ClInclude Include="src\Uranus\Renderer\PerspectiveCamera.h" />
@@ -589,6 +591,7 @@
   <ItemGroup>
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\OpenGLFrameBuffer.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLRendererAPI.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLShader.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLTexture2D.cpp" />
@@ -603,6 +606,7 @@
     <ClCompile Include="src\Uranus\ImGui\ImGuiLayer.cpp" />
     <ClCompile Include="src\Uranus\OrthographicCameraController.cpp" />
     <ClCompile Include="src\Uranus\Renderer\Buffer.cpp" />
+    <ClCompile Include="src\Uranus\Renderer\FrameBuffer.cpp" />
     <ClCompile Include="src\Uranus\Renderer\GraphicsContext.cpp" />
     <ClCompile Include="src\Uranus\Renderer\OrthographicCamera.cpp" />
     <ClCompile Include="src\Uranus\Renderer\PerspectiveCamera.cpp" />

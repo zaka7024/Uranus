@@ -1418,6 +1418,8 @@
     </ClInclude>
     <ClInclude Include="src\Uranus\Renderer\Renderer2D.h" />
     <ClInclude Include="src\Uranus\Debug\Instrumentor.h" />
+    <ClInclude Include="src\Uranus\Renderer\FrameBuffer.h" />
+    <ClInclude Include="src\Platform\OpenGL\OpenGLFrameBuffer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp">
@@ -1502,5 +1504,7 @@
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
     <ClCompile Include="src\Uranus\Renderer\Renderer2D.cpp" />
+    <ClCompile Include="src\Uranus\Renderer\FrameBuffer.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\OpenGLFrameBuffer.cpp" />
   </ItemGroup>
 </Project>

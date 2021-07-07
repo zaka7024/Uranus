@@ -15,6 +15,7 @@ private:
 	Uranus::OrthographicCameraController _CameraController;
 	Uranus::Ref<Uranus::VertexArray> _SquareVA;
 	Uranus::Ref<Uranus::Shader> _FlatColorShader;
+	Uranus::Ref<Uranus::FrameBuffer> _FrameBuffer;
 	
 	Uranus::Ref<Uranus::Texture2D> _CheckerboardTexture;
 	Uranus::Ref<Uranus::Texture2D> _PlayerTexture;
