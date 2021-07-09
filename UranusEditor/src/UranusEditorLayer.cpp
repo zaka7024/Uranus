@@ -179,11 +179,8 @@ namespace Uranus {
         Application::Get().GetImGuiLayer()->BlockEvents(!_viewportFocused || !_viewportHovered);
 
         ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
-        if (viewportPanelSize.y == 0) {
-            viewportPanelSize.y = viewportPanelSize.x;
-        }
-
-        if (_ViewportSize != *((glm::vec2*)(&viewportPanelSize))) {
+        
+        if (_ViewportSize != *((glm::vec2*)(&viewportPanelSize)) && viewportPanelSize.x >= 0 && viewportPanelSize.y >= 0) {
             _FrameBuffer->Resize((uint32_t)viewportPanelSize.x, (uint32_t)viewportPanelSize.y);
             _CameraController.OnResize((uint32_t)viewportPanelSize.x, (uint32_t)viewportPanelSize.y);
             _ViewportSize = { viewportPanelSize.x, viewportPanelSize.y };

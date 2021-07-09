@@ -5,6 +5,8 @@
 
 namespace Uranus {
 
+	static const uint32_t MaxFrameBufferSize = 8192;
+
 	OpenGLFrameBuffer::OpenGLFrameBuffer(const FramebufferSpecification& spec)
 		:_Specification(spec)
 	{
@@ -61,6 +63,10 @@ namespace Uranus {
 
 	void OpenGLFrameBuffer::Resize(uint32_t width, uint32_t height)
 	{
+		if (width == 0 || height == 0 || width > MaxFrameBufferSize || height > MaxFrameBufferSize) {
+			UR_CORE_INFO("Trying to resize frmebuffer to width: {0}, height: {1}", width, height);
+			return;
+		}
 		_Specification.Width = width;
 		_Specification.Height = height;
 		
