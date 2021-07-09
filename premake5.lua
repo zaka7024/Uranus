@@ -84,6 +84,54 @@ project "Uranus"
 		runtime "Release"
 		optimize "on"
 		
+project "UranusEditor"
+	location "UranusEditor"
+	kind "ConsoleApp"
+	staticruntime "on"
+	cppdialect "C++17"
+	language "C++"
+
+	targetdir ("%{wks.location}/bin/" .. outputdir .. "/%{prj.name}")
+	objdir ("%{wks.location}/bin-int/" .. outputdir .. "/%{prj.name}")
+
+	files {
+		"%{prj.name}/src/**.h",
+		"%{prj.name}/src/**.cpp"
+	}
+
+	includedirs {
+		"Uranus/src",
+		"Uranus/vendor/spdlog/include",
+		"Uranus/vendor",
+		"%{IncludeDir.glm}"
+	}
+
+	links {
+		"Uranus"
+	}
+
+	filter "system:windows"
+		systemversion "latest"
+
+		defines {
+			"UR_PLATFORM_WINDOWS"
+		}
+
+	filter "configurations:Debug"
+		defines "UR_DEBUG"
+		runtime "Debug"
+		symbols "On"
+
+	filter "configurations:Release"
+		defines "UR_RELAESE"
+		runtime "Release"
+		optimize "On"
+
+	filter "configurations:Dist"
+		defines "UR_DIST"
+		runtime "Release"
+		optimize "On"
+		
 
 project "Sandbox"
 	location "Sandbox"

@@ -14,13 +14,13 @@ namespace Uranus {
 
 	Application* Application::_Instance;
 
-	Application::Application()
+	Application::Application(const std::string name)
 	{
 		UR_PROFILE_FUNCTION();
 
 		UR_CORE_ASSERT(!_Instance, "There exsist already Application instance")
 		_Instance = this;
-		_Window = std::unique_ptr<Window>(Window::Create());
+		_Window = std::unique_ptr<Window>(Window::Create(WindowProps(name)));
 		_Window->SetEventCallback(UR_BIND_EVENT_FUN(Application::OnEvent));
 
 		Renderer::Init();

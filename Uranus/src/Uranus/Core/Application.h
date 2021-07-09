@@ -17,7 +17,7 @@ namespace Uranus {
 	class URANUS_API Application
 	{
 	public:
-		Application();
+		Application(const std::string name = "Uranus Application");
 		~Application();
 
 		void Run();

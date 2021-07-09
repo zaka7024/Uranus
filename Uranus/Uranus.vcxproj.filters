@@ -19,6 +19,9 @@
     <Filter Include="src\Uranus\Core">
       <UniqueIdentifier>{B23D49FD-1EC9-B6C1-27DA-39B693E412C2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Uranus\Debug">
+      <UniqueIdentifier>{104F7DA6-FC47-9CF8-257A-817D11D27B04}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Uranus\Events">
       <UniqueIdentifier>{BE83B179-2A9A-AF0F-7311-3B31DF668097}</UniqueIdentifier>
     </Filter>
@@ -64,6 +67,9 @@
       <Filter>src\Platform\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLFrameBuffer.h">
       <Filter>src\Platform\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\OpenGL\OpenGLRendererAPI.h">
@@ -120,6 +126,9 @@
     <ClInclude Include="src\Uranus\Core\Window.h">
       <Filter>src\Uranus\Core</Filter>
     </ClInclude>
+    <ClInclude Include="src\Uranus\Debug\Instrumentor.h">
+      <Filter>src\Uranus\Debug</Filter>
+    </ClInclude>
     <ClInclude Include="src\Uranus\Events\ApplicationEvent.h">
       <Filter>src\Uranus\Events</Filter>
     </ClInclude>
@@ -141,6 +150,9 @@
     <ClInclude Include="src\Uranus\Renderer\Buffer.h">
       <Filter>src\Uranus\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="src\Uranus\Renderer\FrameBuffer.h">
+      <Filter>src\Uranus\Renderer</Filter>
+    </ClInclude>
     <ClInclude Include="src\Uranus\Renderer\GraphicsContext.h">
       <Filter>src\Uranus\Renderer</Filter>
     </ClInclude>
@@ -154,6 +166,9 @@
       <Filter>src\Uranus\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Uranus\Renderer\Renderer.h">
+      <Filter>src\Uranus\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Uranus\Renderer\Renderer2D.h">
       <Filter>src\Uranus\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Uranus\Renderer\RendererAPI.h">
@@ -1416,16 +1431,15 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="src\Uranus\Renderer\Renderer2D.h" />
-    <ClInclude Include="src\Uranus\Debug\Instrumentor.h" />
-    <ClInclude Include="src\Uranus\Renderer\FrameBuffer.h" />
-    <ClInclude Include="src\Platform\OpenGL\OpenGLFrameBuffer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp">
       <Filter>src\Platform\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLFrameBuffer.cpp">
       <Filter>src\Platform\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\OpenGLRendererAPI.cpp">
@@ -1470,6 +1484,9 @@
     <ClCompile Include="src\Uranus\Renderer\Buffer.cpp">
       <Filter>src\Uranus\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="src\Uranus\Renderer\FrameBuffer.cpp">
+      <Filter>src\Uranus\Renderer</Filter>
+    </ClCompile>
     <ClCompile Include="src\Uranus\Renderer\GraphicsContext.cpp">
       <Filter>src\Uranus\Renderer</Filter>
     </ClCompile>
@@ -1483,6 +1500,9 @@
       <Filter>src\Uranus\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Uranus\Renderer\Renderer.cpp">
+      <Filter>src\Uranus\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Uranus\Renderer\Renderer2D.cpp">
       <Filter>src\Uranus\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Uranus\Renderer\RendererAPI.cpp">
@@ -1503,8 +1523,5 @@
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
-    <ClCompile Include="src\Uranus\Renderer\Renderer2D.cpp" />
-    <ClCompile Include="src\Uranus\Renderer\FrameBuffer.cpp" />
-    <ClCompile Include="src\Platform\OpenGL\OpenGLFrameBuffer.cpp" />
   </ItemGroup>
 </Project>
