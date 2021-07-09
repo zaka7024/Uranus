@@ -56,6 +56,16 @@ namespace Uranus {
         ImGui::DestroyContext();
 	}
 
+    void ImGuiLayer::OnEvent(Event& event)
+    {
+        if (_BlockEvents) 
+        {
+            ImGuiIO& io = ImGui::GetIO();
+            event.isHandled |= event.IsInCategory(EventCategoryMouse) & io.WantCaptureMouse;
+            event.isHandled |= event.IsInCategory(EventCategoryKeyboard) & io.WantCaptureKeyboard;
+        }
+    }
+
     void ImGuiLayer::Begin()
     {
         ImGui_ImplOpenGL3_NewFrame();

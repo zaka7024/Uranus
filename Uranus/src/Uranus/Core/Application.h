@@ -26,6 +26,8 @@ namespace Uranus {
 		void PushLayer(Layer* layer);
 		void PushOverlay(Layer* layer);
 
+		ImGuiLayer* GetImGuiLayer() { return _ImGuiLayer; }
+
 		inline static Application& Get() { return *_Instance; }
 
 		inline Window& GetWindow() { return (*Get()._Window); }

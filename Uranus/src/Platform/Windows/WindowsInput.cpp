@@ -1,5 +1,5 @@
 #include "urpch.h"
-#include "WindowsInput.h"
+#include "Uranus/Core/Input.h"
 
 #include "Uranus/Core/Application.h"
 
@@ -7,23 +7,21 @@
 
 namespace Uranus {
 	
-	Scope<Input> Input::_Instance = CreateScope<WindowsInput>(WindowsInput());
-
-	bool WindowsInput::IsKeyPressedImpl(int keyCode)
+	bool Input::IsKeyPressed(int keyCode)
 	{
 		auto window = static_cast<GLFWwindow*>((Application::Get().GetWindow().GetNativeWindow()));
 		auto state = glfwGetKey(window, keyCode);
 		return state == GLFW_PRESS || state == GLFW_REPEAT;
 	}
 
-	bool WindowsInput::IsMouseButtonPressedImpl(int button)
+	bool Input::IsMouseButtonPressed(int button)
 	{
 		auto window = static_cast<GLFWwindow*>(Application::Get().GetWindow().GetNativeWindow());
 		auto state = glfwGetMouseButton(window, button);
 		return state == GLFW_PRESS;
 	}
 
-	std::pair<float, float> WindowsInput::GetMousePositionImpl()
+	std::pair<float, float> Input::GetMousePosition()
 	{
 		auto window = static_cast<GLFWwindow*>(Application::Get().GetWindow().GetNativeWindow());
 		double x, y;
@@ -31,15 +29,15 @@ namespace Uranus {
 		return { (float)x, float(y) };
 	}
 
-	float WindowsInput::GetMouseXImpl()
+	float Input::GetMouseX()
 	{
-		auto [x, y] = GetMousePositionImpl();
+		auto [x, y] = GetMousePosition();
 		return x;
 	}
 
-	float WindowsInput::GetMouseYImpl()
+	float Input::GetMouseY()
 	{
-		auto [x, y] = GetMousePositionImpl();
+		auto [x, y] = GetMousePosition();
 		return y;
 	}
 }

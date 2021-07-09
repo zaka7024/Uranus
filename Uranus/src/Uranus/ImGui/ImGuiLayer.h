@@ -16,11 +16,15 @@ namespace Uranus {
 
 		virtual void OnAttach() override;
 		virtual void OnDetach() override;
+		virtual void OnEvent(Event& event) override;
 
 		void Begin();
 		void End();
 
+		void BlockEvents(bool block) { _BlockEvents = block; }
+
 	private:
 		float _time = 0.0f;
+		bool _BlockEvents = true;
 	};
 }

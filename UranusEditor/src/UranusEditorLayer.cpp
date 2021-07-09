@@ -36,7 +36,9 @@ namespace Uranus {
         UR_PROFILE_FUNCTION();
         {
             UR_PROFILE_SCOPE("CameraController::OnUpdate");
-            _CameraController.OnUpdate(ts);
+            if (_viewportFocused) {
+                _CameraController.OnUpdate(ts);
+            }
         }
 
         {
@@ -171,6 +173,11 @@ namespace Uranus {
         
         ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, { 0, 0 });
         ImGui::Begin("Viewport");
+        _viewportFocused = ImGui::IsWindowFocused();
+        _viewportHovered = ImGui::IsWindowHovered();
+
+        Application::Get().GetImGuiLayer()->BlockEvents(!_viewportFocused || !_viewportHovered);
+
         ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
         if (viewportPanelSize.y == 0) {
             viewportPanelSize.y = viewportPanelSize.x;

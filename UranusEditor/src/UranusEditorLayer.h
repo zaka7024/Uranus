@@ -23,7 +23,9 @@ namespace Uranus {
 		Uranus::Ref<Uranus::Texture2D> _PlayerTexture;
 		Uranus::Ref<Uranus::Texture2D> _TileTexture;
 
+		bool _viewportFocused = false, _viewportHovered = false;
 		glm::vec2 _ViewportSize = { 0.0f, 0.0f };
+
 		glm::vec4 _Color = { 0.4f, 0.2f, 0.7f, 1.0f };
 		glm::vec3 _Position = { 0.0f, 0.0f, 0.1f };
 		glm::vec2 _Scale = { 1.0f, 1.0f };
