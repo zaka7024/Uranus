@@ -8,6 +8,17 @@ namespace Uranus {
 	OpenGLFrameBuffer::OpenGLFrameBuffer(const FramebufferSpecification& spec)
 		:_Specification(spec)
 	{
+		Invalidate();
+	}
+
+	void OpenGLFrameBuffer::Invalidate() {
+		
+		if (_RendererId) {
+			glDeleteFramebuffers(1, &_RendererId);
+			glDeleteTextures(1, &_ColorAttachment);
+			glDeleteTextures(1, &_DepthAttachment);
+		}
+
 		glCreateFramebuffers(1, &_RendererId);
 		glBindFramebuffer(GL_FRAMEBUFFER, _RendererId);
 
@@ -22,7 +33,7 @@ namespace Uranus {
 		glCreateTextures(GL_TEXTURE_2D, 1, &_DepthAttachment);
 		glBindTexture(GL_TEXTURE_2D, _DepthAttachment);
 		glTexStorage2D(GL_TEXTURE_2D, 1, GL_DEPTH24_STENCIL8, _Specification.Width, _Specification.Height);
-		
+
 		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_TEXTURE_2D, _DepthAttachment, 0);
 
 		UR_CORE_ASSERT(glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE, "Framebuffer is incomplete!");
@@ -33,15 +44,26 @@ namespace Uranus {
 	OpenGLFrameBuffer::~OpenGLFrameBuffer()
 	{
 		glDeleteFramebuffers(1, &_RendererId);
+		glDeleteTextures(1, &_ColorAttachment);
+		glDeleteTextures(1, &_DepthAttachment);
 	}
 
 	void OpenGLFrameBuffer::Bind()
 	{
 		glBindFramebuffer(GL_FRAMEBUFFER, _RendererId);
+		glViewport(0, 0, _Specification.Width, _Specification.Height);
 	}
 
 	void OpenGLFrameBuffer::Ubnind()
 	{
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	}
+
+	void OpenGLFrameBuffer::Resize(uint32_t width, uint32_t height)
+	{
+		_Specification.Width = width;
+		_Specification.Height = height;
+		
+		Invalidate();
 	}
 }

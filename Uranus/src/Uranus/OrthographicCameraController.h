@@ -19,6 +19,7 @@ namespace Uranus {
 
 		void OnUpdate(Timestep ts);
 		void OnEvent(Event& e);
+		void OnResize(uint32_t width, uint32_t height);
 
 		const OrthographicCameraBounds& GetBounds() const { return _Bounds; }
 

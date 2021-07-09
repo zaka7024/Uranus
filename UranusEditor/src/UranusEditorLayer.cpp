@@ -152,9 +152,9 @@ namespace Uranus {
             ImGui::EndMenuBar();
         }
 
-        ImGui::End();
 
         ImGui::Begin("Color Picker");
+
         ImGui::ColorEdit4("Color", glm::value_ptr(_Color));
         ImGui::SliderFloat3("Position", glm::value_ptr(_Position), -10, 10);
         ImGui::DragFloat("Rotation", &_Rotation, 0.1, 0, 360);
@@ -167,7 +167,24 @@ namespace Uranus {
         ImGui::Text("Vertex Count %d", stats.GetTotalVertexCount());
         ImGui::Text("Index	Count %d", stats.GetTotalIndexCount());
 
-        ImGui::Image((void*)_FrameBuffer->GetColorAttachmentRendererId(), { 1280, 720 }, { 0, 1 }, { 1, 0 });
+        ImGui::End();
+        
+        ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, { 0, 0 });
+        ImGui::Begin("Viewport");
+        ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
+        if (viewportPanelSize.y == 0) {
+            viewportPanelSize.y = viewportPanelSize.x;
+        }
+
+        if (_ViewportSize != *((glm::vec2*)(&viewportPanelSize))) {
+            _FrameBuffer->Resize((uint32_t)viewportPanelSize.x, (uint32_t)viewportPanelSize.y);
+            _CameraController.OnResize((uint32_t)viewportPanelSize.x, (uint32_t)viewportPanelSize.y);
+            _ViewportSize = { viewportPanelSize.x, viewportPanelSize.y };
+        }
+
+        ImGui::Image((void*)_FrameBuffer->GetColorAttachmentRendererId(), { _ViewportSize.x, _ViewportSize.y}, { 0, 1 }, { 1, 0 });
+        ImGui::PopStyleVar();
+        ImGui::End();
 
         ImGui::End();
     }
