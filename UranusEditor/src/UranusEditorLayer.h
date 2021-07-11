@@ -18,10 +18,13 @@ namespace Uranus {
 		Uranus::Ref<Uranus::VertexArray> _SquareVA;
 		Uranus::Ref<Uranus::Shader> _FlatColorShader;
 		Uranus::Ref<Uranus::FrameBuffer> _FrameBuffer;
+		Uranus::Ref<Uranus::Scene> _ActiveScene;
 
 		Uranus::Ref<Uranus::Texture2D> _CheckerboardTexture;
 		Uranus::Ref<Uranus::Texture2D> _PlayerTexture;
 		Uranus::Ref<Uranus::Texture2D> _TileTexture;
+
+		entt::entity _SquareEntity;
 
 		bool _viewportFocused = false, _viewportHovered = false;
 		glm::vec2 _ViewportSize = { 0.0f, 0.0f };

@@ -68,9 +68,9 @@ namespace Uranus{
 	{
 		UR_PROFILE_SCOPE("LayerStack OnImGuiRender");
 
-		_AspectRatio = static_cast<float>(e.GetWidth()) / e.GetHeight();
-		_Bounds = { -_AspectRatio * _ZoomLevel, _AspectRatio * _ZoomLevel, -_ZoomLevel, _ZoomLevel };
-		_Camera.SetProjection(_Bounds.Left, _Bounds.Right, _Bounds.Bottom, _Bounds.Top);
+		//_AspectRatio = static_cast<float>(e.GetWidth()) / e.GetHeight();
+		//_Bounds = { -_AspectRatio * _ZoomLevel, _AspectRatio * _ZoomLevel, -_ZoomLevel, _ZoomLevel };
+		//_Camera.SetProjection(_Bounds.Left, _Bounds.Right, _Bounds.Bottom, _Bounds.Top);
 		return false;
 	}
 }

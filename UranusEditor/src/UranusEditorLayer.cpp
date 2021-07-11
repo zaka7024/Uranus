@@ -24,6 +24,14 @@ namespace Uranus {
         framebufferSpecification.Height = 1280;
         framebufferSpecification.Width = 720;
         _FrameBuffer = Uranus::FrameBuffer::Create(framebufferSpecification);
+
+        _ActiveScene = CreateRef<Scene>();
+        entt::entity squareEntity = _ActiveScene->CreateEntity();
+        auto& reg = _ActiveScene->GetRegistry();
+        reg.emplace<TransformComponent>(squareEntity);
+        reg.emplace<SpriteRendererComponent>(squareEntity);
+
+        _SquareEntity = squareEntity;
     }
 
     void UranusEditorLayer::OnDetach()
@@ -53,33 +61,13 @@ namespace Uranus {
         {
             UR_PROFILE_SCOPE("Renderer Draw");
             Uranus::Renderer2D::BeginScene(_CameraController.GetCamera());
-            Uranus::Renderer2D::DrawQuad(glm::vec3(0.0f), { 10.0f, 10.0f }, _CheckerboardTexture, 10);
-
-            static float angel;
-            angel += ts * 120.0f;
-
-            Uranus::Renderer2D::DrawRotatedQuad({ -2.0f, 0.0f }, { 1.0f, 1.0f }, angel, _CheckerboardTexture, 10, { 1.0f, 0.8f, 0.8f, 1.0f });
-
-            Uranus::Renderer2D::DrawQuad(_Position, { 1.0f, 1.0f }, _PlayerTexture, 1);
-
-            Uranus::Renderer2D::DrawQuad({ 1.0f, 0.0f }, _Scale, _TileTexture);
-
-            Uranus::Renderer2D::DrawRotatedQuad({ 1.0f, -1.0f }, _Scale, angel, { 0.7, 0.2, 0.5, 1.0f });
+            
+            _ActiveScene->GetRegistry().get<SpriteRendererComponent>(_SquareEntity).Color = _Color;
+            _ActiveScene->OnUpdate(ts);
 
             Uranus::Renderer2D::EndScene();
-
-            Uranus::Renderer2D::BeginScene(_CameraController.GetCamera());
-            for (float y = -5.0f; y < 5.0f; y += 0.4f)
-            {
-                for (float x = -5.0f; x < 5.0f; x += 0.4f)
-                {
-                    glm::vec4 color = { (x + 5.0f) / 10.0f, 0.4f, (y + 5.0f) / 10.0f, 0.8f };
-                    Uranus::Renderer2D::DrawRotatedQuad({ x, y }, { 0.48f, 0.48f }, angel, color);
-                }
-            }
         }
 
-        Uranus::Renderer2D::EndScene();
         _FrameBuffer->Ubnind();
     }
 
