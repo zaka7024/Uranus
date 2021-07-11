@@ -17,6 +17,7 @@ IncludeDir["Glad"] = "Uranus/vendor/glad/include"
 IncludeDir["ImGui"] = "Uranus/vendor/imgui"
 IncludeDir["glm"] = "Uranus/vendor/glm"
 IncludeDir["stb_image"] = "Uranus/vendor/stb_image"
+IncludeDir["entt"] = "Uranus/vendor/entt/include"
 
 include "Uranus/vendor/GLFW"
 include "Uranus/vendor/Glad"
@@ -51,7 +52,8 @@ project "Uranus"
 		"%{IncludeDir.Glad}",
 		"%{IncludeDir.ImGui}",
 		"%{IncludeDir.glm}",
-		"%{IncludeDir.stb_image}"
+		"%{IncludeDir.stb_image}",
+		"%{IncludeDir.entt}"
 	}
 
 	links {
@@ -103,7 +105,8 @@ project "UranusEditor"
 		"Uranus/src",
 		"Uranus/vendor/spdlog/include",
 		"Uranus/vendor",
-		"%{IncludeDir.glm}"
+		"%{IncludeDir.glm}",
+		"%{IncludeDir.entt}"
 	}
 
 	links {
@@ -152,7 +155,8 @@ project "Sandbox"
 		"Uranus/src",
 		"Uranus/vendor/spdlog/include",
 		"Uranus/vendor",
-		"%{IncludeDir.glm}"
+		"%{IncludeDir.glm}",
+		"%{IncludeDir.entt}"
 	}
 
 	links {
