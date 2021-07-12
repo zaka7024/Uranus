@@ -26,12 +26,11 @@ namespace Uranus {
         _FrameBuffer = Uranus::FrameBuffer::Create(framebufferSpecification);
 
         _ActiveScene = CreateRef<Scene>();
-        entt::entity squareEntity = _ActiveScene->CreateEntity();
-        auto& reg = _ActiveScene->GetRegistry();
-        reg.emplace<TransformComponent>(squareEntity);
-        reg.emplace<SpriteRendererComponent>(squareEntity);
+        Entity squareEntity = _ActiveScene->CreateEntity();
+        UR_INFO("HAS {0}", squareEntity.HasComponent<TransformComponent>());
 
         _SquareEntity = squareEntity;
+        _SquareEntity.AddComponent<SpriteRendererComponent>();
     }
 
     void UranusEditorLayer::OnDetach()
@@ -62,7 +61,7 @@ namespace Uranus {
             UR_PROFILE_SCOPE("Renderer Draw");
             Uranus::Renderer2D::BeginScene(_CameraController.GetCamera());
             
-            _ActiveScene->GetRegistry().get<SpriteRendererComponent>(_SquareEntity).Color = _Color;
+            _SquareEntity.GetComponent<SpriteRendererComponent>().Color = _Color;
             _ActiveScene->OnUpdate(ts);
 
             Uranus::Renderer2D::EndScene();
@@ -144,8 +143,6 @@ namespace Uranus {
 
 
         ImGui::Begin("Color Picker");
-
-        ImGui::ColorEdit4("Color", glm::value_ptr(_Color));
         ImGui::SliderFloat3("Position", glm::value_ptr(_Position), -10, 10);
         ImGui::DragFloat("Rotation", &_Rotation, 0.1, 0, 360);
         ImGui::DragFloat2("Scale", glm::value_ptr(_Scale), 0.1, 0, 360);
@@ -156,6 +153,13 @@ namespace Uranus {
         ImGui::Text("Quad	Count %d", stats.QuadCount);
         ImGui::Text("Vertex Count %d", stats.GetTotalVertexCount());
         ImGui::Text("Index	Count %d", stats.GetTotalIndexCount());
+
+        if (_SquareEntity) {
+            ImGui::Separator();
+            ImGui::ColorEdit4("Color", glm::value_ptr(_Color));
+            ImGui::Text("%s", _SquareEntity.GetComponent<TagComponent>().Tag.c_str());
+            ImGui::Separator();
+        }
 
         ImGui::End();
         

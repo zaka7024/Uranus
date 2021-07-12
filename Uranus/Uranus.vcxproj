@@ -171,6 +171,7 @@
     <ClInclude Include="src\Uranus\Renderer\Texture.h" />
     <ClInclude Include="src\Uranus\Renderer\VertexArray.h" />
     <ClInclude Include="src\Uranus\Scene\Components.h" />
+    <ClInclude Include="src\Uranus\Scene\Entity.h" />
     <ClInclude Include="src\Uranus\Scene\Scene.h" />
     <ClInclude Include="src\urpch.h" />
     <ClInclude Include="vendor\entt\include\entt.hpp" />
@@ -619,6 +620,7 @@
     <ClCompile Include="src\Uranus\Renderer\Shader.cpp" />
     <ClCompile Include="src\Uranus\Renderer\Texture.cpp" />
     <ClCompile Include="src\Uranus\Renderer\VertexBuffer.cpp" />
+    <ClCompile Include="src\Uranus\Scene\Entity.cpp" />
     <ClCompile Include="src\Uranus\Scene\Scene.cpp" />
     <ClCompile Include="src\urpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>

@@ -4,6 +4,8 @@
 
 #include "Uranus/Renderer/Renderer2D.h"
 
+#include "Entity.h"
+
 #include <glm/glm.hpp>
 
 namespace Uranus {
@@ -20,18 +22,18 @@ namespace Uranus {
 			glm::vec4 Color;
 		};
 
-		entt::entity entity = _registry.create();
+		entt::entity entity = _Registry.create();
 
-		auto& transformComponent = _registry.emplace<TransformComponent>(entity);
+		auto& transformComponent = _Registry.emplace<TransformComponent>(entity);
 
-		_registry.get<TransformComponent>(entity);
+		_Registry.get<TransformComponent>(entity);
 
-		auto view = _registry.view<TransformComponent>();
+		auto view = _Registry.view<TransformComponent>();
 		for (auto entity : view) {
 			TransformComponent& transformComponent = view.get<TransformComponent>(entity);
 		}
 
-		auto group = _registry.group<TransformComponent, SpriteRendererComponent>();
+		auto group = _Registry.group<TransformComponent, SpriteRendererComponent>();
 
 		for (auto entity : group) {
 			auto&[transfrom, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
@@ -44,7 +46,7 @@ namespace Uranus {
 
 	void Scene::OnUpdate(Timestep ts)
 	{
-		auto group = _registry.group<TransformComponent, SpriteRendererComponent>();
+		auto group = _Registry.group<TransformComponent, SpriteRendererComponent>();
 
 		for (auto entity : group) {
 			auto& [transfrom, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
@@ -53,8 +55,12 @@ namespace Uranus {
 		}
 	}
 
-	entt::entity Scene::CreateEntity()
+	Entity Scene::CreateEntity(const std::string& name)
 	{
-		return entt::entity();
+		Entity entity = { _Registry.create() , this };
+		entity.AddComponent<TransformComponent>();
+		auto& tagComponent = entity.AddComponent<TagComponent>();
+		tagComponent.Tag = name.empty() ? "Entity" : name;
+		return entity;
 	}
 }

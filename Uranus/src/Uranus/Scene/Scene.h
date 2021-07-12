@@ -6,18 +6,22 @@
 
 namespace Uranus {
 
+	class Entity;
+
 	class Scene {
 	public:
 		Scene();
 		~Scene();
 
 		void OnUpdate(Timestep ts);
-		entt::entity CreateEntity();
+		Entity CreateEntity(const std::string& name = std::string());
 
-		entt::registry& GetRegistry() { return _registry; }
+		entt::registry& GetRegistry() { return _Registry; }
+
+		friend class Entity;
 
 	private:
-		entt::registry _registry;
+		entt::registry _Registry;
 	};
 
 }

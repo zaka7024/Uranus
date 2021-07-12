@@ -1439,6 +1439,7 @@
     </ClInclude>
     <ClInclude Include="src\Uranus\Scene\Scene.h" />
     <ClInclude Include="src\Uranus\Scene\Components.h" />
+    <ClInclude Include="src\Uranus\Scene\Entity.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp">
@@ -1532,5 +1533,6 @@
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
     <ClCompile Include="src\Uranus\Scene\Scene.cpp" />
+    <ClCompile Include="src\Uranus\Scene\Entity.cpp" />
   </ItemGroup>
 </Project>

@@ -14,6 +14,7 @@
 #include "Uranus/ImGui/ImGuiLayer.h"
 
 #include "Uranus/Scene/Scene.h"
+#include "Uranus/Scene/Entity.h"
 #include "Uranus/Scene/Components.h"
 
 // Renderer
