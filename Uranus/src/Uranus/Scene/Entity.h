@@ -29,10 +29,10 @@ namespace Uranus {
 			return _Scene->_Registry.any_of<T>(_EntityHandle);
 		}
 
-		operator bool() const { return *((uint32_t*)(&_EntityHandle)) != 0; }
+		operator bool() const { return _EntityHandle != entt::null; }
 
 	private:
-		entt::entity _EntityHandle { 0 };
+		entt::entity _EntityHandle { entt::null };
 		Scene* _Scene = nullptr;
 	};
 

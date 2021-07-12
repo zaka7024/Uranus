@@ -27,10 +27,16 @@ namespace Uranus {
 
         _ActiveScene = CreateRef<Scene>();
         Entity squareEntity = _ActiveScene->CreateEntity();
-        UR_INFO("HAS {0}", squareEntity.HasComponent<TransformComponent>());
 
         _SquareEntity = squareEntity;
         _SquareEntity.AddComponent<SpriteRendererComponent>();
+
+        _MainCamera = _ActiveScene->CreateEntity();
+        _MainCamera.AddComponent<CameraComponent>(glm::ortho(-16.0f, 16.0f, -9.0f, 9.0f, -1.0f, 1.0f));
+
+        _SecondCamera = _ActiveScene->CreateEntity();
+        auto& cc = _SecondCamera.AddComponent<CameraComponent>(glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f));
+        cc.Primary = false;
     }
 
     void UranusEditorLayer::OnDetach()
@@ -59,12 +65,8 @@ namespace Uranus {
 
         {
             UR_PROFILE_SCOPE("Renderer Draw");
-            Uranus::Renderer2D::BeginScene(_CameraController.GetCamera());
-            
             _SquareEntity.GetComponent<SpriteRendererComponent>().Color = _Color;
             _ActiveScene->OnUpdate(ts);
-
-            Uranus::Renderer2D::EndScene();
         }
 
         _FrameBuffer->Ubnind();
@@ -159,6 +161,15 @@ namespace Uranus {
             ImGui::ColorEdit4("Color", glm::value_ptr(_Color));
             ImGui::Text("%s", _SquareEntity.GetComponent<TagComponent>().Tag.c_str());
             ImGui::Separator();
+        }
+
+        ImGui::DragFloat3("Camera Transform",
+            glm::value_ptr(_MainCamera.GetComponent<TransformComponent>().Transform[3]));
+
+        if (ImGui::Checkbox("Camera A", &_PrimaryCamera))
+        {
+            _MainCamera.GetComponent<CameraComponent>().Primary = _PrimaryCamera;
+            _SecondCamera.GetComponent<CameraComponent>().Primary = !_PrimaryCamera;
         }
 
         ImGui::End();
