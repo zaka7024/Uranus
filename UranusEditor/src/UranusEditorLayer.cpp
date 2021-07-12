@@ -32,10 +32,10 @@ namespace Uranus {
         _SquareEntity.AddComponent<SpriteRendererComponent>();
 
         _MainCamera = _ActiveScene->CreateEntity();
-        _MainCamera.AddComponent<CameraComponent>(glm::ortho(-16.0f, 16.0f, -9.0f, 9.0f, -1.0f, 1.0f));
+        _MainCamera.AddComponent<CameraComponent>();
 
         _SecondCamera = _ActiveScene->CreateEntity();
-        auto& cc = _SecondCamera.AddComponent<CameraComponent>(glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f));
+        auto& cc = _SecondCamera.AddComponent<CameraComponent>();
         cc.Primary = false;
     }
 
@@ -47,6 +47,18 @@ namespace Uranus {
     void UranusEditorLayer::OnUpdate(Uranus::Timestep ts)
     {
         UR_PROFILE_FUNCTION();
+
+        // Frame Buffer Resize
+        if (FramebufferSpecification spec = _FrameBuffer->GetSpecification();
+            _ViewportSize.x > 0.0f && _ViewportSize.y > 0.0f &&
+            (spec.Width != _ViewportSize.x || spec.Height != _ViewportSize.y))
+        {
+            _FrameBuffer->Resize((uint32_t)_ViewportSize.x, (uint32_t)_ViewportSize.y);
+            _CameraController.OnResize(_ViewportSize.x, _ViewportSize.y);
+
+            _ActiveScene->OnViewportResize((uint32_t)_ViewportSize.x, (uint32_t)_ViewportSize.y);
+        }
+
         {
             UR_PROFILE_SCOPE("CameraController::OnUpdate");
             if (_viewportFocused) {
@@ -84,8 +96,6 @@ namespace Uranus {
         static bool opt_padding = false;
         static ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_None;
 
-        // We are using the ImGuiWindowFlags_NoDocking flag to make the parent window not dockable into,
-        // because it would be confusing to have two docking targets within each others.
         ImGuiWindowFlags window_flags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking;
         if (opt_fullscreen)
         {
@@ -103,16 +113,9 @@ namespace Uranus {
             dockspace_flags &= ~ImGuiDockNodeFlags_PassthruCentralNode;
         }
 
-        // When using ImGuiDockNodeFlags_PassthruCentralNode, DockSpace() will render our background
-        // and handle the pass-thru hole, so we ask Begin() to not render a background.
         if (dockspace_flags & ImGuiDockNodeFlags_PassthruCentralNode)
             window_flags |= ImGuiWindowFlags_NoBackground;
 
-        // Important: note that we proceed even if Begin() returns false (aka window is collapsed).
-        // This is because we want to keep our DockSpace() active. If a DockSpace() is inactive,
-        // all active windows docked into it will lose their parent and become undocked.
-        // We cannot preserve the docking relationship between an active window and an inactive docking, otherwise
-        // any change of dockspace/settings would lead to windows being stuck in limbo and never being visible.
         if (!opt_padding)
             ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
         ImGui::Begin("DockSpace Demo", &open, window_flags);
@@ -172,6 +175,13 @@ namespace Uranus {
             _SecondCamera.GetComponent<CameraComponent>().Primary = !_PrimaryCamera;
         }
 
+        {
+            auto& camera = _SecondCamera.GetComponent<CameraComponent>().Camera;
+            float orthoSize = camera.GetOrthographicSize();
+            if (ImGui::DragFloat("Second Camera Ortho Size", &orthoSize))
+                camera.SetOrthographicSize(orthoSize);
+        }
+
         ImGui::End();
         
         ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, { 0, 0 });
@@ -182,12 +192,8 @@ namespace Uranus {
         Application::Get().GetImGuiLayer()->BlockEvents(!_viewportFocused || !_viewportHovered);
 
         ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
-        
-        if (_ViewportSize != *((glm::vec2*)(&viewportPanelSize)) && viewportPanelSize.x >= 0 && viewportPanelSize.y >= 0) {
-            _FrameBuffer->Resize((uint32_t)viewportPanelSize.x, (uint32_t)viewportPanelSize.y);
-            _CameraController.OnResize((uint32_t)viewportPanelSize.x, (uint32_t)viewportPanelSize.y);
-            _ViewportSize = { viewportPanelSize.x, viewportPanelSize.y };
-        }
+        _ViewportSize = { viewportPanelSize.x, viewportPanelSize.y };
+
 
         ImGui::Image((void*)_FrameBuffer->GetColorAttachmentRendererId(), { _ViewportSize.x, _ViewportSize.y}, { 0, 1 }, { 1, 0 });
         ImGui::PopStyleVar();

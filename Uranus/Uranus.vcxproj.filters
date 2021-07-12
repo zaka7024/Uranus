@@ -1441,6 +1441,7 @@
     <ClInclude Include="src\Uranus\Scene\Components.h" />
     <ClInclude Include="src\Uranus\Scene\Entity.h" />
     <ClInclude Include="src\Uranus\Renderer\Camera.h" />
+    <ClInclude Include="src\Uranus\Scene\SceneCamera.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp">
@@ -1535,5 +1536,6 @@
     </ClCompile>
     <ClCompile Include="src\Uranus\Scene\Scene.cpp" />
     <ClCompile Include="src\Uranus\Scene\Entity.cpp" />
+    <ClCompile Include="src\Uranus\Scene\SceneCamera.cpp" />
   </ItemGroup>
 </Project>

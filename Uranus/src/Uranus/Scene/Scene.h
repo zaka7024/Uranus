@@ -14,6 +14,8 @@ namespace Uranus {
 		~Scene();
 
 		void OnUpdate(Timestep ts);
+		void OnViewportResize(uint32_t width, uint32_t height);
+
 		Entity CreateEntity(const std::string& name = std::string());
 
 		entt::registry& GetRegistry() { return _Registry; }
