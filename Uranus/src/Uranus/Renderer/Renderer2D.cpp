@@ -122,6 +122,22 @@ namespace Uranus {
 		delete _RendererData;
 	}
 
+	void Renderer2D::BeginScene(Camera& camera, const glm::mat4& transform)
+	{
+		UR_PROFILE_SCOPE("LayerStack OnImGuiRender");
+
+
+		auto viewProjectionMat = camera.GetProjection() * glm::inverse(transform);
+
+		_RendererData->TextureShader->Bind();
+		_RendererData->TextureShader->SetMat4(viewProjectionMat, "u_ViewProjection");
+
+		_RendererData->TextureSlotIndex = 1;
+		_RendererData->QuadIndexCount = 0;
+
+		_RendererData->QuadVertexBufferPtr = _RendererData->QuadVertexBufferBase;
+	}
+
 	void Renderer2D::BeginScene(OrthographicCamera& camera)
 	{
 		UR_PROFILE_SCOPE("LayerStack OnImGuiRender");

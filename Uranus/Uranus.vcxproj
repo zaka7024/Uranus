@@ -159,6 +159,7 @@
     <ClInclude Include="src\Uranus\ImGui\ImGuiLayer.h" />
     <ClInclude Include="src\Uranus\OrthographicCameraController.h" />
     <ClInclude Include="src\Uranus\Renderer\Buffer.h" />
+    <ClInclude Include="src\Uranus\Renderer\Camera.h" />
     <ClInclude Include="src\Uranus\Renderer\FrameBuffer.h" />
     <ClInclude Include="src\Uranus\Renderer\GraphicsContext.h" />
     <ClInclude Include="src\Uranus\Renderer\OrthographicCamera.h" />

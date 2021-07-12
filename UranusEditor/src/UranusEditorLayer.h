@@ -24,7 +24,11 @@ namespace Uranus {
 		Uranus::Ref<Uranus::Texture2D> _PlayerTexture;
 		Uranus::Ref<Uranus::Texture2D> _TileTexture;
 
+		Uranus::Entity _MainCamera;
+		Uranus::Entity _SecondCamera;
 		Uranus::Entity _SquareEntity;
+
+		bool _PrimaryCamera = true;
 
 		bool _viewportFocused = false, _viewportHovered = false;
 		glm::vec2 _ViewportSize = { 0.0f, 0.0f };

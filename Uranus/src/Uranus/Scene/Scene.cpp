@@ -46,12 +46,33 @@ namespace Uranus {
 
 	void Scene::OnUpdate(Timestep ts)
 	{
-		auto group = _Registry.group<TransformComponent, SpriteRendererComponent>();
+		Camera* mainCamera = nullptr;
+		glm::mat4* cameraTransform = nullptr;
 
-		for (auto entity : group) {
-			auto& [transfrom, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
+		auto view = _Registry.view<CameraComponent, TransformComponent>();
 
-			Uranus::Renderer2D::DrawQuad(transfrom, sprite.Color);
+		for (auto entity : view) {
+			
+			auto& [camera, transform] = view.get<CameraComponent, TransformComponent>(entity);
+			if (camera.Primary) {
+				mainCamera = &camera.Camera;
+				cameraTransform = &transform.Transform;
+				break;
+			}
+		}
+
+		if (mainCamera) {
+			Uranus::Renderer2D::BeginScene(*mainCamera, *cameraTransform);
+
+			auto group = _Registry.group<TransformComponent, SpriteRendererComponent>();
+
+			for (auto entity : group) {
+				auto& [transfrom, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
+
+				Uranus::Renderer2D::DrawQuad(transfrom, sprite.Color);
+			}
+
+			Uranus::Renderer2D::EndScene();
 		}
 	}
 

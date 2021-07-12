@@ -2,6 +2,7 @@
 #include "OrthographicCamera.h"
 
 #include "Texture.h"
+#include "Uranus/Renderer/Camera.h"
 
 namespace Uranus {
 
@@ -10,6 +11,7 @@ namespace Uranus {
 		static void Init();
 		static void Shutdown();
 
+		static void BeginScene(Camera& camera, const glm::mat4& transform);
 		static void BeginScene(OrthographicCamera& camera);
 		static void EndScene();
 		static void Flush();
