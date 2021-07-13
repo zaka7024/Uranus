@@ -175,6 +175,7 @@
     <ClInclude Include="src\Uranus\Scene\Entity.h" />
     <ClInclude Include="src\Uranus\Scene\Scene.h" />
     <ClInclude Include="src\Uranus\Scene\SceneCamera.h" />
+    <ClInclude Include="src\Uranus\Scene\ScriptableEntity.h" />
     <ClInclude Include="src\urpch.h" />
     <ClInclude Include="vendor\entt\include\entt.hpp" />
     <ClInclude Include="vendor\glm\glm\common.hpp" />

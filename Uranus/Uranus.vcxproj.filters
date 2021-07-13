@@ -1442,6 +1442,7 @@
     <ClInclude Include="src\Uranus\Scene\Entity.h" />
     <ClInclude Include="src\Uranus\Renderer\Camera.h" />
     <ClInclude Include="src\Uranus\Scene\SceneCamera.h" />
+    <ClInclude Include="src\Uranus\Scene\ScriptableEntity.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp">

@@ -37,6 +37,40 @@ namespace Uranus {
         _SecondCamera = _ActiveScene->CreateEntity();
         auto& cc = _SecondCamera.AddComponent<CameraComponent>();
         cc.Primary = false;
+
+        class CameraController : public ScriptableEntity {
+        public:
+            void OnCreate() 
+            {
+                std::cout << "CameraController::OnCreate" << std::endl;
+                transformComponent = &GetComponent<TransformComponent>();
+            };
+
+            void OnDestroy()
+            {
+
+            };
+
+            void OnUpdate(Timestep ts)
+            {
+                auto& transform = transformComponent->Transform;
+                if (Input::IsKeyPressed(UR_KEY_A))
+                    transform[3][0] -= cameraMoveSpeed * ts;
+                if (Input::IsKeyPressed(UR_KEY_D))
+                    transform[3][0] += cameraMoveSpeed * ts;
+                if (Input::IsKeyPressed(UR_KEY_S))
+                    transform[3][1] -= cameraMoveSpeed * ts;
+                if (Input::IsKeyPressed(UR_KEY_W))
+                    transform[3][1] += cameraMoveSpeed * ts;
+
+            };
+
+        private:
+            float cameraMoveSpeed = 5.0f;
+            TransformComponent* transformComponent;
+        };
+
+        _SquareEntity.AddComponent<NativeScriptComponent>().Bind<CameraController>();
     }
 
     void UranusEditorLayer::OnDetach()

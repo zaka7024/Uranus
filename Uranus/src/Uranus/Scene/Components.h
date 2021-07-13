@@ -3,6 +3,7 @@
 #include <glm/glm.hpp>
 
 #include "Uranus/Scene/SceneCamera.h"
+#include "Uranus/Scene/ScriptableEntity.h"
 
 namespace Uranus {
 
@@ -43,5 +44,26 @@ namespace Uranus {
 
 		CameraComponent() = default;
 		CameraComponent(const CameraComponent&) = default;
+	};
+
+	struct NativeScriptComponent {
+		ScriptableEntity* Instance = nullptr;
+
+		NativeScriptComponent() = default;
+
+		//ScriptableEntity*(*InstantiateScript)();
+		std::function<ScriptableEntity*()> InstantiateScript;
+		void(*DestroyScript)(NativeScriptComponent*);
+		
+		template<typename T>
+		void Bind() {
+			InstantiateScript = []() {
+				return new T();
+			};
+
+			DestroyScript = [](NativeScriptComponent* nsc) {
+				delete nsc->Instance; nsc->Instance = nullptr;
+			};
+		}
 	};
 }

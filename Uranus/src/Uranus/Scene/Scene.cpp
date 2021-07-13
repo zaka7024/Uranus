@@ -46,6 +46,21 @@ namespace Uranus {
 
 	void Scene::OnUpdate(Timestep ts)
 	{
+
+		// Update And Create Scripts
+		_Registry.view<NativeScriptComponent>().each([=](auto entity, auto& nsc)
+		{
+			if(!nsc.Instance)
+			{
+				nsc.Instance = nsc.InstantiateScript();
+				nsc.Instance->_Entity = Entity{ entity,  this };
+				nsc.Instance->OnCreate();
+			}
+
+			nsc.Instance->OnUpdate(ts);
+		});
+
+		// Rendere
 		Camera* mainCamera = nullptr;
 		glm::mat4* cameraTransform = nullptr;
 

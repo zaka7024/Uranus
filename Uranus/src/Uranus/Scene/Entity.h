@@ -19,7 +19,7 @@ namespace Uranus {
 			return _Scene->_Registry.emplace<T>(_EntityHandle, std::forward<Args>(args)...);
 		}
 
-		template<typename T, typename... Args>
+		template<typename T>
 		T& GetComponent() {
 			return _Scene->_Registry.get<T>(_EntityHandle);
 		}
