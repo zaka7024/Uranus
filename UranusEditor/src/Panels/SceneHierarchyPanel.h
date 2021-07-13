@@ -14,6 +14,7 @@ namespace Uranus {
 		void OnImGuiRender();
 
 	private:
+		void DrawComponents(Entity entity);
 		void DrawEntityNode(Entity entity);
 
 	private:

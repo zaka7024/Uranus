@@ -2,6 +2,7 @@
 #include "Uranus/Scene/Components.h"
 
 #include <imgui/imgui.h>
+#include <glm\glm\gtc\type_ptr.hpp>
 
 namespace Uranus {
 
@@ -25,18 +26,39 @@ namespace Uranus {
 			DrawEntityNode(entity);
 		});
 
+		if (ImGui::IsMouseDown(0) && ImGui::IsWindowHovered())
+			_SelectionContext = {};
+
 		ImGui::End();
 
 		ImGui::Begin("Propertes Panel");
 		if (_SelectionContext) {
-
-			if (_SelectionContext.HasComponent<TagComponent>()) {
-				auto& tag = _SelectionContext.GetComponent<TagComponent>().Tag;
-				ImGui::Text(tag.c_str());
-			}
-
+			DrawComponents(_SelectionContext);
 		}
 		ImGui::End();
+	}
+
+	void SceneHierarchyPanel::DrawComponents(Entity entity)
+	{
+		if (entity.HasComponent<TagComponent>()) {
+			auto& tag = entity.GetComponent<TagComponent>().Tag;
+
+			char buffer[255];
+			memset(buffer, 0, sizeof(buffer));
+			strcpy_s(buffer, sizeof(buffer), tag.c_str());
+			if (ImGui::InputText("Tag", buffer, sizeof(buffer))) {
+				tag = std::string(buffer);
+			}
+		}	
+
+		if (entity.HasComponent<TransformComponent>()) {
+			if (ImGui::TreeNodeEx((void*)typeid(TransformComponent).hash_code(), ImGuiTreeNodeFlags_DefaultOpen, "Transform")) {
+				auto& transform = entity.GetComponent<TransformComponent>().Transform;
+				ImGui::DragFloat3("Position", glm::value_ptr(transform[3]), 0.1f);	
+
+				ImGui::TreePop();
+			}
+		}
 	}
 
 	void SceneHierarchyPanel::DrawEntityNode(Entity entity)
