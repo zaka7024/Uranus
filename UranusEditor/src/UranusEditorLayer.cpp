@@ -26,15 +26,15 @@ namespace Uranus {
         _FrameBuffer = Uranus::FrameBuffer::Create(framebufferSpecification);
 
         _ActiveScene = CreateRef<Scene>();
-        Entity squareEntity = _ActiveScene->CreateEntity();
+        Entity squareEntity = _ActiveScene->CreateEntity("Square");
 
         _SquareEntity = squareEntity;
         _SquareEntity.AddComponent<SpriteRendererComponent>();
 
-        _MainCamera = _ActiveScene->CreateEntity();
+        _MainCamera = _ActiveScene->CreateEntity("Main Camera");
         _MainCamera.AddComponent<CameraComponent>();
 
-        _SecondCamera = _ActiveScene->CreateEntity();
+        _SecondCamera = _ActiveScene->CreateEntity("Second Camera");
         auto& cc = _SecondCamera.AddComponent<CameraComponent>();
         cc.Primary = false;
 
@@ -71,6 +71,9 @@ namespace Uranus {
         };
 
         _SquareEntity.AddComponent<NativeScriptComponent>().Bind<CameraController>();
+
+        //
+        _SceneHierarchyPanel.SetContext(_ActiveScene);
     }
 
     void UranusEditorLayer::OnDetach()
@@ -180,6 +183,8 @@ namespace Uranus {
             ImGui::EndMenuBar();
         }
 
+
+        _SceneHierarchyPanel.OnImGuiRender();
 
         ImGui::Begin("Color Picker");
         ImGui::SliderFloat3("Position", glm::value_ptr(_Position), -10, 10);

@@ -12,32 +12,6 @@ namespace Uranus {
 
 	Scene::Scene() {
 		
-		struct TransformComponent {
-			glm::mat4 Transform;
-
-			operator const glm::mat4&() { return Transform; }
-		};
-
-		struct SpriteRendererComponent {
-			glm::vec4 Color;
-		};
-
-		entt::entity entity = _Registry.create();
-
-		auto& transformComponent = _Registry.emplace<TransformComponent>(entity);
-
-		_Registry.get<TransformComponent>(entity);
-
-		auto view = _Registry.view<TransformComponent>();
-		for (auto entity : view) {
-			TransformComponent& transformComponent = view.get<TransformComponent>(entity);
-		}
-
-		auto group = _Registry.group<TransformComponent, SpriteRendererComponent>();
-
-		for (auto entity : group) {
-			auto&[transfrom, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
-		}
 	}
 
 	Scene::~Scene() {

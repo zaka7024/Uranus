@@ -1,6 +1,8 @@
 #pragma once
 #include "Uranus.h"
 
+#include "Panels/SceneHierarchyPanel.h"
+
 namespace Uranus {
 
 	class UranusEditorLayer : public Uranus::Layer {
@@ -27,6 +29,9 @@ namespace Uranus {
 		Uranus::Entity _MainCamera;
 		Uranus::Entity _SecondCamera;
 		Uranus::Entity _SquareEntity;
+
+		// panels
+		SceneHierarchyPanel _SceneHierarchyPanel;
 
 		bool _PrimaryCamera = true;
 

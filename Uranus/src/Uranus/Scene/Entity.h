@@ -29,7 +29,24 @@ namespace Uranus {
 			return _Scene->_Registry.any_of<T>(_EntityHandle);
 		}
 
+		template<typename T>
+		void RemoveComponent()
+		{
+			_Scene->_Registry.remove<T>(_EntityHandle);
+		}
+
+		operator entt::entity() const { return _EntityHandle; }
+		operator uint32_t() const { return (uint32_t)_EntityHandle; }
 		operator bool() const { return _EntityHandle != entt::null; }
+
+		bool operator== (const Entity & other) {
+			return _EntityHandle == other._EntityHandle && _Scene == other._Scene;
+		}
+
+		bool operator!= (const Entity& other) {
+			//return !operator==(other);
+			return !(*this != other);
+		}
 
 	private:
 		entt::entity _EntityHandle { entt::null };
