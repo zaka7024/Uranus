@@ -261,11 +261,9 @@ namespace Uranus {
 			_RendererData->TextureSlotIndex++;
 		}
 
-		const glm::vec4 color = glm::vec4(1.0f);
-
 		for (uint32_t i = 0; i < 4; i++) {
 			_RendererData->QuadVertexBufferPtr->Position = transform * _RendererData->QuadVertexPosition[i];
-			_RendererData->QuadVertexBufferPtr->Color = color;
+			_RendererData->QuadVertexBufferPtr->Color = tintColor;
 			_RendererData->QuadVertexBufferPtr->TexCoord = _RendererData->QuadTextureCoords[i];
 			_RendererData->QuadVertexBufferPtr->TexIndex = textureIndex;
 			_RendererData->QuadVertexBufferPtr->TilingFactor = tilingFactor;
@@ -341,14 +339,13 @@ namespace Uranus {
 			_RendererData->TextureSlotIndex++;
 		}
 
-		const glm::vec4 color = glm::vec4(1.0f);
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
 			* glm::scale(glm::mat4(1.0f), glm::vec3(size.x, size.y, 1.0f))
 			* glm::rotate(glm::mat4(1.0f), glm::radians(rotation), {0.0f, 0.0f, 1.0f});
 
 		for (uint32_t i = 0; i < 4; i++) {
 			_RendererData->QuadVertexBufferPtr->Position = transform * _RendererData->QuadVertexPosition[i];
-			_RendererData->QuadVertexBufferPtr->Color = color;
+			_RendererData->QuadVertexBufferPtr->Color = tintColor;
 			_RendererData->QuadVertexBufferPtr->TexCoord = _RendererData->QuadTextureCoords[i];
 			_RendererData->QuadVertexBufferPtr->TexIndex = textureIndex;
 			_RendererData->QuadVertexBufferPtr->TilingFactor = tilingFactor;

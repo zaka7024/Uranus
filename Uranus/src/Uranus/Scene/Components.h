@@ -1,7 +1,9 @@
 #pragma once
 
 #include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
+#include "Uranus/Renderer/Texture.h"
 #include "Uranus/Scene/SceneCamera.h"
 #include "Uranus/Scene/ScriptableEntity.h"
 
@@ -18,14 +20,27 @@ namespace Uranus {
 
 
 	struct TransformComponent {
-		glm::mat4 Transform{ 1.0f };
+		glm::vec3 Translation = glm::vec3(0.0f);
+		glm::vec3 Rotation = glm::vec3(0.0f);
+		glm::vec3 Scale = glm::vec3(1.0f);
 
 		TransformComponent() = default;
 		TransformComponent(const TransformComponent&) = default;
-		TransformComponent(const glm::mat4& transfrom)
-			: Transform(transfrom) {}
+		TransformComponent(const glm::vec3& translation)
+			: Translation(translation) {}
 
-		operator const glm::mat4& () { return Transform; }
+		glm::mat4 GetTransform() {
+			
+			glm::mat4 rotation = glm::rotate(glm::mat4(1.0f), Rotation.x, { 1.0f, 0.0f, 0.0f })
+				* glm::rotate(glm::mat4(1.0f), Rotation.y, { 0.0f, 1.0f, 0.0f })
+				* glm::rotate(glm::mat4(1.0f), Rotation.z, { 0.0f, 0.0f, 1.0f });
+
+			glm::mat4 transform = glm::translate(glm::mat4(1.0f), Translation)
+				* rotation
+				* glm::scale(glm::mat4(1.0f), Scale);
+
+			return transform;
+		}
 	};
 
 	struct SpriteRendererComponent {

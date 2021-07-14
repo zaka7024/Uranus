@@ -29,7 +29,7 @@ namespace Uranus {
         Entity squareEntity = _ActiveScene->CreateEntity("Square");
 
         _SquareEntity = squareEntity;
-        _SquareEntity.AddComponent<SpriteRendererComponent>();
+        auto& sr = _SquareEntity.AddComponent<SpriteRendererComponent>();
 
         _MainCamera = _ActiveScene->CreateEntity("Main Camera");
         _MainCamera.AddComponent<CameraComponent>();
@@ -56,15 +56,15 @@ namespace Uranus {
 
             void OnUpdate(Timestep ts)
             {
-                auto& transform = transformComponent->Transform;
+                auto& position = transformComponent->Translation;
                 if (Input::IsKeyPressed(UR_KEY_A))
-                    transform[3][0] -= cameraMoveSpeed * ts;
+                    position.x -= cameraMoveSpeed * ts;
                 if (Input::IsKeyPressed(UR_KEY_D))
-                    transform[3][0] += cameraMoveSpeed * ts;
+                    position.x += cameraMoveSpeed * ts;
                 if (Input::IsKeyPressed(UR_KEY_S))
-                    transform[3][1] -= cameraMoveSpeed * ts;
+                    position.y -= cameraMoveSpeed * ts;
                 if (Input::IsKeyPressed(UR_KEY_W))
-                    transform[3][1] += cameraMoveSpeed * ts;
+                    position.y += cameraMoveSpeed * ts;
 
             };
 
@@ -188,10 +188,7 @@ namespace Uranus {
 
         _SceneHierarchyPanel.OnImGuiRender();
 
-        ImGui::Begin("Color Picker");
-        ImGui::SliderFloat3("Position", glm::value_ptr(_Position), -10, 10);
-        ImGui::DragFloat("Rotation", &_Rotation, 0.1, 0, 360);
-        ImGui::DragFloat2("Scale", glm::value_ptr(_Scale), 0.1, 0, 360);
+        ImGui::Begin("Settings");
 
         ImGui::Text("Stats");
         auto stats = Uranus::Renderer2D::GetStats();
@@ -199,29 +196,6 @@ namespace Uranus {
         ImGui::Text("Quad	Count %d", stats.QuadCount);
         ImGui::Text("Vertex Count %d", stats.GetTotalVertexCount());
         ImGui::Text("Index	Count %d", stats.GetTotalIndexCount());
-
-        if (_SquareEntity) {
-            ImGui::Separator();
-            ImGui::ColorEdit4("Color", glm::value_ptr(_Color));
-            ImGui::Text("%s", _SquareEntity.GetComponent<TagComponent>().Tag.c_str());
-            ImGui::Separator();
-        }
-
-        ImGui::DragFloat3("Camera Transform",
-            glm::value_ptr(_MainCamera.GetComponent<TransformComponent>().Transform[3]));
-
-        if (ImGui::Checkbox("Camera A", &_PrimaryCamera))
-        {
-            _MainCamera.GetComponent<CameraComponent>().Primary = _PrimaryCamera;
-            _SecondCamera.GetComponent<CameraComponent>().Primary = !_PrimaryCamera;
-        }
-
-        {
-            auto& camera = _SecondCamera.GetComponent<CameraComponent>().Camera;
-            float orthoSize = camera.GetOrthographicSize();
-            if (ImGui::DragFloat("Second Camera Ortho Size", &orthoSize))
-                camera.SetOrthographicSize(orthoSize);
-        }
 
         ImGui::End();
         

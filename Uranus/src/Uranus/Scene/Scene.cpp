@@ -36,7 +36,7 @@ namespace Uranus {
 
 		// Rendere
 		Camera* mainCamera = nullptr;
-		glm::mat4* cameraTransform = nullptr;
+		glm::mat4 cameraTransform;
 
 		auto view = _Registry.view<CameraComponent, TransformComponent>();
 
@@ -45,20 +45,19 @@ namespace Uranus {
 			auto& [camera, transform] = view.get<CameraComponent, TransformComponent>(entity);
 			if (camera.Primary) {
 				mainCamera = &camera.Camera;
-				cameraTransform = &transform.Transform;
+				cameraTransform = transform.GetTransform();
 				break;
 			}
 		}
 
 		if (mainCamera) {
-			Uranus::Renderer2D::BeginScene(*mainCamera, *cameraTransform);
+			Uranus::Renderer2D::BeginScene(*mainCamera, cameraTransform);
 
 			auto group = _Registry.group<TransformComponent, SpriteRendererComponent>();
 
 			for (auto entity : group) {
 				auto& [transfrom, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
-
-				Uranus::Renderer2D::DrawQuad(transfrom, sprite.Color);
+				Uranus::Renderer2D::DrawQuad(transfrom.GetTransform(), sprite.Color);
 			}
 
 			Uranus::Renderer2D::EndScene();
