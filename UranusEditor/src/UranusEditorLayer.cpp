@@ -38,6 +38,9 @@ namespace Uranus {
         auto& cc = _SecondCamera.AddComponent<CameraComponent>();
         cc.Primary = false;
 
+        auto& redSquare = _ActiveScene->CreateEntity("Red Square");
+        redSquare.AddComponent<SpriteRendererComponent>().Color = { 0.8f, 0.3f, 0.6f, 1.0f };
+
         class CameraController : public ScriptableEntity {
         public:
             void OnCreate() 
@@ -70,7 +73,7 @@ namespace Uranus {
             TransformComponent* transformComponent;
         };
 
-        _SquareEntity.AddComponent<NativeScriptComponent>().Bind<CameraController>();
+        _MainCamera.AddComponent<NativeScriptComponent>().Bind<CameraController>();
 
         //
         _SceneHierarchyPanel.SetContext(_ActiveScene);
@@ -114,7 +117,6 @@ namespace Uranus {
 
         {
             UR_PROFILE_SCOPE("Renderer Draw");
-            _SquareEntity.GetComponent<SpriteRendererComponent>().Color = _Color;
             _ActiveScene->OnUpdate(ts);
         }
 
