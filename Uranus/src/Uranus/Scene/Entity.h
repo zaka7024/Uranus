@@ -16,7 +16,9 @@ namespace Uranus {
 
 		template<typename T, typename... Args>
 		T& AddComponent(Args&&... args) {
-			return _Scene->_Registry.emplace<T>(_EntityHandle, std::forward<Args>(args)...);
+			auto& component = _Scene->_Registry.emplace<T>(_EntityHandle, std::forward<Args>(args)...);
+			_Scene->OnComponenetAdded<T>(*this, component);
+			return component;
 		}
 
 		template<typename T>

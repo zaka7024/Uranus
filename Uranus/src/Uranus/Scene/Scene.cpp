@@ -52,9 +52,8 @@ namespace Uranus {
 
 		if (mainCamera) {
 			Uranus::Renderer2D::BeginScene(*mainCamera, cameraTransform);
-
+	
 			auto group = _Registry.group<TransformComponent, SpriteRendererComponent>();
-
 			for (auto entity : group) {
 				auto& [transfrom, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
 				Uranus::Renderer2D::DrawQuad(transfrom.GetTransform(), sprite.Color);
@@ -66,6 +65,9 @@ namespace Uranus {
 
 	void Scene::OnViewportResize(uint32_t width, uint32_t height)
 	{
+		_ViewPortWidth = width;
+		_ViewPortHeight = height;
+
 		auto view = _Registry.view<CameraComponent>();
 		for (auto entity : view) {
 			auto& cameraComponent = view.get<CameraComponent>(entity);
@@ -82,5 +84,42 @@ namespace Uranus {
 		auto& tagComponent = entity.AddComponent<TagComponent>();
 		tagComponent.Tag = name.empty() ? "Entity" : name;
 		return entity;
+	}
+
+	void Scene::DeleteEntity(Entity entity)
+	{
+		_Registry.destroy(entity);
+	}
+
+	template<typename T>
+	void Scene::OnComponenetAdded(Entity entity, T& component)
+	{
+		static_assert(false);
+	}
+
+	template<>
+	void Scene::OnComponenetAdded<CameraComponent>(Entity entity, CameraComponent& component)
+	{
+		component.Camera.SetViewportSize(_ViewPortWidth, _ViewPortHeight);
+	}
+
+	template<>
+	void Scene::OnComponenetAdded<TagComponent>(Entity entity, TagComponent& component)
+	{
+	}
+
+	template<>
+	void Scene::OnComponenetAdded<TransformComponent>(Entity entity, TransformComponent& component)
+	{
+	}
+
+	template<>
+	void Scene::OnComponenetAdded<SpriteRendererComponent>(Entity entity, SpriteRendererComponent& component)
+	{
+	}
+
+	template<>
+	void Scene::OnComponenetAdded<NativeScriptComponent>(Entity entity, NativeScriptComponent& component)
+	{
 	}
 }

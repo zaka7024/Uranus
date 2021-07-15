@@ -155,9 +155,12 @@ namespace Uranus {
 	{
 		UR_PROFILE_SCOPE("LayerStack OnImGuiRender");
 
+		if (_RendererData->QuadIndexCount == 0)
+			return;
+
 		uint32_t size = (uint8_t*)_RendererData->QuadVertexBufferPtr - (uint8_t*)_RendererData->QuadVertexBufferBase;
 		_RendererData->QuadVertexBuffer->SetData(_RendererData->QuadVertexBufferBase, size);
-	
+
 		Flush();
 	}
 
