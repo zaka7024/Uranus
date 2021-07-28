@@ -26,6 +26,7 @@ namespace Uranus {
 
 		friend class Entity;
 		friend class SceneHierarchyPanel;
+		friend class SceneSerializer;
 
 	private:
 		entt::registry _Registry;

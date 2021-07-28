@@ -15,6 +15,14 @@ namespace Uranus {
 		virtual void OnUpdate(Uranus::Timestep ts) override;
 		virtual void OnEvent(Uranus::Event& event) override;
 		virtual void OnImGuiRender() override;
+
+	private:
+		void NewScene();
+		void OpenScene();
+		void SaveSceneAs();
+
+		bool OnKeyPressed(KeyPressedEvent& e);
+
 	private:
 		Uranus::OrthographicCameraController _CameraController;
 		Uranus::Ref<Uranus::VertexArray> _SquareVA;

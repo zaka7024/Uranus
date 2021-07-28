@@ -109,6 +109,7 @@ namespace Uranus {
 	void SceneHierarchyPanel::SetContext(const Ref<Scene>& context)
 	{
 		_Context = context;
+		_SelectionContext = {};
 	}
 
 	void SceneHierarchyPanel::OnImGuiRender()

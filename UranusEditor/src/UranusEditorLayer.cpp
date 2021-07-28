@@ -1,5 +1,7 @@
 #include "UranusEditorLayer.h"
 
+#include "Uranus/Scene/SceneSerializer.h"
+#include "Uranus/Utils/PlatformUtils.h"
 #include <Uranus.h>
 
 #include <imgui\imgui.cpp>
@@ -26,6 +28,8 @@ namespace Uranus {
         _FrameBuffer = Uranus::FrameBuffer::Create(framebufferSpecification);
 
         _ActiveScene = CreateRef<Scene>();
+
+#if 0
         Entity squareEntity = _ActiveScene->CreateEntity("Square");
 
         _SquareEntity = squareEntity;
@@ -75,6 +79,7 @@ namespace Uranus {
 
         _MainCamera.AddComponent<NativeScriptComponent>().Bind<CameraController>();
 
+#endif
         //
         _SceneHierarchyPanel.SetContext(_ActiveScene);
     }
@@ -126,6 +131,73 @@ namespace Uranus {
     void UranusEditorLayer::OnEvent(Uranus::Event& event)
     {
         _CameraController.OnEvent(event);
+        EventDispatcher dispatcher(event);
+        dispatcher.Dispatch<KeyPressedEvent>(UR_BIND_EVENT_FUN(UranusEditorLayer::OnKeyPressed));
+    }
+
+    bool UranusEditorLayer::OnKeyPressed(KeyPressedEvent& e)
+    {
+        // Shortcuts
+        if (e.GetRepeatCount() > 0)
+            return false;
+
+        bool control = Input::IsKeyPressed(UR_KEY_LEFT_CONTROL) || Input::IsKeyPressed(UR_KEY_RIGHT_CONTROL);
+        bool shift = Input::IsKeyPressed(UR_KEY_LEFT_SHIFT) || Input::IsKeyPressed(UR_KEY_RIGHT_SHIFT);
+        switch (e.GetKeyCode())
+        {
+            case UR_KEY_N:
+            {
+                if (control)
+                    NewScene();
+
+                break;
+            }
+            case UR_KEY_O:
+            {
+                if (control)
+                    OpenScene();
+
+                break;
+            }
+            case UR_KEY_S:
+            {
+                if (control && shift)
+                    SaveSceneAs();
+
+                break;
+            }
+        }
+    }
+
+    void UranusEditorLayer::NewScene()
+    {
+        _ActiveScene = CreateRef<Scene>();
+        _ActiveScene->OnViewportResize((uint32_t)_ViewportSize.x, (uint32_t)_ViewportSize.y);
+        _SceneHierarchyPanel.SetContext(_ActiveScene);
+    }
+
+    void UranusEditorLayer::OpenScene()
+    {
+        std::string filepath = FileDialogs::OpenFile("Uranus Scene (*.uranus)\0*.uranus\0");
+        if (!filepath.empty())
+        {
+            _ActiveScene = CreateRef<Scene>();
+            _ActiveScene->OnViewportResize((uint32_t)_ViewportSize.x, (uint32_t)_ViewportSize.y);
+            _SceneHierarchyPanel.SetContext(_ActiveScene);
+
+            SceneSerializer serializer(_ActiveScene);
+            serializer.Deserialize(filepath);
+        }
+    }
+
+    void UranusEditorLayer::SaveSceneAs()
+    {
+        std::string filepath = FileDialogs::SaveFile("Uranus Scene (*.uranus)\0*.uranus\0");
+        if (!filepath.empty())
+        {
+            SceneSerializer serializer(_ActiveScene);
+            serializer.Serialize(filepath);
+        }
     }
 
     void UranusEditorLayer::OnImGuiRender()
@@ -176,10 +248,16 @@ namespace Uranus {
         {
             if (ImGui::BeginMenu("File"))
             {
-                if (ImGui::MenuItem("Close", NULL, false, open != NULL)) {
-                    Uranus::Application::Get().Close();
-                    open = false;
-                }
+
+                if (ImGui::MenuItem("New", "Ctrl+N"))
+                    NewScene();
+
+                if (ImGui::MenuItem("Open...", "Ctrl+O"))
+                    OpenScene();
+
+                if (ImGui::MenuItem("Save As...", "Ctrl+Shift+S"))
+                    SaveSceneAs();
+
                 ImGui::EndMenu();
             }
             ImGui::EndMenuBar();

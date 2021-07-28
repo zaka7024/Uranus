@@ -31,6 +31,12 @@
     <Filter Include="src\Uranus\Renderer">
       <UniqueIdentifier>{007A1CA3-6CDB-F9B0-F548-406361A93070}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Uranus\Scene">
+      <UniqueIdentifier>{B7B18BA7-A3AA-AAF9-CCDC-8F7EB8348A05}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Uranus\Utils">
+      <UniqueIdentifier>{FA45B9A7-E63E-D8F9-0F71-BD7EFBC8B705}</UniqueIdentifier>
+    </Filter>
     <Filter Include="vendor">
       <UniqueIdentifier>{B3738122-9F15-ACF8-88D0-BF4C74113349}</UniqueIdentifier>
     </Filter>
@@ -153,6 +159,9 @@
     <ClInclude Include="src\Uranus\Renderer\Buffer.h">
       <Filter>src\Uranus\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="src\Uranus\Renderer\Camera.h">
+      <Filter>src\Uranus\Renderer</Filter>
+    </ClInclude>
     <ClInclude Include="src\Uranus\Renderer\FrameBuffer.h">
       <Filter>src\Uranus\Renderer</Filter>
     </ClInclude>
@@ -185,6 +194,27 @@
     </ClInclude>
     <ClInclude Include="src\Uranus\Renderer\VertexArray.h">
       <Filter>src\Uranus\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Uranus\Scene\Components.h">
+      <Filter>src\Uranus\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Uranus\Scene\Entity.h">
+      <Filter>src\Uranus\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Uranus\Scene\Scene.h">
+      <Filter>src\Uranus\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Uranus\Scene\SceneCamera.h">
+      <Filter>src\Uranus\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Uranus\Scene\SceneSerializer.h">
+      <Filter>src\Uranus\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Uranus\Scene\ScriptableEntity.h">
+      <Filter>src\Uranus\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Uranus\Utils\PlatformUtils.h">
+      <Filter>src\Uranus\Utils</Filter>
     </ClInclude>
     <ClInclude Include="src\urpch.h">
       <Filter>src</Filter>
@@ -1437,12 +1467,6 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="src\Uranus\Scene\Scene.h" />
-    <ClInclude Include="src\Uranus\Scene\Components.h" />
-    <ClInclude Include="src\Uranus\Scene\Entity.h" />
-    <ClInclude Include="src\Uranus\Renderer\Camera.h" />
-    <ClInclude Include="src\Uranus\Scene\SceneCamera.h" />
-    <ClInclude Include="src\Uranus\Scene\ScriptableEntity.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp">
@@ -1467,6 +1491,9 @@
       <Filter>src\Platform\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\Windows\WindowsInput.cpp">
+      <Filter>src\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\Windows\WindowsPlatformUtils.cpp">
       <Filter>src\Platform\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp">
@@ -1529,14 +1556,23 @@
     <ClCompile Include="src\Uranus\Renderer\VertexBuffer.cpp">
       <Filter>src\Uranus\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="src\Uranus\Scene\Entity.cpp">
+      <Filter>src\Uranus\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Uranus\Scene\Scene.cpp">
+      <Filter>src\Uranus\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Uranus\Scene\SceneCamera.cpp">
+      <Filter>src\Uranus\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Uranus\Scene\SceneSerializer.cpp">
+      <Filter>src\Uranus\Scene</Filter>
+    </ClCompile>
     <ClCompile Include="src\urpch.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
-    <ClCompile Include="src\Uranus\Scene\Scene.cpp" />
-    <ClCompile Include="src\Uranus\Scene\Entity.cpp" />
-    <ClCompile Include="src\Uranus\Scene\SceneCamera.cpp" />
   </ItemGroup>
 </Project>

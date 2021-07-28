@@ -18,10 +18,12 @@ IncludeDir["ImGui"] = "Uranus/vendor/imgui"
 IncludeDir["glm"] = "Uranus/vendor/glm"
 IncludeDir["stb_image"] = "Uranus/vendor/stb_image"
 IncludeDir["entt"] = "Uranus/vendor/entt/include"
+IncludeDir["yaml"] = "Uranus/vendor/taml-cpp/include"
 
 include "Uranus/vendor/GLFW"
 include "Uranus/vendor/Glad"
 include "Uranus/vendor/imgui"
+include "Uranus/vendor/taml-cpp"
 
 project "Uranus"
 	location "Uranus"
@@ -53,13 +55,15 @@ project "Uranus"
 		"%{IncludeDir.ImGui}",
 		"%{IncludeDir.glm}",
 		"%{IncludeDir.stb_image}",
-		"%{IncludeDir.entt}"
+		"%{IncludeDir.entt}",
+		"%{IncludeDir.yaml}"
 	}
 
 	links {
 		"GLFW",
 		"Glad",
-		"ImGui"
+		"ImGui",
+		"yaml-cpp"
 	}
 
 	filter "system:windows"
