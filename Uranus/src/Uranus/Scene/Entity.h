@@ -10,7 +10,7 @@ namespace Uranus {
 	public:
 		Entity() = default;
 		Entity(entt::entity entityHandle, Scene* scene);
-		Entity(const Entity&) = default;
+		Entity(const Entity& other) = default;
 
 	public:
 
@@ -22,8 +22,13 @@ namespace Uranus {
 		}
 
 		template<typename T>
-		T& GetComponent() {
+		T& GetComponent() const {
 			return _Scene->_Registry.get<T>(_EntityHandle);
+		}
+
+		template<typename T>
+		T& GetOrEmplaceComponent() const {
+			return _Scene->_Registry.get_or_emplace<T>(_EntityHandle);
 		}
 
 		template<typename T>
@@ -49,6 +54,8 @@ namespace Uranus {
 			//return !operator==(other);
 			return !(*this != other);
 		}
+
+		void CopyFrom(Entity entity);
 
 	private:
 		entt::entity _EntityHandle { entt::null };

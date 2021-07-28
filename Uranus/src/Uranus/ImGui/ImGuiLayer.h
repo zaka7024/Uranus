@@ -22,6 +22,8 @@ namespace Uranus {
 		void End();
 
 		void BlockEvents(bool block) { _BlockEvents = block; }
+		
+		void SetDarkThemeColors();
 
 	private:
 		float _time = 0.0f;
