@@ -24,6 +24,8 @@ namespace Uranus {
 
 		entt::registry& GetRegistry() { return _Registry; }
 
+		Entity GetPrimaryCameraEntity();
+
 		friend class Entity;
 		friend class SceneHierarchyPanel;
 		friend class SceneSerializer;

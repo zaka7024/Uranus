@@ -2,7 +2,10 @@
 
 #include "Uranus/Scene/SceneSerializer.h"
 #include "Uranus/Utils/PlatformUtils.h"
-#include <Uranus.h>
+#include "Uranus.h"
+
+#include "ImGuizmo/ImGuizmo.h"
+#include "Uranus/Math/Math.h"
 
 #include <imgui\imgui.cpp>
 #include <glm\glm\gtc\type_ptr.hpp>
@@ -137,7 +140,6 @@ namespace Uranus {
 
     bool UranusEditorLayer::OnKeyPressed(KeyPressedEvent& e)
     {
-        // Shortcuts
         if (e.GetRepeatCount() > 0)
             return false;
 
@@ -166,6 +168,19 @@ namespace Uranus {
 
                 break;
             }
+
+            case UR_KEY_Q:
+                _GizmoType = -1;
+                break;
+            case UR_KEY_W:
+                _GizmoType = ImGuizmo::OPERATION::TRANSLATE;
+                break;
+            case UR_KEY_E:
+                _GizmoType = ImGuizmo::OPERATION::ROTATE;
+                break;
+            case UR_KEY_R:
+                _GizmoType = ImGuizmo::OPERATION::SCALE;
+                break;
         }
     }
 
@@ -282,11 +297,56 @@ namespace Uranus {
         _viewportFocused = ImGui::IsWindowFocused();
         _viewportHovered = ImGui::IsWindowHovered();
 
-        Application::Get().GetImGuiLayer()->BlockEvents(!_viewportFocused || !_viewportHovered);
+        Application::Get().GetImGuiLayer()->BlockEvents(!_viewportFocused && !_viewportHovered);
 
         ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
         _ViewportSize = { viewportPanelSize.x, viewportPanelSize.y };
 
+        // Gizmos
+        Entity selectedEntity = _SceneHierarchyPanel.GetSelectedEntity();
+        if (selectedEntity && _GizmoType != -1)
+        {
+            ImGuizmo::SetOrthographic(false);
+            //ImGuizmo::SetDrawlist();
+
+            float windowWidth = (float)ImGui::GetWindowWidth();
+            float windowHeight = (float)ImGui::GetWindowHeight();
+            ImGuizmo::SetRect(ImGui::GetWindowPos().x, ImGui::GetWindowPos().y, windowWidth, windowHeight);
+
+            // Camera
+            auto cameraEntity = _ActiveScene->GetPrimaryCameraEntity();
+            auto& camera = cameraEntity.GetComponent<CameraComponent>().Camera;
+            const glm::mat4& cameraProjection = camera.GetProjection();
+            glm::mat4 cameraView = glm::inverse(cameraEntity.GetComponent<TransformComponent>().GetTransform());
+
+            // Entity transform
+            auto& tc = selectedEntity.GetComponent<TransformComponent>();
+            glm::mat4 transform = tc.GetTransform();
+
+            // Snapping
+            bool snap = Input::IsKeyPressed(UR_KEY_LEFT_CONTROL);
+            float snapValue = 0.5f; // Snap to 0.5m for translation/scale
+            // Snap to 45 degrees for rotation
+            if (_GizmoType == ImGuizmo::OPERATION::ROTATE)
+                snapValue = 45.0f;
+
+            float snapValues[3] = { snapValue, snapValue, snapValue };
+
+            ImGuizmo::Manipulate(glm::value_ptr(cameraView), glm::value_ptr(cameraProjection),
+                (ImGuizmo::OPERATION)_GizmoType, ImGuizmo::LOCAL, glm::value_ptr(transform),
+                nullptr, snap ? snapValues : nullptr);
+
+            if (ImGuizmo::IsUsing())
+            {
+                glm::vec3 translation, rotation, scale;
+                Math::DecomposeTransform(transform, translation, rotation, scale);
+
+                glm::vec3 deltaRotation = rotation - tc.Rotation;
+                tc.Translation = translation;
+                tc.Rotation += deltaRotation;
+                tc.Scale = scale;
+            }
+        }
 
         ImGui::Image((void*)_FrameBuffer->GetColorAttachmentRendererId(), { _ViewportSize.x, _ViewportSize.y}, { 0, 1 }, { 1, 0 });
         ImGui::PopStyleVar();

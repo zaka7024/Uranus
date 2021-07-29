@@ -19,6 +19,7 @@ IncludeDir["glm"] = "Uranus/vendor/glm"
 IncludeDir["stb_image"] = "Uranus/vendor/stb_image"
 IncludeDir["entt"] = "Uranus/vendor/entt/include"
 IncludeDir["yaml"] = "Uranus/vendor/taml-cpp/include"
+IncludeDir["ImGuizmo"] = "Uranus/vendor/ImGuizmo"
 
 include "Uranus/vendor/GLFW"
 include "Uranus/vendor/Glad"
@@ -44,7 +45,9 @@ project "Uranus"
 		"%{prj.name}/vendor/**.hpp",
 		"%{prj.name}/vendor/**.inl",
 		"%{prj.name}/vendor/stb_image/**.h",
-		"%{prj.name}/vendor/stb_image/**.cpp"
+		"%{prj.name}/vendor/stb_image/**.cpp",
+		"%{prj.name}/vendor/ImGuizmo/ImGuizmo.h",
+		"%{prj.name}/vendor/ImGuizmo/ImGuizmo.cpp",
 	}
 
 	includedirs {
@@ -56,7 +59,8 @@ project "Uranus"
 		"%{IncludeDir.glm}",
 		"%{IncludeDir.stb_image}",
 		"%{IncludeDir.entt}",
-		"%{IncludeDir.yaml}"
+		"%{IncludeDir.yaml}",
+		"%{IncludeDir.ImGuizmo}"
 	}
 
 	links {
@@ -160,7 +164,8 @@ project "Sandbox"
 		"Uranus/vendor/spdlog/include",
 		"Uranus/vendor",
 		"%{IncludeDir.glm}",
-		"%{IncludeDir.entt}"
+		"%{IncludeDir.entt}",
+		"%{IncludeDir.ImGuizmo}"
 	}
 
 	links {

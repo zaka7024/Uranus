@@ -17,3 +17,6 @@
 [submodule "Uranus/vendor/taml-cpp"]
 	path = Uranus/vendor/taml-cpp
 	url = https://github.com/TheCherno/yaml-cpp
+[submodule "Uranus/vendor/ImGuizmo"]
+	path = Uranus/vendor/ImGuizmo
+	url = https://github.com/TheCherno/ImGuizmo

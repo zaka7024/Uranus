@@ -77,7 +77,7 @@
       <PrecompiledHeaderFile>urpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>UR_PLATFORM_WINDOWS;GLFW_INCLUDE_NONE;UR_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\glad\include;vendor\imgui;vendor\glm;vendor\stb_image;vendor\entt\include;vendor\taml-cpp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\glad\include;vendor\imgui;vendor\glm;vendor\stb_image;vendor\entt\include;vendor\taml-cpp\include;vendor\ImGuizmo;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -94,7 +94,7 @@
       <PrecompiledHeaderFile>urpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>UR_PLATFORM_WINDOWS;UR_DEBUG;GLFW_INCLUDE_NONE;UR_RELAESE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\glad\include;vendor\imgui;vendor\glm;vendor\stb_image;vendor\entt\include;vendor\taml-cpp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\glad\include;vendor\imgui;vendor\glm;vendor\stb_image;vendor\entt\include;vendor\taml-cpp\include;vendor\ImGuizmo;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -115,7 +115,7 @@
       <PrecompiledHeaderFile>urpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>UR_PLATFORM_WINDOWS;UR_DEBUG;GLFW_INCLUDE_NONE;UR_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\glad\include;vendor\imgui;vendor\glm;vendor\stb_image;vendor\entt\include;vendor\taml-cpp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\glad\include;vendor\imgui;vendor\glm;vendor\stb_image;vendor\entt\include;vendor\taml-cpp\include;vendor\ImGuizmo;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -157,6 +157,7 @@
     <ClInclude Include="src\Uranus\Events\KeyEvent.h" />
     <ClInclude Include="src\Uranus\Events\MouseEvent.h" />
     <ClInclude Include="src\Uranus\ImGui\ImGuiLayer.h" />
+    <ClInclude Include="src\Uranus\Math\Math.h" />
     <ClInclude Include="src\Uranus\OrthographicCameraController.h" />
     <ClInclude Include="src\Uranus\Renderer\Buffer.h" />
     <ClInclude Include="src\Uranus\Renderer\Camera.h" />
@@ -179,6 +180,7 @@
     <ClInclude Include="src\Uranus\Scene\ScriptableEntity.h" />
     <ClInclude Include="src\Uranus\Utils\PlatformUtils.h" />
     <ClInclude Include="src\urpch.h" />
+    <ClInclude Include="vendor\ImGuizmo\ImGuizmo.h" />
     <ClInclude Include="vendor\entt\include\entt.hpp" />
     <ClInclude Include="vendor\glm\glm\common.hpp" />
     <ClInclude Include="vendor\glm\glm\detail\_features.hpp" />
@@ -613,6 +615,7 @@
     <ClCompile Include="src\Uranus\Core\Log.cpp" />
     <ClCompile Include="src\Uranus\ImGui\ImGuiBuild.cpp" />
     <ClCompile Include="src\Uranus\ImGui\ImGuiLayer.cpp" />
+    <ClCompile Include="src\Uranus\Math\Math.cpp" />
     <ClCompile Include="src\Uranus\OrthographicCameraController.cpp" />
     <ClCompile Include="src\Uranus\Renderer\Buffer.cpp" />
     <ClCompile Include="src\Uranus\Renderer\FrameBuffer.cpp" />
@@ -633,6 +636,7 @@
     <ClCompile Include="src\urpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="vendor\ImGuizmo\ImGuizmo.cpp" />
     <ClCompile Include="vendor\stb_image\stb_image.cpp" />
   </ItemGroup>
   <ItemGroup>
