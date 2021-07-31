@@ -44,6 +44,7 @@ namespace Uranus {
 
 		operator entt::entity() const { return _EntityHandle; }
 		operator uint32_t() const { return (uint32_t)_EntityHandle; }
+		operator float() const { return (float)_EntityHandle; }
 		operator bool() const { return _EntityHandle != entt::null; }
 
 		bool operator== (const Entity & other) {

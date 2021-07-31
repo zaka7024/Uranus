@@ -4,11 +4,11 @@ Entities:
     TagComponent:
       Tag: Square
     TransformComponent:
-      Translation: [0, 0.42576313, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
+      Translation: [3.91474771, 0.733745039, 4.03774214]
+      Rotation: [0, 0.184952855, 0]
+      Scale: [0.999999285, 1, 1]
     SpriteRendererComponent:
-      Color: [1, 1, 1, 1]
+      Color: [1, 0.613899589, 0.613899589, 1]
   - Entity: 12837192831273
     TagComponent:
       Tag: Main Camera

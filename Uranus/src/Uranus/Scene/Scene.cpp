@@ -18,7 +18,7 @@ namespace Uranus {
 
 	}
 
-	void Scene::OnUpdate(Timestep ts)
+	void Scene::OnUpdateRuntime(Timestep ts)
 	{
 
 		// Update And Create Scripts
@@ -34,7 +34,7 @@ namespace Uranus {
 			nsc.Instance->OnUpdate(ts);
 		});
 
-		// Rendere
+		// Render
 		Camera* mainCamera = nullptr;
 		glm::mat4 cameraTransform;
 
@@ -56,11 +56,24 @@ namespace Uranus {
 			auto group = _Registry.group<TransformComponent, SpriteRendererComponent>();
 			for (auto entity : group) {
 				auto& [transfrom, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
-				Uranus::Renderer2D::DrawQuad(transfrom.GetTransform(), sprite.Color);
+				Uranus::Renderer2D::DrawQuad(transfrom.GetTransform(), sprite.Color, (int)entity);
 			}
 
 			Uranus::Renderer2D::EndScene();
 		}
+	}
+
+	void Scene::OnUpdateEditor(Timestep ts, EditorCamera& camera)
+	{
+		Uranus::Renderer2D::BeginScene(camera);
+
+		auto group = _Registry.group<TransformComponent, SpriteRendererComponent>();
+		for (auto entity : group) {
+			auto& [transfrom, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
+			Uranus::Renderer2D::DrawQuad(transfrom.GetTransform(), sprite.Color, (int)entity);
+		}
+
+		Uranus::Renderer2D::EndScene();
 	}
 
 	void Scene::OnViewportResize(uint32_t width, uint32_t height)

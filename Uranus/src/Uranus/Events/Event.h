@@ -4,6 +4,7 @@
 
 #include <sstream>
 #include <string>
+#include <functional>
 
 namespace Uranus {
 

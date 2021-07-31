@@ -3,6 +3,8 @@
 
 #include "Texture.h"
 #include "Uranus/Renderer/Camera.h"
+#include "Uranus/Renderer/EditorCamera.h"
+#include "Uranus/Scene/Entity.h"
 
 namespace Uranus {
 
@@ -12,6 +14,7 @@ namespace Uranus {
 		static void Shutdown();
 
 		static void BeginScene(Camera& camera, const glm::mat4& transform);
+		static void BeginScene(const EditorCamera& camera);
 		static void BeginScene(OrthographicCamera& camera);
 		static void EndScene();
 		static void Flush();
@@ -22,7 +25,7 @@ namespace Uranus {
 		static void DrawQuad(const glm::vec2& position, const glm::vec2& size, const Ref<Texture2D>& texture, float tilingFactor = 1.0f, const glm::vec4& tintColor = glm::vec4(1.0f));
 		static void DrawQuad(const glm::vec3& position, const glm::vec2& size, const Ref<Texture2D>& texture, float tilingFactor = 1.0f, const glm::vec4& tintColor = glm::vec4(1.0f));
 
-		static void DrawQuad(const glm::mat4& transform, const glm::vec4& color);
+		static void DrawQuad(const glm::mat4& transform, const glm::vec4& color, int id);
 		static void DrawQuad(const glm::mat4& transform, const Ref<Texture2D>& texture, float tilingFactor = 1.0f, const glm::vec4& tintColor = glm::vec4(1.0f));
 
 		static void DrawRotatedQuad(const glm::vec2& position, const glm::vec2& size, float rotation, const glm::vec4& color);

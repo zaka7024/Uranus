@@ -1474,6 +1474,7 @@
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
     <ClInclude Include="src\Uranus\Math\Math.h" />
+    <ClInclude Include="src\Uranus\Renderer\EditorCamera.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp">
@@ -1585,5 +1586,6 @@
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
     <ClCompile Include="src\Uranus\Math\Math.cpp" />
+    <ClCompile Include="src\Uranus\Renderer\EditorCamera.cpp" />
   </ItemGroup>
 </Project>

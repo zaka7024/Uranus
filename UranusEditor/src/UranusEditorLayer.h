@@ -38,6 +38,8 @@ namespace Uranus {
 		Uranus::Entity _SecondCamera;
 		Uranus::Entity _SquareEntity;
 
+		EditorCamera _EditorCamera;
+
 		// panels
 		SceneHierarchyPanel _SceneHierarchyPanel;
 		int _GizmoType = -1;
@@ -46,6 +48,8 @@ namespace Uranus {
 		bool _viewportFocused = false, _viewportHovered = false;
 
 		glm::vec2 _ViewportSize = { 0.0f, 0.0f };
+		glm::vec2 m_ViewportBounds[2];
+
 		glm::vec4 _Color = { 0.4f, 0.2f, 0.7f, 1.0f };
 		glm::vec3 _Position = { 0.0f, 0.0f, 0.1f };
 		glm::vec2 _Scale = { 1.0f, 1.0f };

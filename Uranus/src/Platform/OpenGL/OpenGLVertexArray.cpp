@@ -66,11 +66,60 @@ namespace Uranus {
 		BufferLayout& bufferLayout = vertexBuffer->GetLayout();
 
 		for (auto& element : bufferLayout.GetElements()) {
-			glEnableVertexAttribArray(index);
-			glVertexAttribPointer(index, GetShderTypeComponentCount(element.Type),
-				ShaderDateTypeToOpenGLBaseType(element.Type), element.Normlized ? GL_TRUE : GL_FALSE,
-				bufferLayout.GetStride(), (const void*)element.Offset);
-			index++;
+			switch (element.Type)
+			{
+			case ShaderDataType::Float:
+			case ShaderDataType::Float2:
+			case ShaderDataType::Float3:
+			case ShaderDataType::Float4:
+			{
+				glEnableVertexAttribArray(index);
+				glVertexAttribPointer(index,
+					GetShderTypeComponentCount(element.Type),
+					ShaderDateTypeToOpenGLBaseType(element.Type),
+					element.Normlized ? GL_TRUE : GL_FALSE,
+					bufferLayout.GetStride(),
+					(const void*)element.Offset);
+				index++;
+				break;
+			}
+			case ShaderDataType::Int:
+			case ShaderDataType::Int2:
+			case ShaderDataType::Int3:
+			case ShaderDataType::Int4:
+			case ShaderDataType::Bool:
+			{
+				glEnableVertexAttribArray(index);
+				glVertexAttribIPointer(index,
+					GetShderTypeComponentCount(element.Type),
+					ShaderDateTypeToOpenGLBaseType(element.Type),
+					bufferLayout.GetStride(),
+					(const void*)element.Offset);
+				index++;
+				break;
+			}
+			case ShaderDataType::Mat3:
+			case ShaderDataType::Mat4:
+			{
+				uint8_t count = GetShderTypeComponentCount(element.Type);
+				for (uint8_t i = 0; i < count; i++)
+				{
+					glEnableVertexAttribArray(index);
+					glVertexAttribPointer(index,
+						count,
+						ShaderDateTypeToOpenGLBaseType(element.Type),
+						element.Normlized ? GL_TRUE : GL_FALSE,
+						bufferLayout.GetStride(),
+						(const void*)(element.Offset + sizeof(float) * count * i));
+					glVertexAttribDivisor(index, 1);
+					index++;
+				}
+				break;
+			}
+			default:
+				UR_CORE_ASSERT(false, "Unknown ShaderDataType!");
+			}
+
 		}
 
 		_VertexBuffers.push_back(vertexBuffer);

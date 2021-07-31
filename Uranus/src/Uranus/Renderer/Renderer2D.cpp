@@ -15,6 +15,7 @@ namespace Uranus {
 		glm::vec2 TexCoord;
 		float TexIndex;
 		float TilingFactor;
+		int EntityId;
 	};
 
 	static struct Renderer2DStorage {
@@ -60,8 +61,9 @@ namespace Uranus {
 			{ ShaderDataType::Float3, "a_Position"},
 			{ ShaderDataType::Float4, "a_Color"},
 			{ ShaderDataType::Float2, "a_TexCoord"},
-			{ ShaderDataType::Float, "a_TexIndex"},
-			{ ShaderDataType::Float, "a_TilingFactor"},
+			{ ShaderDataType::Float	, "a_TexIndex"},
+			{ ShaderDataType::Float	, "a_TilingFactor"},
+			{ ShaderDataType::Int	, "a_EntityId"},
 		};
 
 		_RendererData->QuadVertexBuffer->SetLayout(bufferLayout);
@@ -117,16 +119,12 @@ namespace Uranus {
 
 	void Renderer2D::Shutdown()
 	{
-		UR_PROFILE_SCOPE("LayerStack OnImGuiRender");
 
 		delete _RendererData;
 	}
 
 	void Renderer2D::BeginScene(Camera& camera, const glm::mat4& transform)
 	{
-		UR_PROFILE_SCOPE("LayerStack OnImGuiRender");
-
-
 		auto viewProjectionMat = camera.GetProjection() * glm::inverse(transform);
 
 		_RendererData->TextureShader->Bind();
@@ -138,10 +136,21 @@ namespace Uranus {
 		_RendererData->QuadVertexBufferPtr = _RendererData->QuadVertexBufferBase;
 	}
 
+	void Renderer2D::BeginScene(const EditorCamera& camera)
+	{
+		glm::mat4 viewProj = camera.GetViewProjection();
+
+		_RendererData->TextureShader->Bind();
+		_RendererData->TextureShader->SetMat4(camera.GetViewProjection(), "u_ViewProjection");
+
+		_RendererData->TextureSlotIndex = 1;
+		_RendererData->QuadIndexCount = 0;
+
+		_RendererData->QuadVertexBufferPtr = _RendererData->QuadVertexBufferBase;
+	}
+
 	void Renderer2D::BeginScene(OrthographicCamera& camera)
 	{
-		UR_PROFILE_SCOPE("LayerStack OnImGuiRender");
-
 		_RendererData->TextureShader->Bind();
 		_RendererData->TextureShader->SetMat4(camera.GetViewProjectionMatrix(), "u_ViewProjection");
 
@@ -153,8 +162,6 @@ namespace Uranus {
 
 	void Renderer2D::EndScene()
 	{
-		UR_PROFILE_SCOPE("LayerStack OnImGuiRender");
-
 		if (_RendererData->QuadIndexCount == 0)
 			return;
 
@@ -197,7 +204,7 @@ namespace Uranus {
 		auto transform = glm::translate(glm::mat4(1.0f), position)
 			* glm::scale(glm::mat4(1.0f), glm::vec3(size.x, size.y, 1.0f));
 
-		DrawQuad(transform, color);
+		DrawQuad(transform, color, {});
 	}
 
 	void Renderer2D::DrawQuad(const glm::vec2& position, const glm::vec2& size, const Ref<Texture2D>& texture, float tilingFactor, const glm::vec4& tintColor)
@@ -218,7 +225,7 @@ namespace Uranus {
 		DrawQuad(transform, texture, tilingFactor, tintColor);
 	}
 
-	void Renderer2D::DrawQuad(const glm::mat4& transform, const glm::vec4& color) {
+	void Renderer2D::DrawQuad(const glm::mat4& transform, const glm::vec4& color, int entity) {
 		UR_PROFILE_SCOPE("LayerStack OnImGuiRender");
 
 		if (_RendererData->QuadIndexCount >= _RendererData->MaxIndices) {
@@ -234,6 +241,7 @@ namespace Uranus {
 			_RendererData->QuadVertexBufferPtr->TexCoord = _RendererData->QuadTextureCoords[i];
 			_RendererData->QuadVertexBufferPtr->TexIndex = texIndex;
 			_RendererData->QuadVertexBufferPtr->TilingFactor = tilingFactor;
+			_RendererData->QuadVertexBufferPtr->EntityId = entity;
 			_RendererData->QuadVertexBufferPtr++;
 		}
 

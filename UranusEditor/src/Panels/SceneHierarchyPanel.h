@@ -13,6 +13,7 @@ namespace Uranus {
 		void SetContext(const Ref<Scene>& context);
 		void OnImGuiRender();
 
+		void SetSelectedEntity(Entity entity) { _SelectionContext = entity; }
 		Entity GetSelectedEntity() const { return _SelectionContext; }
 
 	private:

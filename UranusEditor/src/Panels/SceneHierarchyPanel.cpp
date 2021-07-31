@@ -148,17 +148,20 @@ namespace Uranus {
 			if (ImGui::BeginPopup("AddComponent")) {
 
 				if (ImGui::MenuItem("Transform")) {
-					_SelectionContext.AddComponent<TransformComponent>();
+					if (!_SelectionContext.HasComponent<TransformComponent>())
+						_SelectionContext.AddComponent<TransformComponent>();
 					ImGui::CloseCurrentPopup();
 				}
 
 				if (ImGui::MenuItem("Camera")) {
-					_SelectionContext.AddComponent<CameraComponent>();
+					if (!_SelectionContext.HasComponent<CameraComponent>())
+						_SelectionContext.AddComponent<CameraComponent>();
 					ImGui::CloseCurrentPopup();
 				}
 
 				if (ImGui::MenuItem("Sprite Renderer")) {
-					_SelectionContext.AddComponent<SpriteRendererComponent>();
+					if (!_SelectionContext.HasComponent<SpriteRendererComponent>())
+						_SelectionContext.AddComponent<SpriteRendererComponent>();
 					ImGui::CloseCurrentPopup();
 				}
 

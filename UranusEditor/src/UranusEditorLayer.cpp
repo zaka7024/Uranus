@@ -16,7 +16,7 @@ namespace Uranus {
 
     UranusEditorLayer::UranusEditorLayer() : Layer("UranusEditorLayer"), _CameraController(1280.0f / 720.0f, true)
     {
-
+        _EditorCamera = EditorCamera(30.0f, 1280.0f / 720.0f, 0.1f, 1000.0f);
     }
 
     void UranusEditorLayer::OnAttach()
@@ -26,6 +26,7 @@ namespace Uranus {
         _TileTexture = Uranus::Texture2D::Create("assets/textures/tile.jpg");
 
         Uranus::FramebufferSpecification framebufferSpecification;
+        framebufferSpecification.Attachments = { FramebufferTextureFormat::RGBA8, FramebufferTextureFormat::RED_INTEGER, FramebufferTextureFormat::DEPTH24STENCIL8 };
         framebufferSpecification.Height = 1280;
         framebufferSpecification.Width = 720;
         _FrameBuffer = Uranus::FrameBuffer::Create(framebufferSpecification);
@@ -103,7 +104,7 @@ namespace Uranus {
         {
             _FrameBuffer->Resize((uint32_t)_ViewportSize.x, (uint32_t)_ViewportSize.y);
             _CameraController.OnResize(_ViewportSize.x, _ViewportSize.y);
-
+            _EditorCamera.SetViewportSize(_ViewportSize.x, _ViewportSize.y);
             _ActiveScene->OnViewportResize((uint32_t)_ViewportSize.x, (uint32_t)_ViewportSize.y);
         }
 
@@ -112,6 +113,8 @@ namespace Uranus {
             if (_viewportFocused) {
                 _CameraController.OnUpdate(ts);
             }
+
+            _EditorCamera.OnUpdate(ts);
         }
 
         {
@@ -125,7 +128,22 @@ namespace Uranus {
 
         {
             UR_PROFILE_SCOPE("Renderer Draw");
-            _ActiveScene->OnUpdate(ts);
+            _ActiveScene->OnUpdateEditor(ts, _EditorCamera);
+        }
+
+        auto [mx, my] = ImGui::GetMousePos();
+        mx -= m_ViewportBounds[0].x;
+        my -= m_ViewportBounds[0].y;
+
+        glm::vec2 viewportSize = m_ViewportBounds[1] - m_ViewportBounds[0];
+        my = viewportSize.y - my;
+        int mouseX = (int)mx;
+        int mouseY = (int)my;
+
+        if (mouseX >= 0 && mouseY >= 0 && mouseX < (int)viewportSize.x && mouseY < (int)viewportSize.y)
+        {
+            int pixelData = _FrameBuffer->ReadPixel(1, mouseX, mouseY);
+            UR_CORE_WARN("Pixel data = {0}", pixelData);
         }
 
         _FrameBuffer->Ubnind();
@@ -133,6 +151,7 @@ namespace Uranus {
 
     void UranusEditorLayer::OnEvent(Uranus::Event& event)
     {
+        _EditorCamera.OnEvent(event);
         _CameraController.OnEvent(event);
         EventDispatcher dispatcher(event);
         dispatcher.Dispatch<KeyPressedEvent>(UR_BIND_EVENT_FUN(UranusEditorLayer::OnKeyPressed));
@@ -294,6 +313,17 @@ namespace Uranus {
         
         ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, { 0, 0 });
         ImGui::Begin("Viewport");
+        auto viewportOffset = ImGui::GetCursorPos();
+
+        auto windowSize = ImGui::GetWindowSize();
+        ImVec2 minBound = ImGui::GetWindowPos();
+        minBound.x += viewportOffset.x;
+        minBound.y += viewportOffset.y;
+
+        ImVec2 maxBound = { minBound.x + windowSize.x, minBound.y + windowSize.y };
+        m_ViewportBounds[0] = { minBound.x, minBound.y };
+        m_ViewportBounds[1] = { maxBound.x, maxBound.y };
+
         _viewportFocused = ImGui::IsWindowFocused();
         _viewportHovered = ImGui::IsWindowHovered();
 
@@ -313,11 +343,15 @@ namespace Uranus {
             float windowHeight = (float)ImGui::GetWindowHeight();
             ImGuizmo::SetRect(ImGui::GetWindowPos().x, ImGui::GetWindowPos().y, windowWidth, windowHeight);
 
-            // Camera
-            auto cameraEntity = _ActiveScene->GetPrimaryCameraEntity();
-            auto& camera = cameraEntity.GetComponent<CameraComponent>().Camera;
-            const glm::mat4& cameraProjection = camera.GetProjection();
-            glm::mat4 cameraView = glm::inverse(cameraEntity.GetComponent<TransformComponent>().GetTransform());
+            // Runtime Camera
+            //auto cameraEntity = _ActiveScene->GetPrimaryCameraEntity();
+            //auto& camera = cameraEntity.GetComponent<CameraComponent>().Camera;
+            //const glm::mat4& cameraProjection = camera.GetProjection();
+            //glm::mat4 cameraView = glm::inverse(cameraEntity.GetComponent<TransformComponent>().GetTransform());
+
+            // Editor Camera
+            glm::mat4 cameraView = _EditorCamera.GetViewMatrix();
+            
 
             // Entity transform
             auto& tc = selectedEntity.GetComponent<TransformComponent>();
@@ -332,7 +366,7 @@ namespace Uranus {
 
             float snapValues[3] = { snapValue, snapValue, snapValue };
 
-            ImGuizmo::Manipulate(glm::value_ptr(cameraView), glm::value_ptr(cameraProjection),
+            ImGuizmo::Manipulate(glm::value_ptr(cameraView), glm::value_ptr(_EditorCamera.GetProjection()),
                 (ImGuizmo::OPERATION)_GizmoType, ImGuizmo::LOCAL, glm::value_ptr(transform),
                 nullptr, snap ? snapValues : nullptr);
 
@@ -348,7 +382,7 @@ namespace Uranus {
             }
         }
 
-        ImGui::Image((void*)_FrameBuffer->GetColorAttachmentRendererId(), { _ViewportSize.x, _ViewportSize.y}, { 0, 1 }, { 1, 0 });
+        ImGui::Image((void*)_FrameBuffer->GetColorAttachmentRendererId(0), { _ViewportSize.x, _ViewportSize.y}, { 0, 1 }, { 1, 0 });
         ImGui::PopStyleVar();
         ImGui::End();
 

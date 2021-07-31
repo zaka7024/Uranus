@@ -4,7 +4,7 @@
 
 namespace Uranus {
 
-	class URANUS_API MouseMovedEvent : public Event {
+	class MouseMovedEvent : public Event {
 	private:
 		float _MouseX, _MouseY;
 	
@@ -25,7 +25,7 @@ namespace Uranus {
 		EVENT_CLASS_CATEGORY(EventCategoryMouse)
 	};
 
-	class URANUS_API MouseScrolledEvent : public Event {
+	class MouseScrolledEvent : public Event {
 	public:
 		MouseScrolledEvent(float offsetX, float offsetY)
 			: _OffsetX(offsetX), _OffsetY(offsetY) {}
@@ -47,7 +47,7 @@ namespace Uranus {
 	};
 
 
-	class URANUS_API MouseButtonEvent : public Event {
+	class MouseButtonEvent : public Event {
 	public:
 
 		inline int GetMouseButton() const { return _MouseButton; }
@@ -61,7 +61,7 @@ namespace Uranus {
 		int _MouseButton;
 	};
 
-	class URANUS_API MouseButtonPressedEvent : public MouseButtonEvent {
+	class MouseButtonPressedEvent : public MouseButtonEvent {
 	public:
 		MouseButtonPressedEvent(int button)
 			: MouseButtonEvent(button) {}
@@ -75,7 +75,7 @@ namespace Uranus {
 		EVENT_CLASS_TYPE(MouseButtonPressed)
 	};
 
-	class URANUS_API MouseButtonRelesedEvent : public MouseButtonEvent {
+	class MouseButtonRelesedEvent : public MouseButtonEvent {
 	public:
 		MouseButtonRelesedEvent(int button)
 			: MouseButtonEvent(button) {}
