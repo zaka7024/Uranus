@@ -1475,6 +1475,7 @@
     </ClInclude>
     <ClInclude Include="src\Uranus\Math\Math.h" />
     <ClInclude Include="src\Uranus\Renderer\EditorCamera.h" />
+    <ClInclude Include="src\Uranus\Core\MouseCodes.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp">

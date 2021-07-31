@@ -21,10 +21,6 @@ namespace Uranus {
 
     void UranusEditorLayer::OnAttach()
     {
-        _CheckerboardTexture = Uranus::Texture2D::Create("assets/textures/Checkerboard.png");
-        _PlayerTexture = Uranus::Texture2D::Create("assets/textures/moon.png");
-        _TileTexture = Uranus::Texture2D::Create("assets/textures/tile.jpg");
-
         Uranus::FramebufferSpecification framebufferSpecification;
         framebufferSpecification.Attachments = { FramebufferTextureFormat::RGBA8, FramebufferTextureFormat::RED_INTEGER, FramebufferTextureFormat::DEPTH24STENCIL8 };
         framebufferSpecification.Height = 1280;
@@ -122,6 +118,9 @@ namespace Uranus {
             _FrameBuffer->Bind();
             Uranus::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
             Uranus::RenderCommand::Clear();
+
+            // Clear entity id buffer
+            _FrameBuffer->ClearAttachment(1, -1);
         }
 
         Uranus::Renderer2D::ResetStats();
@@ -132,10 +131,10 @@ namespace Uranus {
         }
 
         auto [mx, my] = ImGui::GetMousePos();
-        mx -= m_ViewportBounds[0].x;
-        my -= m_ViewportBounds[0].y;
+        mx -= _ViewportBounds[0].x;
+        my -= _ViewportBounds[0].y;
 
-        glm::vec2 viewportSize = m_ViewportBounds[1] - m_ViewportBounds[0];
+        glm::vec2 viewportSize = _ViewportBounds[1] - _ViewportBounds[0];
         my = viewportSize.y - my;
         int mouseX = (int)mx;
         int mouseY = (int)my;
@@ -143,6 +142,9 @@ namespace Uranus {
         if (mouseX >= 0 && mouseY >= 0 && mouseX < (int)viewportSize.x && mouseY < (int)viewportSize.y)
         {
             int pixelData = _FrameBuffer->ReadPixel(1, mouseX, mouseY);
+            pixelData != -1 && pixelData >= 0
+            ? _HoveredEntity = Entity{ (entt::entity)pixelData, _ActiveScene.get() }
+            : _HoveredEntity = Entity();
             UR_CORE_WARN("Pixel data = {0}", pixelData);
         }
 
@@ -155,6 +157,7 @@ namespace Uranus {
         _CameraController.OnEvent(event);
         EventDispatcher dispatcher(event);
         dispatcher.Dispatch<KeyPressedEvent>(UR_BIND_EVENT_FUN(UranusEditorLayer::OnKeyPressed));
+        dispatcher.Dispatch<MouseButtonPressedEvent>(UR_BIND_EVENT_FUN(UranusEditorLayer::OnMouseButtonPressed));
     }
 
     bool UranusEditorLayer::OnKeyPressed(KeyPressedEvent& e)
@@ -201,6 +204,15 @@ namespace Uranus {
                 _GizmoType = ImGuizmo::OPERATION::SCALE;
                 break;
         }
+    }
+
+    bool UranusEditorLayer::OnMouseButtonPressed(MouseButtonPressedEvent& e)
+    {
+        if (e.GetMouseButton() == MouseButtons::ButtonLeft) {
+            if (_viewportHovered && !ImGuizmo::IsOver() && !Input::IsKeyPressed(KeyCode::LeftAlt))
+                _SceneHierarchyPanel.SetSelectedEntity(_HoveredEntity);
+        }
+        return false;
     }
 
     void UranusEditorLayer::NewScene()
@@ -309,20 +321,27 @@ namespace Uranus {
         ImGui::Text("Vertex Count %d", stats.GetTotalVertexCount());
         ImGui::Text("Index	Count %d", stats.GetTotalIndexCount());
 
+        std::string name = "None";
+        if (_HoveredEntity)
+            name = _HoveredEntity.GetComponent<TagComponent>().Tag;
+        ImGui::Text("Hovered Entity: %s", name.c_str());
+
         ImGui::End();
         
         ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, { 0, 0 });
         ImGui::Begin("Viewport");
         auto viewportOffset = ImGui::GetCursorPos();
+        auto viewportMinRegion = ImGui::GetWindowContentRegionMin();
+		auto viewportMaxRegion = ImGui::GetWindowContentRegionMax();
 
         auto windowSize = ImGui::GetWindowSize();
         ImVec2 minBound = ImGui::GetWindowPos();
         minBound.x += viewportOffset.x;
-        minBound.y += viewportOffset.y;
+        //minBound.y += viewportOffset.y;
 
         ImVec2 maxBound = { minBound.x + windowSize.x, minBound.y + windowSize.y };
-        m_ViewportBounds[0] = { minBound.x, minBound.y };
-        m_ViewportBounds[1] = { maxBound.x, maxBound.y };
+        _ViewportBounds[0] = { minBound.x, minBound.y };
+        _ViewportBounds[1] = { maxBound.x, maxBound.y };
 
         _viewportFocused = ImGui::IsWindowFocused();
         _viewportHovered = ImGui::IsWindowHovered();

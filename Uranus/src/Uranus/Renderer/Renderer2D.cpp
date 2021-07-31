@@ -181,6 +181,11 @@ namespace Uranus {
 		_RendererData->Stats.DrawCalls++;
 	}
 
+	void Renderer2D::DrawSprite(const glm::mat4& transform, const SpriteRendererComponent& src, int entityId)
+	{
+		DrawQuad(transform, src.Color, entityId);
+	}
+
 	void Renderer2D::StartNewBatch() {
 		// Flush the current data
 		EndScene();
@@ -250,7 +255,7 @@ namespace Uranus {
 		_RendererData->Stats.QuadCount++;
 	}
 
-	void Renderer2D::DrawQuad(const glm::mat4& transform, const Ref<Texture2D>& texture, float tilingFactor, const glm::vec4& tintColor) {
+	void Renderer2D::DrawQuad(const glm::mat4& transform, const Ref<Texture2D>& texture, float tilingFactor, const glm::vec4& tintColor, int entityId) {
 		UR_PROFILE_SCOPE("LayerStack OnImGuiRender");
 
 		if (_RendererData->QuadIndexCount >= _RendererData->MaxIndices) {
@@ -278,6 +283,7 @@ namespace Uranus {
 			_RendererData->QuadVertexBufferPtr->TexCoord = _RendererData->QuadTextureCoords[i];
 			_RendererData->QuadVertexBufferPtr->TexIndex = textureIndex;
 			_RendererData->QuadVertexBufferPtr->TilingFactor = tilingFactor;
+			_RendererData->QuadVertexBufferPtr->EntityId = entityId;
 			_RendererData->QuadVertexBufferPtr++;
 		}
 

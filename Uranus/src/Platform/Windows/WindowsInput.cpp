@@ -14,6 +14,13 @@ namespace Uranus {
 		return state == GLFW_PRESS || state == GLFW_REPEAT;
 	}
 
+	bool Input::IsKeyPressed(KeyCode keyCode)
+	{
+		auto window = static_cast<GLFWwindow*>((Application::Get().GetWindow().GetNativeWindow()));
+		auto state = glfwGetKey(window, (int)keyCode);
+		return state == GLFW_PRESS || state == GLFW_REPEAT;
+	}
+
 	bool Input::IsMouseButtonPressed(int button)
 	{
 		auto window = static_cast<GLFWwindow*>(Application::Get().GetWindow().GetNativeWindow());

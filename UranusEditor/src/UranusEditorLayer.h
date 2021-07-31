@@ -22,23 +22,21 @@ namespace Uranus {
 		void SaveSceneAs();
 
 		bool OnKeyPressed(KeyPressedEvent& e);
+		bool OnMouseButtonPressed(MouseButtonPressedEvent& e);
 
 	private:
 		Uranus::OrthographicCameraController _CameraController;
-		Uranus::Ref<Uranus::VertexArray> _SquareVA;
-		Uranus::Ref<Uranus::Shader> _FlatColorShader;
 		Uranus::Ref<Uranus::FrameBuffer> _FrameBuffer;
 		Uranus::Ref<Uranus::Scene> _ActiveScene;
 
-		Uranus::Ref<Uranus::Texture2D> _CheckerboardTexture;
-		Uranus::Ref<Uranus::Texture2D> _PlayerTexture;
-		Uranus::Ref<Uranus::Texture2D> _TileTexture;
 
 		Uranus::Entity _MainCamera;
 		Uranus::Entity _SecondCamera;
 		Uranus::Entity _SquareEntity;
 
 		EditorCamera _EditorCamera;
+
+		Entity _HoveredEntity;
 
 		// panels
 		SceneHierarchyPanel _SceneHierarchyPanel;
@@ -48,7 +46,7 @@ namespace Uranus {
 		bool _viewportFocused = false, _viewportHovered = false;
 
 		glm::vec2 _ViewportSize = { 0.0f, 0.0f };
-		glm::vec2 m_ViewportBounds[2];
+		glm::vec2 _ViewportBounds[2];
 
 		glm::vec4 _Color = { 0.4f, 0.2f, 0.7f, 1.0f };
 		glm::vec3 _Position = { 0.0f, 0.0f, 0.1f };

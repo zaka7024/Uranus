@@ -149,6 +149,7 @@
     <ClInclude Include="src\Uranus\Core\LayerStack.h" />
     <ClInclude Include="src\Uranus\Core\Log.h" />
     <ClInclude Include="src\Uranus\Core\MouseButtonCodes.h" />
+    <ClInclude Include="src\Uranus\Core\MouseCodes.h" />
     <ClInclude Include="src\Uranus\Core\Timestep.h" />
     <ClInclude Include="src\Uranus\Core\Window.h" />
     <ClInclude Include="src\Uranus\Debug\Instrumentor.h" />

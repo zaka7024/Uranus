@@ -11,6 +11,7 @@ namespace Uranus {
 		virtual void Ubnind() override;
 		virtual void Resize(uint32_t width, uint32_t height) override;
 
+		virtual void ClearAttachment(uint32_t attachmentIndex, int value) override;
 		virtual uint32_t GetColorAttachmentRendererId(int index = 0) { UR_CORE_ASSERT(index < _ColorAttachments.size(), "") return _ColorAttachments[index]; };
 		virtual int ReadPixel(uint32_t attachmentIndex, int x, int y) override;
 

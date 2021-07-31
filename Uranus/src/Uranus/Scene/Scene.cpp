@@ -56,7 +56,7 @@ namespace Uranus {
 			auto group = _Registry.group<TransformComponent, SpriteRendererComponent>();
 			for (auto entity : group) {
 				auto& [transfrom, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
-				Uranus::Renderer2D::DrawQuad(transfrom.GetTransform(), sprite.Color, (int)entity);
+				Uranus::Renderer2D::DrawSprite(transfrom.GetTransform(), sprite, (int)entity);
 			}
 
 			Uranus::Renderer2D::EndScene();
@@ -70,7 +70,7 @@ namespace Uranus {
 		auto group = _Registry.group<TransformComponent, SpriteRendererComponent>();
 		for (auto entity : group) {
 			auto& [transfrom, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
-			Uranus::Renderer2D::DrawQuad(transfrom.GetTransform(), sprite.Color, (int)entity);
+			Uranus::Renderer2D::DrawSprite(transfrom.GetTransform(), sprite, (int)entity);
 		}
 
 		Uranus::Renderer2D::EndScene();

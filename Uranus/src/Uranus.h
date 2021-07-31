@@ -10,6 +10,7 @@
 #include "Uranus/Core/Input.h"
 #include "Uranus/Core/KeyCodes.h"
 #include "Uranus/Core/MouseButtonCodes.h"
+#include "Uranus/Core/MouseCodes.h"
 
 #include "Uranus/ImGui/ImGuiLayer.h"
 

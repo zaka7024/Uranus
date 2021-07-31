@@ -112,13 +112,13 @@ namespace Uranus {
 			{
 				case GLFW_PRESS:
 				{
-					MouseButtonPressedEvent event(button);
+					MouseButtonPressedEvent event((MouseButtons)button);
 					windowData.EventCallback(event);
 					break;
 				}
 				case GLFW_RELEASE:
 				{
-					MouseButtonRelesedEvent event(button);
+					MouseButtonRelesedEvent event((MouseButtons)button);
 					windowData.EventCallback(event);
 					break;
 				}

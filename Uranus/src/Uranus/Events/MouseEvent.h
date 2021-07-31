@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Event.h"
+#include "Uranus/Core/MouseCodes.h"
 
 namespace Uranus {
 
@@ -50,25 +51,25 @@ namespace Uranus {
 	class MouseButtonEvent : public Event {
 	public:
 
-		inline int GetMouseButton() const { return _MouseButton; }
+		inline MouseButtons GetMouseButton() const { return _MouseButton; }
 
 		EVENT_CLASS_CATEGORY(EventCategoryMouseButton)
 	
 	protected:
-		MouseButtonEvent(int button)
+		MouseButtonEvent(MouseButtons button)
 			: _MouseButton(button) {}
 
-		int _MouseButton;
+		MouseButtons _MouseButton;
 	};
 
 	class MouseButtonPressedEvent : public MouseButtonEvent {
 	public:
-		MouseButtonPressedEvent(int button)
+		MouseButtonPressedEvent(MouseButtons button)
 			: MouseButtonEvent(button) {}
 
 		virtual std::string ToString() const override {
 			std::stringstream ss;
-			ss << "MouseButtonPressed: " << _MouseButton;
+			ss << "MouseButtonPressed: " << (int)_MouseButton;
 			return ss.str();
 		}
 
@@ -77,12 +78,12 @@ namespace Uranus {
 
 	class MouseButtonRelesedEvent : public MouseButtonEvent {
 	public:
-		MouseButtonRelesedEvent(int button)
+		MouseButtonRelesedEvent(MouseButtons button)
 			: MouseButtonEvent(button) {}
 
 		virtual std::string ToString() const override {
 			std::stringstream ss;
-			ss << "MouseButtonRelesedEvent: " << _MouseButton;
+			ss << "MouseButtonRelesedEvent: " << (int)_MouseButton;
 			return ss.str();
 		}
 

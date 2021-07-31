@@ -75,6 +75,18 @@ namespace Uranus {
 
 			return false;
 		}
+
+		static GLenum UranusFBTextureFormatToGL(FramebufferTextureFormat format)
+		{
+			switch (format)
+			{
+			case FramebufferTextureFormat::RGBA8:       return GL_RGBA8;
+			case FramebufferTextureFormat::RED_INTEGER: return GL_RED_INTEGER;
+			}
+
+			UR_CORE_ASSERT(false, "");
+			return 0;
+		}
 	}
 
 	OpenGLFrameBuffer::OpenGLFrameBuffer(const FramebufferSpecification& spec)
@@ -182,6 +194,15 @@ namespace Uranus {
 		_Specification.Height = height;
 		
 		Invalidate();
+	}
+
+	void OpenGLFrameBuffer::ClearAttachment(uint32_t attachmentIndex, int value)
+	{
+		UR_CORE_ASSERT(attachmentIndex < _ColorAttachments.size(), "");
+
+		auto& spec = _ColorAttachmentSpecifications[attachmentIndex];
+		glClearTexImage(_ColorAttachments[attachmentIndex], 0,
+			Utils::UranusFBTextureFormatToGL(spec.TextureFormat), GL_INT, &value);
 	}
 
 	int OpenGLFrameBuffer::ReadPixel(uint32_t attachmentIndex, int x, int y)
