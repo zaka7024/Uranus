@@ -311,6 +311,7 @@ namespace Uranus {
 
 
         _SceneHierarchyPanel.OnImGuiRender();
+        _ContentBrowserPanel.OnImGuiRender();
 
         ImGui::Begin("Settings");
 

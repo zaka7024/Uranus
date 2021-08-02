@@ -2,6 +2,7 @@
 #include "Uranus.h"
 
 #include "Panels/SceneHierarchyPanel.h"
+#include "Panels/ContentBrowserPanel.h"
 
 namespace Uranus {
 
@@ -40,6 +41,7 @@ namespace Uranus {
 
 		// panels
 		SceneHierarchyPanel _SceneHierarchyPanel;
+		ContentBrowserPanel _ContentBrowserPanel;
 		int _GizmoType = -1;
 
 		bool _PrimaryCamera = true;
