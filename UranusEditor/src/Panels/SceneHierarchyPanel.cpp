@@ -270,6 +270,8 @@ namespace Uranus {
 			{
 				auto& spriteRenderer = entity.GetComponent<SpriteRendererComponent>();
 				ImGui::ColorEdit4("Color", glm::value_ptr(spriteRenderer.Color), 0.1f);
+
+				
 			});
 		}
 	}

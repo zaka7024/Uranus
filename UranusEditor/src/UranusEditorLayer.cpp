@@ -10,9 +10,12 @@
 #include <imgui\imgui.cpp>
 #include <glm\glm\gtc\type_ptr.hpp>
 
+#include <filesystem>
 #include <chrono>
 
 namespace Uranus {
+
+    extern const std::filesystem::path s_AssetsPath;
 
     UranusEditorLayer::UranusEditorLayer() : Layer("UranusEditorLayer"), _CameraController(1280.0f / 720.0f, true)
     {
@@ -145,7 +148,6 @@ namespace Uranus {
             pixelData != -1 && pixelData >= 0
             ? _HoveredEntity = Entity{ (entt::entity)pixelData, _ActiveScene.get() }
             : _HoveredEntity = Entity();
-            UR_CORE_WARN("Pixel data = {0}", pixelData);
         }
 
         _FrameBuffer->Ubnind();
@@ -222,17 +224,22 @@ namespace Uranus {
         _SceneHierarchyPanel.SetContext(_ActiveScene);
     }
 
+    void UranusEditorLayer::OpenScene(const std::filesystem::path& path)
+    {
+        _ActiveScene = CreateRef<Scene>();
+        _ActiveScene->OnViewportResize((uint32_t)_ViewportSize.x, (uint32_t)_ViewportSize.y);
+        _SceneHierarchyPanel.SetContext(_ActiveScene);
+
+        SceneSerializer serializer(_ActiveScene);
+        serializer.Deserialize(path.string());
+    }
+
     void UranusEditorLayer::OpenScene()
     {
         std::string filepath = FileDialogs::OpenFile("Uranus Scene (*.uranus)\0*.uranus\0");
         if (!filepath.empty())
         {
-            _ActiveScene = CreateRef<Scene>();
-            _ActiveScene->OnViewportResize((uint32_t)_ViewportSize.x, (uint32_t)_ViewportSize.y);
-            _SceneHierarchyPanel.SetContext(_ActiveScene);
-
-            SceneSerializer serializer(_ActiveScene);
-            serializer.Deserialize(filepath);
+            OpenScene(filepath);
         }
     }
 
@@ -403,6 +410,18 @@ namespace Uranus {
         }
 
         ImGui::Image((void*)_FrameBuffer->GetColorAttachmentRendererId(0), { _ViewportSize.x, _ViewportSize.y}, { 0, 1 }, { 1, 0 });
+        
+        if (ImGui::BeginDragDropTarget())
+        {
+            if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("CONTENT_BROWSER_ITEM"))
+            {
+                const wchar_t* path = (const wchar_t*)payload->Data;
+            
+                OpenScene(std::filesystem::path(path));
+            }
+            ImGui::EndDragDropTarget();
+        }
+
         ImGui::PopStyleVar();
         ImGui::End();
 

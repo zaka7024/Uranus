@@ -23,6 +23,7 @@ namespace Uranus {
 
 		virtual uint32_t GetWidth() const { return _Width; }
 		virtual uint32_t GetHeight() const { return _Height; }
+		virtual uint32_t GetRendereId() const { return _RendererId; }
 
 	private:
 		std::string _TexturPath;

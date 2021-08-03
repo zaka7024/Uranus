@@ -19,6 +19,7 @@ namespace Uranus {
 
 	private:
 		void NewScene();
+		void OpenScene(const std::filesystem::path& path);
 		void OpenScene();
 		void SaveSceneAs();
 
