@@ -142,12 +142,19 @@ namespace Uranus {
         int mouseX = (int)mx;
         int mouseY = (int)my;
 
+
+        // In Viewport bounds
         if (mouseX >= 0 && mouseY >= 0 && mouseX < (int)viewportSize.x && mouseY < (int)viewportSize.y)
         {
             int pixelData = _FrameBuffer->ReadPixel(1, mouseX, mouseY);
             pixelData != -1 && pixelData >= 0
             ? _HoveredEntity = Entity{ (entt::entity)pixelData, _ActiveScene.get() }
             : _HoveredEntity = Entity();
+
+            UR_WARN("PIXEL: {0}", pixelData)
+        }
+        else {
+            _HoveredEntity = Entity();
         }
 
         _FrameBuffer->Ubnind();

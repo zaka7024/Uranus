@@ -3,6 +3,7 @@
 #include "SceneSerializer.h"
 #include "Entity.h"
 #include "Components.h"
+#include "AssetsManager.h"
 
 #include <fstream>
 #include <yaml-cpp/yaml.h>
@@ -144,6 +145,7 @@ namespace Uranus {
 
 			auto& spriteRendererComponent = entity.GetComponent<SpriteRendererComponent>();
 			out << YAML::Key << "Color" << YAML::Value << spriteRendererComponent.Color;
+			out << YAML::Key << "AssetPath" << YAML::Value << spriteRendererComponent.Texture->GetAssetFilePath().string();
 
 			out << YAML::EndMap; // SpriteRendererComponent
 		}
@@ -236,6 +238,10 @@ namespace Uranus {
 				{
 					auto& src = deserializedEntity.AddComponent<SpriteRendererComponent>();
 					src.Color = spriteRendererComponent["Color"].as<glm::vec4>();
+					std::filesystem::path filepath = spriteRendererComponent["AssetPath"].as<std::string>();
+					AssetsManager::AddAsset(Texture2D::Create(filepath.string()));
+					Ref<Texture2D> texAsset = (Ref<Texture2D>)(Texture2D*)AssetsManager::Lockup(filepath).get();
+					src.Texture = texAsset;
 				}
 			}
 		}

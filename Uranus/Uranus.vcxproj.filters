@@ -28,6 +28,9 @@
     <Filter Include="src\Uranus\ImGui">
       <UniqueIdentifier>{C4B9DBA6-B0B2-FAF8-D9E4-DF7DC53CDA04}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Uranus\Math">
+      <UniqueIdentifier>{337E4EFD-9F09-BCC1-A81A-3FB6142518C2}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Uranus\Renderer">
       <UniqueIdentifier>{007A1CA3-6CDB-F9B0-F548-406361A93070}</UniqueIdentifier>
     </Filter>
@@ -132,6 +135,9 @@
     <ClInclude Include="src\Uranus\Core\MouseButtonCodes.h">
       <Filter>src\Uranus\Core</Filter>
     </ClInclude>
+    <ClInclude Include="src\Uranus\Core\MouseCodes.h">
+      <Filter>src\Uranus\Core</Filter>
+    </ClInclude>
     <ClInclude Include="src\Uranus\Core\Timestep.h">
       <Filter>src\Uranus\Core</Filter>
     </ClInclude>
@@ -156,6 +162,9 @@
     <ClInclude Include="src\Uranus\ImGui\ImGuiLayer.h">
       <Filter>src\Uranus\ImGui</Filter>
     </ClInclude>
+    <ClInclude Include="src\Uranus\Math\Math.h">
+      <Filter>src\Uranus\Math</Filter>
+    </ClInclude>
     <ClInclude Include="src\Uranus\OrthographicCameraController.h">
       <Filter>src\Uranus</Filter>
     </ClInclude>
@@ -163,6 +172,9 @@
       <Filter>src\Uranus\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Uranus\Renderer\Camera.h">
+      <Filter>src\Uranus\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Uranus\Renderer\EditorCamera.h">
       <Filter>src\Uranus\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Uranus\Renderer\FrameBuffer.h">
@@ -197,6 +209,12 @@
     </ClInclude>
     <ClInclude Include="src\Uranus\Renderer\VertexArray.h">
       <Filter>src\Uranus\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Uranus\Scene\Asset.h">
+      <Filter>src\Uranus\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Uranus\Scene\AssetsManager.h">
+      <Filter>src\Uranus\Scene</Filter>
     </ClInclude>
     <ClInclude Include="src\Uranus\Scene\Components.h">
       <Filter>src\Uranus\Scene</Filter>
@@ -1473,9 +1491,6 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="src\Uranus\Math\Math.h" />
-    <ClInclude Include="src\Uranus\Renderer\EditorCamera.h" />
-    <ClInclude Include="src\Uranus\Core\MouseCodes.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp">
@@ -1526,10 +1541,16 @@
     <ClCompile Include="src\Uranus\ImGui\ImGuiLayer.cpp">
       <Filter>src\Uranus\ImGui</Filter>
     </ClCompile>
+    <ClCompile Include="src\Uranus\Math\Math.cpp">
+      <Filter>src\Uranus\Math</Filter>
+    </ClCompile>
     <ClCompile Include="src\Uranus\OrthographicCameraController.cpp">
       <Filter>src\Uranus</Filter>
     </ClCompile>
     <ClCompile Include="src\Uranus\Renderer\Buffer.cpp">
+      <Filter>src\Uranus\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Uranus\Renderer\EditorCamera.cpp">
       <Filter>src\Uranus\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Uranus\Renderer\FrameBuffer.cpp">
@@ -1565,6 +1586,9 @@
     <ClCompile Include="src\Uranus\Renderer\VertexBuffer.cpp">
       <Filter>src\Uranus\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="src\Uranus\Scene\AssetsManager.cpp">
+      <Filter>src\Uranus\Scene</Filter>
+    </ClCompile>
     <ClCompile Include="src\Uranus\Scene\Entity.cpp">
       <Filter>src\Uranus\Scene</Filter>
     </ClCompile>
@@ -1586,7 +1610,5 @@
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
-    <ClCompile Include="src\Uranus\Math\Math.cpp" />
-    <ClCompile Include="src\Uranus\Renderer\EditorCamera.cpp" />
   </ItemGroup>
 </Project>

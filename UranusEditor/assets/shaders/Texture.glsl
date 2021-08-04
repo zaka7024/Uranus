@@ -14,7 +14,7 @@ uniform mat4 u_Transform;
 
 out vec4 v_Color;
 out vec2 v_TexCoord;
-out float v_TexIndex;
+layout(location = 3) out flat float v_TexIndex;
 out float v_TilingFactor;
 layout (location = 4) flat out int v_EntityId;
 
@@ -34,10 +34,11 @@ void main()
 
 layout(location = 0) out vec4 color;
 layout(location = 1) out int color2;
+layout(location = 3) in flat float v_TexIndex;
 
 in vec4 v_Color;
 in vec2 v_TexCoord;
-in float v_TexIndex;
+//in float v_TexIndex;
 in float v_TilingFactor;
 layout (location = 4) flat in int v_EntityId;
 
@@ -48,5 +49,6 @@ void main()
 {
 	int index = int(v_TexIndex);
 	color = texture(u_Textures[index], v_TexCoord * v_TilingFactor) * v_Color;
+	//color = vec4(index, 0,0,1);
 	color2 = v_EntityId;
 }

@@ -2,28 +2,21 @@ Scene: Untitled
 Entities:
   - Entity: 12837192831273
     TagComponent:
-      Tag: Square
+      Tag: Empty Entity
     TransformComponent:
-      Translation: [3.91474771, 0.733745039, 4.03774214]
-      Rotation: [0, 0.184952855, 0]
-      Scale: [0.999999285, 1, 1]
+      Translation: [-3.01375985e-06, -0.0141281169, -0.000101089419]
+      Rotation: [0, 0, 0]
+      Scale: [5.70482588, 4.04785919, 1]
     SpriteRendererComponent:
-      Color: [1, 0.613899589, 0.613899589, 1]
+      Color: [1, 1, 1, 1]
+      AssetPath: assets\textures\space.jpg
   - Entity: 12837192831273
     TagComponent:
-      Tag: Main Camera
+      Tag: Empty Entity
     TransformComponent:
-      Translation: [0, 0.699999988, 9.30000019]
+      Translation: [0, 0, 0]
       Rotation: [0, 0, 0]
-      Scale: [1, 1, 1.39999998]
-    CameraComponent:
-      Camera:
-        ProjectionType: 0
-        PerspectiveFOV: 1.4486233
-        PerspectiveNear: 0.00999999978
-        PerspectiveFar: 1000
-        OrthographicSize: 15
-        OrthographicNear: -1
-        OrthographicFar: 1
-      Primary: true
-      FixedAspectRatio: false
+      Scale: [1, 1, 1]
+    SpriteRendererComponent:
+      Color: [1, 1, 1, 1]
+      AssetPath: assets\textures\moon.png

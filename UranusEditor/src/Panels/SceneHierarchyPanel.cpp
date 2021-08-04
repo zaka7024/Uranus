@@ -1,8 +1,11 @@
 #include "SceneHierarchyPanel.h"
 #include "Uranus/Scene/Components.h"
+#include "Uranus/Scene/AssetsManager.h"
 
 #include <imgui/imgui.h>
 #include <glm\glm\gtc\type_ptr.hpp>
+
+#include <filesystem>
 
 namespace Uranus {
 
@@ -268,10 +271,35 @@ namespace Uranus {
 
 			DrawComponent<SpriteRendererComponent>("Sprite Renderer", entity, [&]() 
 			{
-				auto& spriteRenderer = entity.GetComponent<SpriteRendererComponent>();
-				ImGui::ColorEdit4("Color", glm::value_ptr(spriteRenderer.Color), 0.1f);
+				auto& src = entity.GetComponent<SpriteRendererComponent>();
+				ImGui::ColorEdit4("Color", glm::value_ptr(src.Color), 0.1f);
 
-				
+				if (src.Texture.get()) {
+					ImGui::ImageButton((ImTextureID)src.Texture->GetRendereId(), { 64, 64 }, { 0, 1 }, { 1, 0 });
+				}
+				if (ImGui::BeginDragDropTarget())
+				{
+					if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("CONTENT_BROWSER_ITEM"))
+					{
+						const wchar_t* path = (const wchar_t*)payload->Data;
+
+						// Todo:: Assets Manager
+						//AssetsManager.AddAsset(Texture2D::Create(std::filesystem::path(path).string()));
+						//AssetsManager.Lockup(filepath)
+						auto filepath = std::filesystem::path(path);
+
+						Ref<Asset> asset = AssetsManager::Lockup(filepath);
+						if (!asset) {
+							Ref<Texture2D> tex = Texture2D::Create(filepath.string());
+							AssetsManager::AddAsset(tex);
+						}
+
+						Ref<Texture2D> texAsset = (Ref<Texture2D>)(Texture2D*)AssetsManager::Lockup(filepath).get();
+						src.Texture = texAsset;
+					}
+					ImGui::EndDragDropTarget();
+				}
+				ImGui::DragFloat("Tiling Factor", &src.TilingFactor, 0.1f, 0.0f, 100.0f);
 			});
 		}
 	}

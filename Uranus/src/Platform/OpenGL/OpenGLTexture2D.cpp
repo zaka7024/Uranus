@@ -67,6 +67,8 @@ namespace Uranus {
 		glTextureSubImage2D(_RendererId, 0, 0, 0, _Width, _Height, dataFormat, GL_UNSIGNED_BYTE, data);
 
 		stbi_image_free(data);
+
+		_Filepath = path;
 	}
 
 	void OpenGLTexture2D::Bind(uint32_t slot)

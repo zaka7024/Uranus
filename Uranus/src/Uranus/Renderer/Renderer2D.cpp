@@ -119,7 +119,6 @@ namespace Uranus {
 
 	void Renderer2D::Shutdown()
 	{
-
 		delete _RendererData;
 	}
 
@@ -162,19 +161,22 @@ namespace Uranus {
 
 	void Renderer2D::EndScene()
 	{
+		Flush();
+	}
+
+	void Renderer2D::Flush() {
+
 		if (_RendererData->QuadIndexCount == 0)
 			return;
 
 		uint32_t size = (uint8_t*)_RendererData->QuadVertexBufferPtr - (uint8_t*)_RendererData->QuadVertexBufferBase;
 		_RendererData->QuadVertexBuffer->SetData(_RendererData->QuadVertexBufferBase, size);
 
-		Flush();
-	}
-
-	void Renderer2D::Flush() {
-
 		for (uint32_t i = 0; i < _RendererData->TextureSlotIndex; i++)
 			_RendererData->TextureSlots[i]->Bind(i);
+			
+		_RendererData->TextureShader->Bind();
+
 
 		RenderCommand::DrawIndexed(_RendererData->QuadVertexArray, _RendererData->QuadIndexCount);
 
@@ -183,12 +185,17 @@ namespace Uranus {
 
 	void Renderer2D::DrawSprite(const glm::mat4& transform, const SpriteRendererComponent& src, int entityId)
 	{
-		DrawQuad(transform, src.Color, entityId);
+		if (src.Texture.get()) {
+			DrawQuad(transform, src.Texture, src.TilingFactor, src.Color, entityId);
+		}
+		else {
+			DrawQuad(transform, src.Color, entityId);
+		}
 	}
 
 	void Renderer2D::StartNewBatch() {
 		// Flush the current data
-		EndScene();
+		Flush();
 
 		_RendererData->TextureSlotIndex = 1;
 		_RendererData->QuadIndexCount = 0;
@@ -265,8 +272,8 @@ namespace Uranus {
 		float textureIndex = 0.0f;
 
 		for (uint32_t i = 1; i < _RendererData->TextureSlotIndex; i++) {
-			if (*_RendererData->TextureSlots[i].get() == *texture.get()) {
-				textureIndex = i;
+			if (_RendererData->TextureSlots[i].get()->GetAssetFilePath() == texture.get()->GetAssetFilePath()) {
+				textureIndex = (float)i;
 				break;
 			}
 		}
