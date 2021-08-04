@@ -20,3 +20,6 @@
 [submodule "Uranus/vendor/ImGuizmo"]
 	path = Uranus/vendor/ImGuizmo
 	url = https://github.com/TheCherno/ImGuizmo
+[submodule "Uranus/vendor/mono"]
+	path = Uranus/vendor/mono
+	url = https://github.com/mono/mono
