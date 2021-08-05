@@ -77,7 +77,7 @@
       <PrecompiledHeaderFile>urpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>UR_PLATFORM_WINDOWS;GLFW_INCLUDE_NONE;UR_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\glad\include;vendor\imgui;vendor\glm;vendor\stb_image;vendor\entt\include;vendor\taml-cpp\include;vendor\ImGuizmo;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\glad\include;vendor\imgui;vendor\glm;vendor\stb_image;vendor\entt\include;vendor\taml-cpp\include;vendor\ImGuizmo;vendor\irrKlang\include;C:\Program Files\Mono\include\mono-2.0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -94,7 +94,7 @@
       <PrecompiledHeaderFile>urpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>UR_PLATFORM_WINDOWS;UR_DEBUG;GLFW_INCLUDE_NONE;UR_RELAESE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\glad\include;vendor\imgui;vendor\glm;vendor\stb_image;vendor\entt\include;vendor\taml-cpp\include;vendor\ImGuizmo;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\glad\include;vendor\imgui;vendor\glm;vendor\stb_image;vendor\entt\include;vendor\taml-cpp\include;vendor\ImGuizmo;vendor\irrKlang\include;C:\Program Files\Mono\include\mono-2.0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -115,7 +115,7 @@
       <PrecompiledHeaderFile>urpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>UR_PLATFORM_WINDOWS;UR_DEBUG;GLFW_INCLUDE_NONE;UR_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\glad\include;vendor\imgui;vendor\glm;vendor\stb_image;vendor\entt\include;vendor\taml-cpp\include;vendor\ImGuizmo;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\glad\include;vendor\imgui;vendor\glm;vendor\stb_image;vendor\entt\include;vendor\taml-cpp\include;vendor\ImGuizmo;vendor\irrKlang\include;C:\Program Files\Mono\include\mono-2.0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -148,6 +148,7 @@
     <ClInclude Include="src\Uranus\Core\Layer.h" />
     <ClInclude Include="src\Uranus\Core\LayerStack.h" />
     <ClInclude Include="src\Uranus\Core\Log.h" />
+    <ClInclude Include="src\Uranus\Core\Mono.h" />
     <ClInclude Include="src\Uranus\Core\MouseButtonCodes.h" />
     <ClInclude Include="src\Uranus\Core\MouseCodes.h" />
     <ClInclude Include="src\Uranus\Core\Timestep.h" />
@@ -174,8 +175,7 @@
     <ClInclude Include="src\Uranus\Renderer\Shader.h" />
     <ClInclude Include="src\Uranus\Renderer\Texture.h" />
     <ClInclude Include="src\Uranus\Renderer\VertexArray.h" />
-    <ClInclude Include="src\Uranus\Scene\Asset.h" />
-    <ClInclude Include="src\Uranus\Scene\AssetsManager.h" />
+    <ClInclude Include="src\Uranus\Audio\AudioPlayer.h" />
     <ClInclude Include="src\Uranus\Scene\Components.h" />
     <ClInclude Include="src\Uranus\Scene\Entity.h" />
     <ClInclude Include="src\Uranus\Scene\Scene.h" />
@@ -634,7 +634,7 @@
     <ClCompile Include="src\Uranus\Renderer\Shader.cpp" />
     <ClCompile Include="src\Uranus\Renderer\Texture.cpp" />
     <ClCompile Include="src\Uranus\Renderer\VertexBuffer.cpp" />
-    <ClCompile Include="src\Uranus\Scene\AssetsManager.cpp" />
+    <ClCompile Include="src\Uranus\Audio\AudioPlayer.cpp" />
     <ClCompile Include="src\Uranus\Scene\Entity.cpp" />
     <ClCompile Include="src\Uranus\Scene\Scene.cpp" />
     <ClCompile Include="src\Uranus\Scene\SceneCamera.cpp" />
@@ -658,8 +658,11 @@
     <ProjectReference Include="vendor\taml-cpp\yaml-cpp.vcxproj">
       <Project>{88F1A057-74BE-FB62-9DD7-E90A890331F1}</Project>
     </ProjectReference>
+    <ProjectReference Include="vendor\irrKlang\IrrKlang.vcxproj">
+      <Project>{BF355E31-AB02-B93C-D41B-A7E4C047EECA}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
-</Project> 
+</Project>

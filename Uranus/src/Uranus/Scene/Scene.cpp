@@ -3,6 +3,7 @@
 #include "Components.h"
 
 #include "Uranus/Renderer/Renderer2D.h"
+#include "Uranus/Audio/AudioPlayer.h"
 
 #include "Entity.h"
 
@@ -60,6 +61,17 @@ namespace Uranus {
 			}
 
 			Uranus::Renderer2D::EndScene();
+		}
+	}
+
+	void Scene::OnEditorStart()
+	{
+		auto audioView = _Registry.view<AudioSourceComponent>();
+		for (auto entity : audioView) {
+			auto& as = audioView.get<AudioSourceComponent>(entity);
+			if (as.AutoPlay) {
+				AudioPlayer::Play(as.SoundFile);
+			}
 		}
 	}
 
@@ -144,6 +156,11 @@ namespace Uranus {
 
 	template<>
 	void Scene::OnComponenetAdded<NativeScriptComponent>(Entity entity, NativeScriptComponent& component)
+	{
+	}
+
+	template<>
+	void Scene::OnComponenetAdded<AudioSourceComponent>(Entity entity, AudioSourceComponent& component)
 	{
 	}
 }

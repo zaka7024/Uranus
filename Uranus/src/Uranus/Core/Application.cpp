@@ -1,12 +1,14 @@
-
+﻿
 #include "urpch.h"
 
 #include "Uranus/Core/Application.h"
 #include "Uranus/Core/Input.h"
 #include "Uranus/Renderer/Renderer.h"
+#include "Uranus/Audio/AudioPlayer.h"
 #include "Uranus/Core/KeyCodes.h"
 
 #include "Uranus/Core/Timestep.h"
+#include "Uranus/Core/Mono.h"
 
 #include<GLFW/glfw3.h>
 
@@ -23,6 +25,9 @@ namespace Uranus {
 		_Window = std::unique_ptr<Window>(Window::Create(WindowProps(name)));
 		_Window->SetEventCallback(UR_BIND_EVENT_FUN(Application::OnEvent));
 
+		//
+		Uranus::Mono::Init();
+		AudioPlayer::Init();
 		Renderer::Init();
 
 		_ImGuiLayer = new ImGuiLayer();

@@ -32,6 +32,8 @@ namespace Uranus {
 
         _ActiveScene = CreateRef<Scene>();
 
+        _ActiveScene->OnEditorStart();
+
 #if 0
         Entity squareEntity = _ActiveScene->CreateEntity("Square");
 
@@ -95,6 +97,10 @@ namespace Uranus {
     void UranusEditorLayer::OnUpdate(Uranus::Timestep ts)
     {
         UR_PROFILE_FUNCTION();
+
+        if (Input::IsKeyPressed(KeyCode::SPACE)) {
+            _ActiveScene->OnEditorStart();
+        }
 
         // Frame Buffer Resize
         if (FramebufferSpecification spec = _FrameBuffer->GetSpecification();

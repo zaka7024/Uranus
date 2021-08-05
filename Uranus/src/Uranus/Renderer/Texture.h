@@ -1,11 +1,11 @@
 #pragma once
 
 #include "Uranus/Core/Core.h"
-#include "Uranus/Scene/Asset.h"
+#include <filesystem>
 
 namespace Uranus {
 
-	class Texture : public Asset {
+	class Texture {
 	public:
 		~Texture() = default;
 
@@ -17,7 +17,7 @@ namespace Uranus {
 		virtual uint32_t GetHeight() const = 0;
 		virtual uint32_t GetRendereId() const = 0;
 
-		virtual std::filesystem::path& GetAssetFilePath() = 0;
+		virtual std::filesystem::path GetAssetFilePath() = 0;
 
 		virtual bool operator==(const Texture& other) const = 0;
 	};

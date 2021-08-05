@@ -1,4 +1,4 @@
-
+﻿
 workspace "Uranus"
 	architecture "x64"
 	startproject "Sandbox"
@@ -20,11 +20,13 @@ IncludeDir["stb_image"] = "Uranus/vendor/stb_image"
 IncludeDir["entt"] = "Uranus/vendor/entt/include"
 IncludeDir["yaml"] = "Uranus/vendor/taml-cpp/include"
 IncludeDir["ImGuizmo"] = "Uranus/vendor/ImGuizmo"
+IncludeDir["IrrKlang"] = "Uranus/vendor/irrKlang/include"
 
 include "Uranus/vendor/GLFW"
 include "Uranus/vendor/Glad"
 include "Uranus/vendor/imgui"
 include "Uranus/vendor/taml-cpp"
+include "Uranus/vendor/irrKlang"
 
 project "Uranus"
 	location "Uranus"
@@ -60,14 +62,17 @@ project "Uranus"
 		"%{IncludeDir.stb_image}",
 		"%{IncludeDir.entt}",
 		"%{IncludeDir.yaml}",
-		"%{IncludeDir.ImGuizmo}"
+		"%{IncludeDir.ImGuizmo}",
+		"%{IncludeDir.IrrKlang}",
+		"C:/Program Files/Mono/include/mono-2.0",
 	}
 
 	links {
 		"GLFW",
 		"Glad",
 		"ImGui",
-		"yaml-cpp"
+		"yaml-cpp",
+		"IrrKlang",
 	}
 
 	filter "system:windows"
@@ -114,11 +119,12 @@ project "UranusEditor"
 		"Uranus/vendor/spdlog/include",
 		"Uranus/vendor",
 		"%{IncludeDir.glm}",
-		"%{IncludeDir.entt}"
+		"%{IncludeDir.entt}",
+		"%{IncludeDir.IrrKlang}",
 	}
 
 	links {
-		"Uranus"
+		"Uranus",
 	}
 
 	filter "system:windows"
@@ -169,7 +175,7 @@ project "Sandbox"
 	}
 
 	links {
-		"Uranus"
+		"Uranus",
 	}
 
 	filter "system:windows"
@@ -193,4 +199,3 @@ project "Sandbox"
 		defines "UR_DIST"
 		runtime "Release"
 		optimize "On"
-		

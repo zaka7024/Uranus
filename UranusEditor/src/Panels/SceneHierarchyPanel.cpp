@@ -1,6 +1,5 @@
 #include "SceneHierarchyPanel.h"
 #include "Uranus/Scene/Components.h"
-#include "Uranus/Scene/AssetsManager.h"
 
 #include <imgui/imgui.h>
 #include <glm\glm\gtc\type_ptr.hpp>
@@ -19,14 +18,14 @@ namespace Uranus {
 		ImGui::NextColumn();
 
 		//ImGui::CalcItemWidth()
-		ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2{ 0, 0 });
+		ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2{ 0, 2 });
 
 		//float lineHeight = GImGui->Font->FontSize + GImGui->Style.FramePadding.y * 2.0f;
-		ImVec2 buttonSize = { 20, 19 };
+		ImVec2 buttonSize = { 20, 24 };
 		const int dragFloatWidth = 45;
 
-		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{ 0.8f, 0.1f, 0.15f, 1.0f });
-		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4{ 0.9f, 0.2f, 0.2f, 1.0f });
+		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{ 0.73f, 0.0f, 0.13f, 1.0f });
+		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4{ 0.88f, 0.0f, 0.21f, 1.0f });
 		ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4{ 0.8f, 0.1f, 0.15f, 1.0f });
 		if (ImGui::Button("X", buttonSize))
 			values.x = resetValue;
@@ -40,9 +39,9 @@ namespace Uranus {
 		ImGui::SameLine();
 		
 
-		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{ 0.2f, 0.7f, 0.2f, 1.0f });
-		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4{ 0.3f, 0.8f, 0.3f, 1.0f });
-		ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4{ 0.2f, 0.7f, 0.2f, 1.0f });
+		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{ 0.0f, 0.81f, 0.56f, 1.0f });
+		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4{ 0.29f, 0.83f, 0.63f, 1.0f });
+		ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4{ 0.0f, 0.52f, 0.21f, 1.0f });
 		if (ImGui::Button("Y", buttonSize))
 			values.y = resetValue;
 		ImGui::PopStyleColor(3);
@@ -53,7 +52,7 @@ namespace Uranus {
 		ImGui::PopItemWidth();
 		ImGui::SameLine();
 
-		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{ 0.1f, 0.25f, 0.8f, 1.0f });
+		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{ 0.0f, 0.37f, 0.9f, 1.0f });
 		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4{ 0.2f, 0.35f, 0.9f, 1.0f });
 		ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4{ 0.1f, 0.25f, 0.8f, 1.0f });
 		if (ImGui::Button("Z", buttonSize))
@@ -165,6 +164,12 @@ namespace Uranus {
 				if (ImGui::MenuItem("Sprite Renderer")) {
 					if (!_SelectionContext.HasComponent<SpriteRendererComponent>())
 						_SelectionContext.AddComponent<SpriteRendererComponent>();
+					ImGui::CloseCurrentPopup();
+				}
+
+				if (ImGui::MenuItem("Audio Source")) {
+					if (!_SelectionContext.HasComponent<AudioSourceComponent>())
+						_SelectionContext.AddComponent<AudioSourceComponent>();
 					ImGui::CloseCurrentPopup();
 				}
 
@@ -283,24 +288,42 @@ namespace Uranus {
 					{
 						const wchar_t* path = (const wchar_t*)payload->Data;
 
-						// Todo:: Assets Manager
-						//AssetsManager.AddAsset(Texture2D::Create(std::filesystem::path(path).string()));
-						//AssetsManager.Lockup(filepath)
 						auto filepath = std::filesystem::path(path);
-
-						Ref<Asset> asset = AssetsManager::Lockup(filepath);
-						if (!asset) {
-							Ref<Texture2D> tex = Texture2D::Create(filepath.string());
-							AssetsManager::AddAsset(tex);
-						}
-
-						Ref<Texture2D> texAsset = (Ref<Texture2D>)(Texture2D*)AssetsManager::Lockup(filepath).get();
-						src.Texture = texAsset;
+						src.Texture = Texture2D::Create(filepath.string());
 					}
 					ImGui::EndDragDropTarget();
 				}
 				ImGui::DragFloat("Tiling Factor", &src.TilingFactor, 0.1f, 0.0f, 100.0f);
 			});
+		}
+
+		if (entity.HasComponent<AudioSourceComponent>()) {
+
+			DrawComponent<AudioSourceComponent>("Audio Source", entity, [&]()
+				{
+					auto& as = entity.GetComponent<AudioSourceComponent>();
+
+					ImGui::Text("Audio");
+					if (ImGui::BeginDragDropTarget())
+					{
+						if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("CONTENT_BROWSER_ITEM"))
+						{
+							const wchar_t* path = (const wchar_t*)payload->Data;
+
+							auto filepath = std::filesystem::path(path);
+							as.SoundFile = filepath;
+						}
+						ImGui::EndDragDropTarget();
+					}
+
+					ImGui::PushID("AutoPlay");
+					ImGui::Checkbox("Auto Play", &as.AutoPlay);
+					ImGui::PopID();
+
+					ImGui::PushID("Loop");
+					ImGui::Checkbox("Loop", &as.Loop);
+					ImGui::PopID();
+				});
 		}
 	}
 

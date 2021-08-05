@@ -64,6 +64,16 @@ namespace Uranus {
 		CameraComponent(const CameraComponent&) = default;
 	};
 
+	struct AudioSourceComponent {
+		std::filesystem::path SoundFile;
+		bool AutoPlay = false;
+		bool Loop = false;
+
+		AudioSourceComponent() = default;
+		AudioSourceComponent(const std::filesystem::path& filepath)
+			:SoundFile(filepath) {}
+	};
+
 	struct NativeScriptComponent {
 		ScriptableEntity* Instance = nullptr;
 
